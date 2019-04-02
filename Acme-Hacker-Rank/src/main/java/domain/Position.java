@@ -30,7 +30,7 @@ public class Position extends DomainEntity {
 	private String				profileRequired;
 	private Collection<String>	skillsRequired;
 	private Collection<String>	technologiesRequired;
-	private Money				salaryOffered;
+	private Double				salaryOffered;
 	private boolean				draft;
 	private boolean				cancelled;
 
@@ -98,11 +98,11 @@ public class Position extends DomainEntity {
 	}
 
 	@Valid
-	public Money getSalaryOffered() {
+	public Double getSalaryOffered() {
 		return this.salaryOffered;
 	}
 
-	public void setSalaryOffered(final Money salaryOffered) {
+	public void setSalaryOffered(final Double salaryOffered) {
 		this.salaryOffered = salaryOffered;
 	}
 

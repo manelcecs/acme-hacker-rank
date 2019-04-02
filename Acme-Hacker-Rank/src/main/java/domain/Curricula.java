@@ -24,7 +24,7 @@ public class Curricula extends DomainEntity {
 		this.hacker = hacker;
 	}
 
-	public boolean isCopy() {
+	public boolean getCopy() {
 		return this.copy;
 	}
 

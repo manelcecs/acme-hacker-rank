@@ -12,18 +12,16 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Access(AccessType.PROPERTY)
 public class Company extends Actor {
 
-	private String	name;
+	private String	companyName;
 
 
-	@Override
 	@NotBlank
 	@SafeHtml
-	public String getName() {
-		return this.name;
+	public String getCompanyName() {
+		return this.companyName;
 	}
 
-	@Override
-	public void setName(final String name) {
-		this.name = name;
+	public void setCompanyName(final String companyName) {
+		this.companyName = companyName;
 	}
 }

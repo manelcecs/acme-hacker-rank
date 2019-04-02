@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2019 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	">
-	
+<beans xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/util 
+http://www.springframework.org/schema/util/spring-util-3.0.xsd "
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans">
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
@@ -24,39 +18,193 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
+					<property name="authority" value="ADMINISTRATOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="username" value="company" />
+		<property name="password" value="93c731f1c3a84ef05cd54d044c379eaa" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="COMPANY" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
 	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="username" value="hacker" />
+		<property name="password" value="d6a6bc0db10694a2d90e3a69648f3a03" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
-				</bean>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="HACKER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
-	
-	<!-- Other domain beans come here -->	
-	
+
+	<!-- Other domain beans come here -->
+
+	<bean class="domain.Company" id="company0">
+
+		<!-- Valores de Actor -->
+
+		<property value="MSI" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>S.L.</value>
+			</list>
+		</property>
+
+		<property value="T-4748254252X" name="vatNumber" />
+
+		<property value="msi.global@msi.com" name="email" />
+
+		<property value="+01 566-329437" name="phoneNumber" />
+
+		<property value="Av. Silicon Minning" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard1" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount2" />
+
+		<!-- Propios de Company -->
+
+		<property value="Micro-Star International" name="companyName" />
+
+	</bean>
+
+	<bean class="domain.Hacker" id="hacker0">
+
+		<!-- Valores de Actor -->
+
+		<property value="Global" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Warming</value>
+			</list>
+		</property>
+
+		<property value="34675689-R" name="vatNumber" />
+
+		<property value="dane@globalwarming.com" name="email" />
+
+		<property value="+03 529-00437" name="phoneNumber" />
+
+		<property value="Unknown Source" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard2" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount3" />
+
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder0" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder0">
+		<property name="keyWord" value="System" />
+		<property name="deadline" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+	</bean>
+
+	<bean class="domain.Administrator" id="admin0">
+
+		<!-- Valores de Actor -->
+
+		<property value="admin" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Boss</value>
+			</list>
+		</property>
+
+		<property value="00000000001-A" name="vatNumber" />
+
+		<property value="admin@" name="email" />
+
+		<property value="+00 000-1234567" name="phoneNumber" />
+
+		<property value="Av. Main Principal" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard0" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount1" />
+
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard0">
+
+		<property value="admin" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard1">
+
+		<property value="company" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+	<bean class="domain.CreditCard" id="creditcard2">
+
+		<property value="hacker" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
 </beans>
