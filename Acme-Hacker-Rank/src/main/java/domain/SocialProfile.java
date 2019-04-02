@@ -26,6 +26,10 @@ public class SocialProfile extends DomainEntity {
 		return this.actor;
 	}
 
+	public void setActor(final Actor actor) {
+		this.actor = actor;
+	}
+
 	@SafeHtml
 	@NotBlank
 	public String getNick() {

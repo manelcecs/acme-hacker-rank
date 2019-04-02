@@ -64,7 +64,7 @@ public class Application extends DomainEntity {
 		return this.curricula;
 	}
 
-	public void setCurriculum(final Curricula curricula) {
+	public void setCurricula(final Curricula curricula) {
 		this.curricula = curricula;
 	}
 

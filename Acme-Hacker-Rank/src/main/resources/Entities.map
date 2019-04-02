@@ -1,5 +1,9 @@
 #./src/main/resources/Entities.map
-#Mon Apr 01 16:41:34 CEST 2019
-userAccount3=6
-userAccount2=5
-userAccount1=4
+#Tue Apr 02 12:35:57 CEST 2019
+finder0=17
+userAccount3=15
+hacker0=19
+userAccount2=14
+admin0=18
+company0=16
+userAccount1=13
