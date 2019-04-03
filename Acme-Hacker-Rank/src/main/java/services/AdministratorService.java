@@ -38,13 +38,14 @@ public class AdministratorService {
 
 	public Administrator create() {
 		final Administrator res = new Administrator();
-
+		//TODO: añadir cajas de mensajes
 		return res;
 	}
 
 	public Administrator save(final Administrator admin) {
 
 		Assert.isTrue(admin != null);
+		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged(Authority.ADMINISTRATOR));
 		Assert.isTrue(!admin.getBanned());
 
@@ -64,6 +65,10 @@ public class AdministratorService {
 
 		return res;
 
+	}
+
+	public Administrator findOne(final int adminId) {
+		return this.adminRepository.findOne(adminId);
 	}
 
 	public Administrator findByPrincipal(final int principalId) {
@@ -88,6 +93,7 @@ public class AdministratorService {
 		result.setAddress(adminForm.getAddress());
 		result.setEmail(adminForm.getEmail());
 		result.setName(adminForm.getName());
+		//TODO:
 		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
 		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
