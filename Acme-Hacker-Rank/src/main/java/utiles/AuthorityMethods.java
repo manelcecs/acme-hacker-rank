@@ -24,4 +24,24 @@ public class AuthorityMethods {
 		return res;
 	}
 
+	/**
+	 * Intenta coger la cuenta loggeada, si puede<br/>
+	 * se debe a que hay alguien loggeado. Si no, fallar�. <br/>
+	 * <b>True</b>:<u>si hay alguien loggeado</u><br/>
+	 * <b>False</b>:<u>no hay nadie loggeado</u>
+	 * 
+	 * @return boolean
+	 */
+	public static boolean checkIsSomeoneLogged() {
+		boolean res = true;
+
+		try {
+			LoginService.getPrincipal();
+		} catch (final Throwable oops) {
+			res = false;
+		}
+
+		return res;
+	}
+
 }

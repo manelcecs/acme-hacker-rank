@@ -14,42 +14,41 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.CompanyRepository;
+import repositories.HackerRepository;
 import security.Authority;
 import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AuthorityMethods;
-import domain.Company;
-import forms.CompanyForm;
+import domain.Hacker;
+import forms.HackerForm;
 
 @Service
 @Transactional
-public class CompanyService {
+public class HackerService {
 
 	@Autowired
 	private UserAccountRepository	accountRepository;
 	@Autowired
-	private CompanyRepository		companyRepository;
+	private HackerRepository		hackerRepository;
 	//@Autowired
-	//private AdminConfigRepository	companyConfigRepository;
+	//private AdminConfigRepository	adminConfigRepository;
 	@Autowired
 	private Validator				validator;
 
 
-	public Company create() {
-		final Company res = new Company();
-
-		//TODO: aï¿½adir cajas de mensajes
-
+	public Hacker create() {
+		final Hacker res = new Hacker();
+		//TODO: añadir finder
+		//TODO: añadir cajas de mensajes
 		return res;
 	}
 
-	public Company save(final Company company) {
-		Assert.isTrue(company != null);
+	public Hacker save(final Hacker hacker) {
+		Assert.isTrue(hacker != null);
 		Assert.isTrue(!AuthorityMethods.checkIsSomeoneLogged());
 
-		if (company.getId() == 0) {
-			final UserAccount userAccount = company.getUserAccount();
+		if (hacker.getId() == 0) {
+			final UserAccount userAccount = hacker.getUserAccount();
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String pass = encoder.encodePassword(userAccount.getPassword(), null);
@@ -57,57 +56,56 @@ public class CompanyService {
 
 			final UserAccount finalAccount = this.accountRepository.save(userAccount);
 
-			company.setUserAccount(finalAccount);
+			hacker.setUserAccount(finalAccount);
 		} else
-			Assert.isTrue(!company.getBanned());
+			Assert.isTrue(!hacker.getBanned());
 
-		final Company res = this.companyRepository.save(company);
+		final Hacker res = this.hackerRepository.save(hacker);
 
 		return res;
 
 	}
 
 	public void flush() {
-		this.companyRepository.flush();
+		this.hackerRepository.flush();
 	}
 
-	public Company findOne(final int companyId) {
-		return this.companyRepository.findOne(companyId);
+	public Hacker findOne(final int hackerId) {
+		return this.hackerRepository.findOne(hackerId);
 	}
 
-	public Company findByPrincipal(final int principalId) {
-		return this.companyRepository.findByPrincipal(principalId);
+	public Hacker findByPrincipal(final int principalId) {
+		return this.hackerRepository.findByPrincipal(principalId);
 	}
-	public Company findByPrincipal(final UserAccount principal) {
+	public Hacker findByPrincipal(final UserAccount principal) {
 		return this.findByPrincipal(principal.getId());
 	}
 
-	public Company reconstruct(final CompanyForm companyForm, final BindingResult binding) {
-		final Company result;
+	public Hacker reconstruct(final HackerForm hackerForm, final BindingResult binding) {
+		final Hacker result;
 		result = this.create();
 
-		final UserAccount account = companyForm.getUserAccount();
+		final UserAccount account = hackerForm.getUserAccount();
 
 		final Authority a = new Authority();
 		a.setAuthority(Authority.ADMINISTRATOR);
 		account.addAuthority(a);
 
 		result.setUserAccount(account);
-		result.setAddress(companyForm.getAddress());
-		result.setEmail(companyForm.getEmail());
-		result.setCompanyName(companyForm.getCompanyName());
-		result.setName(companyForm.getName());
+		result.setAddress(hackerForm.getAddress());
+		result.setEmail(hackerForm.getEmail());
+		result.setName(hackerForm.getName());
 		//TODO:
-		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.companyConfigService.getAdminConfig().getCountryCode(), companyForm.getPhoneNumber()));
-		result.setPhoneNumber(companyForm.getPhoneNumber());
-		result.setPhoto(companyForm.getPhoto());
-		final String surnames[] = companyForm.getSurnames().split(" ");
+		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.hackerConfigService.getAdminConfig().getCountryCode(), hackerForm.getPhoneNumber()));
+		result.setPhoneNumber(hackerForm.getPhoneNumber());
+		result.setPhoto(hackerForm.getPhoto());
+		final String surnames[] = hackerForm.getSurnames().split(" ");
 		final List<String> surNames = new ArrayList<>();
 		for (int i = 0; i < surnames.length; i++)
 			surNames.add(surnames[i]);
 		result.setSurnames(surNames);
 
-		result.setCreditCard(companyForm.getCreditCard());
+		result.setCreditCard(hackerForm.getCreditCard());
 
 		this.validator.validate(result, binding);
 

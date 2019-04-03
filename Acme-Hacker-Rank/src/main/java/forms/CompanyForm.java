@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
-public class CompanyForm {
+public class CompanyForm extends ActorForm {
 
 	private String	email;
 	private String	companyName;
