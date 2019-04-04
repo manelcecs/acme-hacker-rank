@@ -15,37 +15,39 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
+import forms.AdminConfigForm;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class AdminConfig extends DomainEntity {
 
-	private int					cacheFinder;
-	private int					resultsFinder;
+	private Integer				cacheFinder;
+	private Integer				resultsFinder;
 	private Collection<String>	spamWords;
 	private String				systemName;
 	private String				welcomeMessageEN;
 	private String				welcomeMessageES;
-	private Integer				countryCode;
+	private String				countryCode;
 	private String				bannerURL;
 
 
 	@Range(min = 1, max = 24)
 	@NotNull
-	public int getCacheFinder() {
+	public Integer getCacheFinder() {
 		return this.cacheFinder;
 	}
 
-	public void setCacheFinder(final int cacheFinder) {
+	public void setCacheFinder(final Integer cacheFinder) {
 		this.cacheFinder = cacheFinder;
 	}
 
 	@Range(min = 1, max = 100)
 	@NotNull
-	public int getResultsFinder() {
+	public Integer getResultsFinder() {
 		return this.resultsFinder;
 	}
 
-	public void setResultsFinder(final int resultsFinder) {
+	public void setResultsFinder(final Integer resultsFinder) {
 		this.resultsFinder = resultsFinder;
 	}
 
@@ -91,11 +93,11 @@ public class AdminConfig extends DomainEntity {
 	@NotBlank
 	@SafeHtml
 	@Pattern(regexp = "^(\\+[1-9]|\\+[1-9][1-9]|\\+[1-9][1-9][1-9])$")
-	public Integer getCountryCode() {
+	public String getCountryCode() {
 		return this.countryCode;
 	}
 
-	public void setCountryCode(final Integer countryCode) {
+	public void setCountryCode(final String countryCode) {
 		this.countryCode = countryCode;
 	}
 
@@ -108,6 +110,19 @@ public class AdminConfig extends DomainEntity {
 
 	public void setBannerURL(final String bannerURL) {
 		this.bannerURL = bannerURL;
+	}
+
+	public AdminConfigForm castToForm() {
+		final AdminConfigForm adminConfigForm = new AdminConfigForm();
+		adminConfigForm.setBannerURL(this.getBannerURL());
+		adminConfigForm.setCountryCode(this.getCountryCode());
+		adminConfigForm.setCacheFinder(this.getCacheFinder());
+		adminConfigForm.setResultsFinder(this.getResultsFinder());
+		adminConfigForm.setSystemName(this.getSystemName());
+		adminConfigForm.setWelcomeMessageEN(this.getWelcomeMessageEN());
+		adminConfigForm.setWelcomeMessageES(this.getWelcomeMessageES());
+		return adminConfigForm;
+
 	}
 
 }

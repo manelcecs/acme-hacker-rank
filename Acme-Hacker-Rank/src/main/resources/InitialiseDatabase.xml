@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2019 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	">
+<beans xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/util 
+http://www.springframework.org/schema/util/spring-util-3.0.xsd "
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans">
 	
-	<!-- User accounts -->
+	<!-- Administrator -->
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
@@ -24,12 +19,58 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
+					<property name="authority" value="ADMINISTRATOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<bean class="domain.CreditCard" id="creditcard0">
+
+		<property value="company" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
 	
+	<bean class="domain.Administrator" id="admin0">
+
+		<!-- Valores de Actor -->
+
+		<property value="admin" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Boss</value>
+			</list>
+		</property>
+
+		<property value="00000000001-A" name="vatNumber" />
+
+		<property value="admin@" name="email" />
+
+		<property value="+00 000-1234567" name="phoneNumber" />
+
+		<property value="Av. Main Principal" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard0" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount1" />
+
+	</bean>
+
 </beans>

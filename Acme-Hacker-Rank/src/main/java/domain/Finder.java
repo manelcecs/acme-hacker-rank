@@ -23,7 +23,7 @@ public class Finder extends DomainEntity {
 	private String					keyWord;
 	private Date					deadline;
 	private Date					maximumDeadLine;
-	private Money					minimumSalary;
+	private Double					minimumSalary;
 
 	//Relationship
 	private Collection<Position>	positions;
@@ -60,11 +60,11 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
-	public Money getMinimumSalary() {
+	public Double getMinimumSalary() {
 		return this.minimumSalary;
 	}
 
-	public void setMinimumSalary(final Money minimumSalary) {
+	public void setMinimumSalary(final Double minimumSalary) {
 		this.minimumSalary = minimumSalary;
 	}
 

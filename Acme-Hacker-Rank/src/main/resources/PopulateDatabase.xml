@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2019 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
-	<!-- User accounts -->
+
+	<!-- Administrator -->
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
@@ -24,39 +18,690 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
+					<property name="authority" value="ADMINISTRATOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
-	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+	<bean class="domain.CreditCard" id="creditcard0">
+
+		<property value="company" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Administrator" id="admin0">
+
+		<!-- Valores de Actor -->
+
+		<property value="admin" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Boss</value>
+			</list>
+		</property>
+
+		<property value="00000000001-A" name="vatNumber" />
+
+		<property value="admin@" name="email" />
+
+		<property value="+00 000-1234567" name="phoneNumber" />
+
+		<property value="Av. Main Principal" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard0" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount1" />
+
+	</bean>
+
+	<!-- Companies -->
+	<!-- Company0 -->
+
+	<bean id="userAccount20" class="security.UserAccount">
+		<property name="username" value="company" />
+		<property name="password" value="df655f976f7c9d3263815bd981225cd9" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="COMPANY" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
-	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+	<bean class="domain.CreditCard" id="creditcard20">
+
+		<property value="company1" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Company" id="company0">
+
+		<!-- Valores de Actor -->
+
+		<property value="MSI" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>S.L.</value>
+			</list>
+		</property>
+
+		<property value="T-4748254252X" name="vatNumber" />
+
+		<property value="msi.global@msi.com" name="email" />
+
+		<property value="+01 566-329437" name="phoneNumber" />
+
+		<property value="Av. Silicon Minning" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard20" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount20" />
+
+		<!-- Propios de Company -->
+
+		<property value="Micro-Star International" name="companyName" />
+
+	</bean>
+
+	<!-- Company1 -->
+
+	<bean id="userAccount21" class="security.UserAccount">
+		<property name="username" value="company1" />
+		<property name="password" value="d196a28097115067fefd73d25b0c0be8" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
-				</bean>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="COMPANY" />
 				</bean>
 			</list>
 		</property>
 	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard21">
+
+		<property value="company1" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Company" id="company1">
+
+		<!-- Valores de Actor -->
+
+		<property value="HP" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value> Development</value>
+				<value>Company</value>
+				<value>Inc.</value>
+			</list>
+		</property>
+
+		<property value="PW-932454252" name="vatNumber" />
+
+		<property value="hp@hp.com" name="email" />
+
+		<property value="+0311 92-765347" name="phoneNumber" />
+
+		<property value="Av. Hewlett Packard" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard21" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount21" />
+
+		<!-- Propios de Company -->
+
+		<property value="HP Develpment Company L.P." name="companyName" />
+
+	</bean>
+
+	<!-- Company0 -->
+
+	<bean id="userAccount22" class="security.UserAccount">
+		<property name="username" value="company2" />
+		<property name="password" value="e828ae3339b8d80b3902c1564578804e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard22">
+
+		<property value="company2" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Company" id="company2">
+
+		<!-- Valores de Actor -->
+
+		<property value="Apple" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Inc.</value>
+			</list>
+		</property>
+
+		<property value="AP113-INC" name="vatNumber" />
+
+		<property value="apple@me.com" name="email" />
+
+		<property value="+0099 1899-299" name="phoneNumber" />
+
+		<property value="Av. Steve Jowsniac" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard22" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount22" />
+
+		<!-- Propios de Company -->
+
+		<property value="Apple Inc." name="companyName" />
+
+	</bean>
+
+	<!-- Hackers -->
+
+	<!-- Hacker0 -->
+	<bean id="userAccount30" class="security.UserAccount">
+		<property name="username" value="hacker0" />
+		<property name="password" value="c11ff1d553c4e4e65b6c0ff67ccd9fcd" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard30">
+
+		<property value="hacker0" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder0">
+		<property name="keyWord" value="System" />
+		<property name="deadline" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+	</bean>
+
+	<bean class="domain.Hacker" id="hacker0">
+
+		<!-- Valores de Actor -->
+
+		<property value="Global" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Warming</value>
+			</list>
+		</property>
+
+		<property value="34675689-R" name="vatNumber" />
+
+		<property value="dane@globalwarming.com" name="email" />
+
+		<property value="+03 529-00437" name="phoneNumber" />
+
+		<property value="Unknown Source" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard30" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount30" />
+
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder0" />
+	</bean>
+	<!-- Hacker1 -->
+	<bean id="userAccount31" class="security.UserAccount">
+		<property name="username" value="hacker1" />
+		<property name="password" value="2ba2a8ac968a7a2b0a7baa7f2fef18d2" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard31">
+
+		<property value="hacker1" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder1">
+		<property name="keyWord" value="System" />
+		<property name="deadline" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+	</bean>
+
+	<bean class="domain.Hacker" id="hacker1">
+
+		<!-- Valores de Actor -->
+
+		<property value="Mediterranean" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Shark</value>
+				<value>Pido</value>
+			</list>
+		</property>
+
+		<property value="352435234-H" name="vatNumber" />
+
+		<property value="shapk-pido@gemail.com" name="email" />
+
+		<property value="+36 733 342542" name="phoneNumber" />
+
+		<property value="Road Ahead 32" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard31" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount31" />
+
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder1" />
+
+	</bean>
+	<!-- Hacker2 -->
+	<bean id="userAccount32" class="security.UserAccount">
+		<property name="username" value="hacker2" />
+		<property name="password" value="91af68b69a50a98dbc0800942540342c" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard32">
+
+		<property value="hacker2" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder2">
+		<property name="keyWord" value="System" />
+		<property name="deadline" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+	</bean>
+
+	<bean class="domain.Hacker" id="hacker2">
+
+		<!-- Valores de Actor -->
+
+		<property value="Sudowomdo" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>the dreaded one</value>
+			</list>
+		</property>
+
+		<property value="32563775437-Q" name="vatNumber" />
+
+		<property value="thedreadedone@mailto.com" name="email" />
+
+		<property value="+34 666-555-123" name="phoneNumber" />
+
+		<property value="Highway to Hell 66" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard32" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount32" />
+
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder2" />
+
+	</bean>
+
+	<!-- Positions -->
+
+	<!-- Company0 -->
+	<bean class="domain.Position" id="position00">
+		<property value="Network Security" name="title" />
+		<property value="Here will be problems related to Network Security"
+			name="description" />
+		<property value="12/31/2020" name="deadline" />
+		<property value="Networker" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Phishing</value>
+				<value>MITM</value>
+				<value>Smurf</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Wireshark</value>
+				<value>RedHat</value>
+				<value>Linux</value>
+			</list>
+		</property>
+
+		<property value="4500" name="salaryOffered" />
+		<property value="true" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company0" />
+		<property name="ticker" ref="ticker00" />
+	</bean>
+
+	<bean class="domain.Ticker" id="ticker00">
+		<property name="identifier" value="MSIX-3433" />
+	</bean>
+
+	<!-- Company1 -->
+	<bean class="domain.Position" id="position10">
+		<property value="Hardware" name="title" />
+		<property value="Problems related to hardware driver's security"
+			name="description" />
+		<property value="06/30/2019" name="deadline" />
+		<property value="Driver" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Overclock</value>
+				<value>Testing</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Linux</value>
+			</list>
+		</property>
+
+		<property value="3200" name="salaryOffered" />
+		<property value="true" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company1" />
+		<property name="ticker" ref="ticker10" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker10">
+		<property name="identifier" value="HPXX-9931" />
+	</bean>
+
+	<!-- Company2 -->
+	<bean class="domain.Position" id="position20">
+		<property value="Calidad y UX" name="title" />
+		<property
+			value="Se tratará de probar los productos para asegurar una calidad excelente y una experiencia de usario única."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>UX</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Apple</value>
+				<value>iOS</value>
+				<value>OsX</value>
+			</list>
+		</property>
+
+		<property value="7999" name="salaryOffered" />
+		<property value="true" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company2" />
+		<property name="ticker" ref="ticker20" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker20">
+		<property name="identifier" value="AINC-1099" />
+	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<!-- Problemas -->
 	
+	<!-- Position00 -->
+	<bean class="domain.Problem" id="problem00">
+		<property value="Test Wireless Enruter" name="title" />
+		<property value="No Idea what to write here" name="statement" />
+		<property value="Try to check if packets are well encrypted" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="true" name="draft" />
+		<property name="position" ref="position00" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem01">
+		<property value="Bluetooth" name="title" />
+		<property value="NoIDEA" name="statement" />
+		<property value="Check conection endurance" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position00" />
+		
+	</bean>
+	<!-- Position10 -->
+	<bean class="domain.Problem" id="problem10">
+		<property value="Check temperature" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Check if the temperature is acceptable" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="true" name="draft" />
+		<property name="position" ref="position10" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem11">
+		<property value="Check flexibility" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Check the maximum torque" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position10" />
+		
+	</bean>
+	
+	<!-- Position20 -->
+	<bean class="domain.Problem" id="problem20">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="true" name="draft" />
+		<property name="position" ref="position20" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem21">
+		<property value="Comprobar estilo" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Asegurarse que el producto es estiloso" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position20" />
+		
+	</bean>
+
+	<bean id="adminConfig" class="domain.AdminConfig">
+		<property name="systemName" value="Acme-Hacker-Rank" />
+		<property name="bannerURL" value="https://i.imgur.com/7b8lu4b.png" />
+		<property name="countryCode" value="+34" />
+		<property name="resultsFinder" value="10" />
+		<property name="cacheFinder" value="1" />
+		<property name="welcomeMessageEN" value="Welcome to Acme hacker Rank! We're IT hacker’s favourite job marketplace!" />
+		<property name="welcomeMessageES" value="¡Bienvenidos a Acme Hacker Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you've been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+			</list>
+		</property>
+	</bean>
+
 </beans>
