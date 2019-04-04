@@ -26,7 +26,7 @@ public class AuthorityMethods {
 
 	/**
 	 * Intenta coger la cuenta loggeada, si puede<br/>
-	 * se debe a que hay alguien loggeado. Si no, fallará. <br/>
+	 * se debe a que hay alguien loggeado. Si no, fallarï¿½. <br/>
 	 * <b>True</b>:<u>si hay alguien loggeado</u><br/>
 	 * <b>False</b>:<u>no hay nadie loggeado</u>
 	 * 

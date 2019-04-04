@@ -3,6 +3,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
@@ -38,7 +40,7 @@ public class AdministratorService {
 
 	public Administrator create() {
 		final Administrator res = new Administrator();
-		//TODO: añadir cajas de mensajes
+		//TODO: aï¿½adir cajas de mensajes
 		return res;
 	}
 
@@ -114,6 +116,18 @@ public class AdministratorService {
 
 	public void flush() {
 		this.adminRepository.flush();
+	}
+
+	public Boolean validateEmail(final String email) {
+
+		Boolean valid = false;
+
+		final Pattern emailPattern = Pattern.compile("^([0-9a-zA-Z ]{1,}[ ]{1}[<]{1}[A-Za-z0-9]{1,}[@]{1}[>]{1}|[A-Za-z0-9]{1,}[@]{1})$");
+
+		final Matcher mEmail = emailPattern.matcher(email.toLowerCase());
+		if (mEmail.matches())
+			valid = true;
+		return valid;
 	}
 
 }
