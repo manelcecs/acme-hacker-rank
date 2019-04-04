@@ -28,6 +28,7 @@ public class Message extends DomainEntity {
 	private String					subject;
 	private String					body;
 	private Collection<String>		tags;
+	private String					priority;
 
 	//Relationships
 	private Actor					sender;
@@ -104,6 +105,17 @@ public class Message extends DomainEntity {
 
 	public void setMessageBoxes(final Collection<MessageBox> messageBoxes) {
 		this.messageBoxes = messageBoxes;
+	}
+
+	//:TODO TRES VALORES UNICOS O LISTA DE PRIORIDADES DEL ADMIN
+	@NotBlank
+	@SafeHtml
+	public String getPriority() {
+		return this.priority;
+	}
+
+	public void setPriority(final String priority) {
+		this.priority = priority;
 	}
 
 }

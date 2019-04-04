@@ -58,7 +58,7 @@ public class MessageBoxService {
 			Assert.isTrue(messageBox.getDeleteable());
 		}
 
-		final String nameBox = messageBox.getName().toUpperCase();
+		final String nameBox = messageBox.getName().toUpperCase().trim();
 		Assert.isTrue(!(nameBox.equals("IN BOX") || nameBox.equals("TRASH BOX") || nameBox.equals("OUT BOX") || nameBox.equals("SPAM BOX") || nameBox.equals("NOTIFICATION BOX")));
 
 		final MessageBox boxSave = this.messageBoxRepository.save(messageBox);
@@ -203,7 +203,7 @@ public class MessageBoxService {
 
 		this.validator.validate(result, binding);
 
-		final String nameBox = messageBox.getName().toUpperCase();
+		final String nameBox = messageBox.getName().toUpperCase().trim();
 		if (((nameBox.equals("IN BOX") || nameBox.equals("TRASH BOX") || nameBox.equals("OUT BOX") || nameBox.equals("SPAM BOX") || nameBox.equals("NOTIFICATION BOX"))))
 			binding.rejectValue("name", "messageBox.error.name");
 
