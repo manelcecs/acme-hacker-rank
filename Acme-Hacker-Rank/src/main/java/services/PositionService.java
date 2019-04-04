@@ -1,16 +1,21 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
+import security.Authority;
 import security.LoginService;
+import security.UserAccount;
 import domain.Company;
 import domain.Position;
 import forms.PositionForm;
@@ -79,6 +84,40 @@ public class PositionService {
 		positionForm.setSalaryOffered(position.getSalaryOffered());
 
 		return positionForm;
+	}
+
+	public Position save(final Position position) {
+		final UserAccount principal = LoginService.getPrincipal();
+		final Authority authority = new Authority();
+		authority.setAuthority("COMPANY");
+		Assert.isTrue(principal.getAuthorities().contains(authority));
+
+		final Company company = this.companyService.findByPrincipal(principal.getId());
+
+		Assert.isTrue(position.getCompany().getId() == company.getId());
+
+		return this.positionRepository.save(position);
+	}
+
+	public Collection<Position> getPositionsOfCompany(final int idCompany) {
+		return this.positionRepository.getPositionsOfCompany(idCompany);
+	}
+
+	public Position changeDraft(final Position position) {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		final Authority authority = new Authority();
+		authority.setAuthority("COMPANY");
+		Assert.isTrue(principal.getAuthorities().contains(authority));
+
+		final Company company = this.companyService.findByPrincipal(principal.getId());
+
+		Assert.isTrue(position.getCompany().getId() == company.getId());
+
+		position.setDraft(false);
+
+		return this.positionRepository.save(position);
 
 	}
+
 }

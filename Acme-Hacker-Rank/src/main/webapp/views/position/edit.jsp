@@ -23,40 +23,40 @@
 		<acme:hidden path="version"/>
 		
 		<p>
-			<acme:textbox code="position.title" path="title"/>
+			<acme:textbox code="position.edit.title" path="title"/>
 		</p>
 		<p>
-			<acme:textarea code="position.description" path="description"/>
+			<acme:textarea code="position.edit.description" path="description"/>
 		</p>
 		<p>
-			<acme:inputDate code="position.deadline" path="deadline"/>
+			<acme:inputDate code="position.edit.deadline" path="deadline"/>
 		</p>
 		
 		<p>
-			<acme:textbox code="position.profileRequired" path="profileRequired"/>
+			<acme:textbox code="position.edit.profileRequired" path="profileRequired"/>
 		</p>
 		
 		<p>
-			<acme:textbox code="position.salaryOffered" path="salaryOffered"/>
+			<acme:textbox code="position.edit.salaryOffered" path="salaryOffered"/>
 		</p>
 		
-		<form:label class="textboxLabel" path="skillsRequired"><spring:message code="position.skillsRequired" /></form:label>
+		<form:label class="textboxLabel" path="skillsRequired"><spring:message code="position.edit.skillsRequired" /></form:label>
     	<div id="skillsRequired">
     		<form:input class="textbox" path="skillsRequired" type="text"/>    
    		 </div>
     	<form:errors path="skillsRequired" cssClass="error" />   
     	
     	
-    	<form:label class="textboxLabel" path="technologiesRequired"><spring:message code="position.technologiesRequired" /></form:label>
+    	<form:label class="textboxLabel" path="technologiesRequired"><spring:message code="position.edit.technologiesRequired" /></form:label>
     	<div id="technologiesRequired">
     		<form:input class="textbox" path="technologiesRequired" type="text"/>    
    		 </div>
     	<form:errors path="technologiesRequired" cssClass="error" />   
 		
 		
-		<acme:submit name="save" code="position.save"/>
+		<acme:submit name="save" code="position.edit.save"/>
 	</form:form>
 	
-	<button class="addTag" onclick="addComment('skillsRequired','skillsRequired', 'textbox')"><spring:message code="position.addSkillsRequired" /></button>
+	<button class="addTag" onclick="addComment('skillsRequired','skillsRequired', 'textbox')"><spring:message code="position.edit.addSkillsRequired" /></button>
 	
-	<button class="addTag" onclick="addComment('technologiesRequired','technologiesRequired', 'textbox')"><spring:message code="position.addTechnologiesRequired" /></button>
+	<button class="addTag" onclick="addComment('technologiesRequired','technologiesRequired', 'textbox')"><spring:message code="position.edit.addTechnologiesRequired" /></button>
