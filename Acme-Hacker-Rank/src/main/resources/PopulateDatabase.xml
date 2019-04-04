@@ -66,7 +66,15 @@
 
 		<property name="creditCard" ref="creditcard0" />
 
-		<!-- Creo que la asociación de socilProfile está mal -->
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox001" />
+				<ref bean="messageBox002" />
+				<ref bean="messageBox003" />
+				<ref bean="messageBox004" />
+				<ref bean="messageBox005" />
+			</list>
+		</property>
 
 		<property name="userAccount" ref="userAccount1" />
 
@@ -129,7 +137,15 @@
 
 		<property name="creditCard" ref="creditcard20" />
 
-		<!-- Creo que la asociación de socilProfile está mal -->
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox006" />
+				<ref bean="messageBox007" />
+				<ref bean="messageBox008" />
+				<ref bean="messageBox009" />
+				<ref bean="messageBox010" />
+			</list>
+		</property>
 
 		<property name="userAccount" ref="userAccount20" />
 
@@ -701,6 +717,78 @@
 				<value>un millón</value>
 				<value>ha sido seleccionado</value>
 			</list>
+		</property>
+	</bean>
+	
+	<bean id="messageBox001" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox002" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox003" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox004" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox005" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="messageBox006" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox007" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox008" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox009" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox010" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
 		</property>
 	</bean>
 
