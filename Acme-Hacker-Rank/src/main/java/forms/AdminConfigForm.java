@@ -1,12 +1,6 @@
 
-package domain;
+package forms;
 
-import java.util.Collection;
-
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -15,20 +9,16 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
-import forms.AdminConfigForm;
+public class AdminConfigForm {
 
-@Entity
-@Access(AccessType.PROPERTY)
-public class AdminConfig extends DomainEntity {
-
-	private Integer				cacheFinder;
-	private Integer				resultsFinder;
-	private Collection<String>	spamWords;
-	private String				systemName;
-	private String				welcomeMessageEN;
-	private String				welcomeMessageES;
-	private String				countryCode;
-	private String				bannerURL;
+	private Integer	cacheFinder;
+	private Integer	resultsFinder;
+	private String	spamWord;
+	private String	systemName;
+	private String	welcomeMessageEN;
+	private String	welcomeMessageES;
+	private String	countryCode;
+	private String	bannerURL;
 
 
 	@Range(min = 1, max = 24)
@@ -51,13 +41,12 @@ public class AdminConfig extends DomainEntity {
 		this.resultsFinder = resultsFinder;
 	}
 
-	@ElementCollection
-	public Collection<String> getSpamWords() {
-		return this.spamWords;
+	public String getSpamWord() {
+		return this.spamWord;
 	}
 
-	public void setSpamWords(final Collection<String> spamWords) {
-		this.spamWords = spamWords;
+	public void setSpamWord(final String spamWord) {
+		this.spamWord = spamWord;
 	}
 
 	@NotBlank
@@ -110,19 +99,6 @@ public class AdminConfig extends DomainEntity {
 
 	public void setBannerURL(final String bannerURL) {
 		this.bannerURL = bannerURL;
-	}
-
-	public AdminConfigForm castToForm() {
-		final AdminConfigForm adminConfigForm = new AdminConfigForm();
-		adminConfigForm.setBannerURL(this.getBannerURL());
-		adminConfigForm.setCountryCode(this.getCountryCode());
-		adminConfigForm.setCacheFinder(this.getCacheFinder());
-		adminConfigForm.setResultsFinder(this.getResultsFinder());
-		adminConfigForm.setSystemName(this.getSystemName());
-		adminConfigForm.setWelcomeMessageEN(this.getWelcomeMessageEN());
-		adminConfigForm.setWelcomeMessageES(this.getWelcomeMessageES());
-		return adminConfigForm;
-
 	}
 
 }

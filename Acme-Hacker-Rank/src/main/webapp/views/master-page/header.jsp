@@ -25,6 +25,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/register.do"><spring:message code="master.page.administrator.register" /></a></li>			
+					<li><a href="adminConfig/administrator/display.do"><spring:message code="master.page.administrator.configuration" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>

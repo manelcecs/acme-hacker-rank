@@ -25,6 +25,7 @@
 		
 		<value>/views/administrator/messages</value>
 		<value>/views/profile/messages</value>
+		<value>/views/adminConfig/messages</value>
 	</util:list>
 
 </beans>

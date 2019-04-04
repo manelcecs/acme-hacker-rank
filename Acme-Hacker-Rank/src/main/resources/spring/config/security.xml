@@ -45,6 +45,7 @@
 		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/administrator/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
 		<security:intercept-url pattern="/administrator/administrator/save.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/adminConfig/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
