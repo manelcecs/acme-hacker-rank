@@ -9,6 +9,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
@@ -24,19 +25,20 @@ import security.UserAccount;
 public abstract class Actor extends DomainEntity {
 
 	//Atributes
-	private String				name;
-	private Collection<String>	surnames;
-	private String				vatNumber;
-	private CreditCard			creditCard;
-	private String				photo;
-	private String				email;
-	private String				phoneNumber;
-	private String				address;
-	private boolean				banned;
-	private Boolean				spammer;
+	private String					name;
+	private Collection<String>		surnames;
+	private String					vatNumber;
+	private CreditCard				creditCard;
+	private String					photo;
+	private String					email;
+	private String					phoneNumber;
+	private String					address;
+	private boolean					banned;
+	private Boolean					spammer;
 
 	//Relationship
-	private UserAccount			userAccount;
+	private UserAccount				userAccount;
+	private Collection<MessageBox>	messageBoxes;
 
 
 	//Atributes getters and setters
@@ -132,7 +134,6 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	//Relationship getters and setters
-
 	@Valid
 	@OneToOne(optional = false)
 	public UserAccount getUserAccount() {
@@ -141,5 +142,15 @@ public abstract class Actor extends DomainEntity {
 
 	public void setUserAccount(final UserAccount userAccount) {
 		this.userAccount = userAccount;
+	}
+
+	@Valid
+	@OneToMany
+	public Collection<MessageBox> getMessageBoxes() {
+		return this.messageBoxes;
+	}
+
+	public void setMessageBoxes(final Collection<MessageBox> messageBoxes) {
+		this.messageBoxes = messageBoxes;
 	}
 }
