@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +27,8 @@ public class Application extends DomainEntity {
 
 	private Curricula	curricula;
 	private Answer		answer;
+	private Hacker		hacker;
+	private Problem		problem;
 
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -76,6 +79,26 @@ public class Application extends DomainEntity {
 
 	public void setAnswer(final Answer answer) {
 		this.answer = answer;
+	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Hacker getHacker() {
+		return this.hacker;
+	}
+
+	public void setHacker(final Hacker hacker) {
+		this.hacker = hacker;
+	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Problem getProblem() {
+		return this.problem;
+	}
+
+	public void setProblem(final Problem problem) {
+		this.problem = problem;
 	}
 
 }
