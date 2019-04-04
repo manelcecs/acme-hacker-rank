@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -112,6 +113,13 @@ public class HackerService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	//DASHBOARD---------------------------------------------------------
+
+	public Collection<Hacker> getHackersWithMoreApplications() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.hackerRepository.getHackersWithMoreApplications();
 	}
 
 }

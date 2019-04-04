@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -114,6 +115,13 @@ public class CompanyService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	//DASHBOARD----------------------------------------------------
+
+	public Collection<Company> getCompaniesWithMoreOffersOfPositions() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.companyRepository.getCompaniesWithMoreOffersOfPositions();
 	}
 
 }
