@@ -18,6 +18,7 @@ import org.springframework.validation.Validator;
 
 import repositories.AdministratorRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AuthorityMethods;
@@ -40,6 +41,8 @@ public class AdministratorService {
 
 	public Administrator create() {
 		final Administrator res = new Administrator();
+		res.setSpammer(false);
+		res.setBanned(false);
 		//TODO: a�adir cajas de mensajes
 		return res;
 	}
@@ -95,17 +98,37 @@ public class AdministratorService {
 		result.setAddress(adminForm.getAddress());
 		result.setEmail(adminForm.getEmail());
 		result.setName(adminForm.getName());
+		result.setVatNumber(adminForm.getVatNumber());
 		//TODO:
 		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
 		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
-		final String surnames[] = adminForm.getSurnames().split(" ");
+		final String surnames[] = adminForm.getSurnames().split(",");
 		final List<String> surNames = new ArrayList<>();
 		for (int i = 0; i < surnames.length; i++)
-			surNames.add(surnames[i]);
+			surNames.add(surnames[i].trim());
 		result.setSurnames(surNames);
 
 		result.setCreditCard(adminForm.getCreditCard());
+
+		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
+		return result;
+	}
+
+	public Administrator reconstruct(final Administrator admin, final BindingResult binding) {
+		final Administrator result;
+		result = this.findByPrincipal(LoginService.getPrincipal().getId());
+		result.setAddress(admin.getAddress());
+		result.setEmail(admin.getEmail());
+		result.setName(admin.getName());
+		//TODO:
+		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), admin.getPhoneNumber()));
+		result.setPhoto(admin.getPhoto());
+
+		result.setSurnames(admin.getSurnames());
 
 		this.validator.validate(result, binding);
 

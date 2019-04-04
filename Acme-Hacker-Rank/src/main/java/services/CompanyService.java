@@ -38,7 +38,8 @@ public class CompanyService {
 
 	public Company create() {
 		final Company res = new Company();
-
+		res.setSpammer(false);
+		res.setBanned(false);
 		//TODO: a�adir cajas de mensajes
 
 		return res;

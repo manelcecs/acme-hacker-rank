@@ -38,6 +38,8 @@ public class HackerService {
 
 	public Hacker create() {
 		final Hacker res = new Hacker();
+		res.setSpammer(false);
+		res.setBanned(false);
 		//TODO: añadir finder
 		//TODO: añadir cajas de mensajes
 		return res;

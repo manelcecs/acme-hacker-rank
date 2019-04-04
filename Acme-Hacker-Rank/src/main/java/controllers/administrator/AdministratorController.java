@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  */
 
-package administrator;
+package controllers.administrator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.UserAccountRepository;
@@ -55,19 +56,21 @@ public class AdministratorController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping("/save")
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final AdministratorForm adminForm, final BindingResult binding) {
 
 		ModelAndView res;
 
 		if (!this.adminService.validateEmail(adminForm.getEmail()))
-			binding.rejectValue("email", "error.email");
+			binding.rejectValue("email", "administrator.edit.email.error");
 		if (!adminForm.getUserAccount().getPassword().equals(adminForm.getConfirmPassword()))
-			binding.rejectValue("confirmPassword", "error.confirm.password");
+			binding.rejectValue("confirmPassword", "administrator.edit.confirmPassword.error");
 		if (this.userAccountRepository.findByUsername(adminForm.getUserAccount().getUsername()) != null)
-			binding.rejectValue("userAccount.username", "error.unique.username");
+			binding.rejectValue("userAccount.username", "administrator.edit.userAccount.username.error");
 		if (!adminForm.getTermsAndConditions())
-			binding.rejectValue("termsConditions", "error.terms.conditions");
+			binding.rejectValue("termsAndConditions", "administrator.edit.termsAndConditions.error");
+		if (adminForm.getSurnames().isEmpty())
+			binding.rejectValue("surnames", "administrator.edit.surnames.error");
 
 		try {
 			final Administrator adminRect = this.adminService.reconstruct(adminForm, binding);
@@ -75,12 +78,34 @@ public class AdministratorController extends AbstractController {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(adminForm);
+			oops.printStackTrace();
 		} catch (final Throwable oops) {
-			res = this.createModelAndViewEdit(adminForm, "admin.commit.error");
+			res = this.createModelAndViewEdit(adminForm, "administrator.edit.commit.error");
+			oops.printStackTrace();
 		}
 
 		return res;
 
+	}
+
+	@RequestMapping(value = "/administrator/save", method = RequestMethod.POST, params = "submit")
+	public ModelAndView saveAdmin(final Administrator administrator, final BindingResult binding) {
+		ModelAndView res;
+
+		if (!this.adminService.validateEmail(administrator.getEmail()))
+			binding.rejectValue("email", "error.email");
+		try {
+			final Administrator adminRect = this.adminService.reconstruct(administrator, binding);
+			this.adminService.save(adminRect);
+			res = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final ValidationException oops) {
+			res = this.createModelAndViewEdit(administrator);
+
+		} catch (final Throwable oops) {
+			res = this.createModelAndViewEdit(administrator);
+
+		}
+		return res;
 	}
 
 	/*
@@ -90,7 +115,7 @@ public class AdministratorController extends AbstractController {
 
 	protected ModelAndView createModelAndViewRegister(final AdministratorForm adminForm) {
 
-		final ModelAndView res = new ModelAndView("administrator/register");
+		final ModelAndView res = new ModelAndView("administrator/edit");
 
 		res.addObject("administratorForm", adminForm);
 
@@ -105,9 +130,29 @@ public class AdministratorController extends AbstractController {
 
 		final ModelAndView result;
 
-		result = new ModelAndView("administrator/register");
+		result = new ModelAndView("administrator/edit");
 		result.addObject("administratorForm", adminForm);
+		result.addObject("edit", false);
 
+		final List<String> messageCodes = new ArrayList<>();
+		for (final String s : messages)
+			messageCodes.add(s);
+		result.addObject("messages", messageCodes);
+
+		//TODO: añadir el banner y el sysname
+		//this.configValues(res);
+
+		return result;
+
+	}
+
+	protected ModelAndView createModelAndViewEdit(final Administrator admin, final String... messages) {
+
+		final ModelAndView result;
+
+		result = new ModelAndView("administrator/edit");
+		result.addObject("administrator", admin);
+		result.addObject("edit", true);
 		final List<String> messageCodes = new ArrayList<>();
 		for (final String s : messages)
 			messageCodes.add(s);

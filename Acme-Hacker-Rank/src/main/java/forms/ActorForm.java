@@ -2,7 +2,6 @@
 package forms;
 
 import javax.persistence.ElementCollection;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
@@ -16,7 +15,6 @@ import domain.CreditCard;
 public class ActorForm {
 
 	private String		name;
-	//private Collection<String>	surnames;
 	private String		surnames;
 	private String		vatNumber;
 	private CreditCard	creditCard;
@@ -116,9 +114,6 @@ public class ActorForm {
 	}
 
 	//Relationship getters and setters
-
-	@Valid
-	@OneToOne(optional = false)
 	public UserAccount getUserAccount() {
 		return this.userAccount;
 	}
