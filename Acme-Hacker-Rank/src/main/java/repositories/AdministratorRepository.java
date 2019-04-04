@@ -13,4 +13,76 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	@Query("select a from Administrator a where a.userAccount.id = ?1")
 	Administrator findByPrincipal(int principalId);
 
+	//DASHBOARD--------------------------------------------------------------
+	@Query("select avg(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	Double getAvgOfPositionsPerCompany();
+
+	@Query("select min(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	Integer getMinimumOfPositionsPerCompany();
+
+	@Query("select max(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	Integer getMaximumOfPositionsPerCompany();
+
+	@Query("select stddev(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	Double getSDOfPositionsPerCompany();
+
+	//---------------------------------------------------------------------------------
+
+	@Query("select avg(1*(select count(a) from Application a where a.hacker.id = h.id)) from Hacker h")
+	Double getAvgOfApplicationsPerHacker();
+
+	@Query("select min(1*(select count(a) from Application a where a.hacker.id = h.id)) from Hacker h")
+	Integer getMinimumOfApplicationsPerHacker();
+
+	@Query("select max(1*(select count(a) from Application a where a.hacker.id = h.id)) from Hacker h")
+	Integer getMaximumOfApplicationsPerHacker();
+
+	@Query("select stddev(1*(select count(a) from Application a where a.hacker.id = h.id)) from Hacker h")
+	Double getSDOfApplicationsPerHacker();
+
+	//----------------------------------------------------------------------------
+
+	@Query("select avg(p.salaryOffered) from Position p")
+	Double getAvgOfSalariesOffered();
+
+	@Query("select min(p.salaryOffered) from Position p")
+	Integer getMinimumOfSalariesOffered();
+
+	@Query("select max(p.salaryOffered) from Position p")
+	Integer getMaximumOfSalariesOffered();
+
+	@Query("select stddev(p.salaryOffered) from Position p")
+	Double getSDOfSalariesOffered();
+
+	//-------------------------------------------------------------------
+
+	@Query("select avg(1*(select count(c) from Curricula c where c.hacker.id = h.id and c.copy = false)) from Hacker h")
+	Double getAvgOfCurriculaPerHacker();
+
+	@Query("select min(1*(select count(c) from Curricula c where c.hacker.id = h.id and c.copy = false)) from Hacker h")
+	Integer getMinimumOfCurriculaPerHacker();
+
+	@Query("select max(1*(select count(c) from Curricula c where c.hacker.id = h.id and c.copy = false)) from Hacker h")
+	Integer getMaximumOfCurriculaPerHacker();
+
+	@Query("select stddev(1*(select count(c) from Curricula c where c.hacker.id = h.id and c.copy = false)) from Hacker h")
+	Double getSDOfCurriculaPerHacker();
+
+	//-------------------------------------------------------------------
+
+	@Query("select avg(f.positions.size) from Finder f")
+	Double getAvgOfResultsInFinders();
+
+	@Query("select min(f.positions.size) from Finder f")
+	Integer getMinimumOfResultsInFinders();
+
+	@Query("select max(f.positions.size) from Finder f")
+	Integer getMaximumOfResultsInFinders();
+
+	@Query("select stddev(f.positions.size) from Finder f")
+	Double getSDOfResultsInFinders();
+
+	@Query("select 1.0 * count(f) / (select count(fn) from Finder fn where fn.positions.size != 0) from Finder f where f.positions.size = 0")
+	Double getRatioOfEmptyVsNotEmptyFinders();
+
 }

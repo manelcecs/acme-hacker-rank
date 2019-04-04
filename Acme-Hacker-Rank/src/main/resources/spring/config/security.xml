@@ -41,6 +41,7 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
+		<security:intercept-url pattern="/dashboard/administrator/display.do" access="hasRole('ADMINISTRATOR')" /> 
 
 		<security:intercept-url pattern="/adminConfig/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
 

@@ -1,16 +1,20 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
 import security.LoginService;
+import utiles.AuthorityMethods;
 import domain.Company;
 import domain.Position;
 import forms.PositionForm;
@@ -81,4 +85,17 @@ public class PositionService {
 		return positionForm;
 
 	}
+
+	//DASHBOARD-------------------------------------------------------------------------
+
+	public Collection<Position> getPositionsWithTheBestSalary() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.positionRepository.getPositionsWithTheBestSalary();
+	}
+
+	public Collection<Position> getPositionsWithTheWorstSalary() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.positionRepository.getPositionsWithTheWorstSalary();
+	}
+
 }
