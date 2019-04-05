@@ -36,6 +36,12 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('HACKER')">
+			<li>
+				<a class="fNiv" href="finder/hacker/edit.do"><spring:message code="master.page.finder.edit" /></a>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('CUSTOMER')">
 			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
 				<ul>
