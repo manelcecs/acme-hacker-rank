@@ -4,11 +4,8 @@ package controllers.hacker;
 import java.text.ParseException;
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +40,6 @@ public class FinderHackerController extends AbstractController {
 
 		final Finder finder = hacker.getFinder();
 
-		Assert.notNull(finder);
 		result = this.createEditModelAndView(finder);
 		result.addObject("requestURI", "finder/hacker/edit.do");
 		return result;
@@ -73,25 +69,15 @@ public class FinderHackerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "clear")
-	public ModelAndView clear(@Valid Finder finder, final BindingResult binding) throws ParseException {
+	public ModelAndView clear() throws ParseException {
 		ModelAndView result;
-
-		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
-
-		finder = hacker.getFinder();
-		finder.setKeyWord(null);
-		finder.setDeadline(null);
-		finder.setMaximumDeadLine(null);
-		finder.setMinimumSalary(null);
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(finder);
-		else
-			try {
-				this.finderService.save(finder);
-				result = new ModelAndView("redirect:edit.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(finder, "finder.commit.error");
-			}
+		final Finder finder = this.hackerService.findByPrincipal(LoginService.getPrincipal()).getFinder();
+		try {
+			this.finderService.clear(finder);
+			result = new ModelAndView("redirect:edit.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(finder, "finder.commit.error");
+		}
 
 		return result;
 	}
