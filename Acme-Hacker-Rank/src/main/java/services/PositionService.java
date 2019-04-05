@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
@@ -96,6 +97,16 @@ public class PositionService {
 	public Collection<Position> getPositionsWithTheWorstSalary() {
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
 		return this.positionRepository.getPositionsWithTheWorstSalary();
+	}
+	//FINDER-------------------------------------------------------------------
+
+	public Collection<Position> getFilterPositionsByKeyword(final String keyword) {
+		return this.positionRepository.getFilterPositionsByKeyword(keyword);
+	}
+
+	public Collection<Position> getFilterPositionsByFinder(final String keyword, final Date deadlineA, final Date deadlineB, final Date maximumDeadline, final Double minimumSalary) {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+		return this.positionRepository.getFilterPositionsByFinder(keyword, deadlineA, deadlineB, maximumDeadline, minimumSalary);
 	}
 
 }

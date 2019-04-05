@@ -8,9 +8,11 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -22,14 +24,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Date				moment;
-	private String				subject;
-	private String				body;
-	private Collection<String>	tags;
+	private Date					moment;
+	private String					subject;
+	private String					body;
+	private Collection<String>		tags;
+	private String					priority;
 
 	//Relationships
-	private Actor				sender;
-	private Actor				recipient;
+	private Actor					sender;
+	private Collection<Actor>		recipients;
+	private Collection<MessageBox>	messageBoxes;
 
 
 	@ManyToOne(optional = false)
@@ -41,13 +45,15 @@ public class Message extends DomainEntity {
 		this.sender = sender;
 	}
 
-	@ManyToOne(optional = false)
-	public Actor getRecipient() {
-		return this.recipient;
+	@ManyToMany
+	@NotNull
+	@Valid
+	public Collection<Actor> getRecipients() {
+		return this.recipients;
 	}
 
-	public void setRecipient(final Actor recipient) {
-		this.recipient = recipient;
+	public void setRecipients(final Collection<Actor> recipients) {
+		this.recipients = recipients;
 	}
 
 	@Past
@@ -89,6 +95,27 @@ public class Message extends DomainEntity {
 
 	public void setTags(final Collection<String> tags) {
 		this.tags = tags;
+	}
+
+	@Valid
+	@ManyToMany
+	public Collection<MessageBox> getMessageBoxes() {
+		return this.messageBoxes;
+	}
+
+	public void setMessageBoxes(final Collection<MessageBox> messageBoxes) {
+		this.messageBoxes = messageBoxes;
+	}
+
+	//:TODO TRES VALORES UNICOS O LISTA DE PRIORIDADES DEL ADMIN
+	@NotBlank
+	@SafeHtml
+	public String getPriority() {
+		return this.priority;
+	}
+
+	public void setPriority(final String priority) {
+		this.priority = priority;
 	}
 
 }
