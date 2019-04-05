@@ -104,9 +104,9 @@ public class PositionService {
 		return this.positionRepository.getFilterPositionsByKeyword(keyword);
 	}
 
-	public Collection<Position> getFilterPositionsByFinder(final String keyword, final Date deadline, final Date maximumDeadline, final Double minimumSalary) {
+	public Collection<Position> getFilterPositionsByFinder(final String keyword, final Date deadlineA, final Date deadlineB, final Date maximumDeadline, final Double minimumSalary) {
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
-		return this.positionRepository.getFilterPositionsByFinder(keyword, deadline, maximumDeadline, minimumSalary);
+		return this.positionRepository.getFilterPositionsByFinder(keyword, deadlineA, deadlineB, maximumDeadline, minimumSalary);
 	}
 
 }

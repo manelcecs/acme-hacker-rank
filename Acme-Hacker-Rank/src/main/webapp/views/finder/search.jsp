@@ -41,6 +41,7 @@
 					<br/>
 				</jstl:forEach>
 			</display:column>
+			<display:column titleKey="finder.search.minimumSalary"><jstl:out value="${position.salaryOffered}"/></display:column>
 		
 		</display:table>
 	

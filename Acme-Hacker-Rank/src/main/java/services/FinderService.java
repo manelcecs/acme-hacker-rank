@@ -54,15 +54,27 @@ public class FinderService {
 
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 
-		final String keyWord = finder.getKeyWord();
+		String keyWord = finder.getKeyWord();
 		final Date deadline = finder.getDeadline();
 		Date maximumDeadline = finder.getMaximumDeadLine();
-		final Double minimumSalary = finder.getMinimumSalary();
-
+		Double minimumSalary = finder.getMinimumSalary();
+		Date deadlineA;
+		Date deadlineB;
+		if (keyWord == null)
+			keyWord = "";
+		if (deadline == null) {
+			deadlineA = this.FORMAT.parse("0001/01/01 01:00:00");
+			deadlineB = this.FORMAT.parse("9999/01/01 01:00:00");
+		} else {
+			deadlineA = deadline;
+			deadlineB = deadline;
+		}
 		if (maximumDeadline == null)
-			maximumDeadline = this.FORMAT.parse("0001/01/01 01:00:00");
+			maximumDeadline = this.FORMAT.parse("9999/01/01 01:00:00");
+		if (minimumSalary == null)
+			minimumSalary = 0.0;
 
-		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, deadline, maximumDeadline, minimumSalary);
+		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, deadlineA, deadlineB, maximumDeadline, minimumSalary);
 
 		List<Position> returnResults = new ArrayList<Position>();
 		returnResults.addAll(results);
@@ -73,6 +85,35 @@ public class FinderService {
 		finder.setLastUpdate(actual);
 		return this.finderRepository.save(finder);
 	}
+
+	public Finder clear(final Finder finder) throws ParseException, java.text.ParseException {
+		final LocalDateTime DATETIMENOW = LocalDateTime.now();
+
+		Assert.notNull(finder);
+
+		finder.setDeadline(null);
+		finder.setKeyWord(null);
+		finder.setMaximumDeadLine(null);
+		finder.setMinimumSalary(null);
+
+		final Date actual = this.FORMAT.parse(DATETIMENOW.getYear() + "/" + DATETIMENOW.getMonthOfYear() + "/" + DATETIMENOW.getDayOfMonth() + " " + DATETIMENOW.getHourOfDay() + ":" + LocalDateTime.now().getMinuteOfHour() + ":"
+			+ DATETIMENOW.getSecondOfMinute());
+
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+
+		final String keyWord = "";
+		final Date deadlineA = this.FORMAT.parse("0001/01/01 01:00:00");
+		final Date deadlineB = this.FORMAT.parse("9999/01/01 01:00:00");
+		final Date maximumDeadline = this.FORMAT.parse("9999/01/01 01:00:00");
+		final Double minimumSalary = 0.0;
+
+		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, deadlineA, deadlineB, maximumDeadline, minimumSalary);
+
+		finder.setPositions(results);
+		finder.setLastUpdate(actual);
+		return this.finderRepository.save(finder);
+	}
+
 	public Finder findOne(final int finderId) {
 		Assert.notNull(finderId);
 		return this.finderRepository.findOne(finderId);
