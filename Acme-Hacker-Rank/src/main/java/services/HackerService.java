@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,11 +83,8 @@ public class HackerService {
 		return this.hackerRepository.findOne(hackerId);
 	}
 
-	public Hacker findByPrincipal(final int principalId) {
-		return this.hackerRepository.findByPrincipal(principalId);
-	}
 	public Hacker findByPrincipal(final UserAccount principal) {
-		return this.findByPrincipal(principal.getId());
+		return this.hackerRepository.findByPrincipal(principal.getId());
 	}
 
 	public Hacker reconstruct(final HackerForm hackerForm, final BindingResult binding) {
@@ -119,7 +117,7 @@ public class HackerService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), hackerForm.getPhoneNumber()));
 		result.setPhoneNumber(hackerForm.getPhoneNumber());
 		result.setPhoto(hackerForm.getPhoto());
-		//TODO:añadir los inputs de varios surnames
+		//TODO:aï¿½adir los inputs de varios surnames
 		final String surnames[] = hackerForm.getSurnames().split(" ");
 		final List<String> surNames = new ArrayList<>();
 		for (int i = 0; i < surnames.length; i++)
@@ -133,6 +131,13 @@ public class HackerService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	//DASHBOARD---------------------------------------------------------
+
+	public Collection<Hacker> getHackersWithMoreApplications() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.hackerRepository.getHackersWithMoreApplications();
 	}
 
 	public Hacker reconstruct(final Hacker hacker, final BindingResult binding) {

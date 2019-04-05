@@ -26,7 +26,20 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/administrator/register.do"><spring:message code="master.page.administrator.register" /></a></li>			
 					<li><a href="adminConfig/administrator/display.do"><spring:message code="master.page.administrator.configuration" /></a></li>					
+					<li><a href="dashboard/administrator/display.do"><spring:message code="master.page.header.dashboard" /></a></li>
 				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="isAuthenticated()">
+			<li>
+				<a class="fNiv" href="finder/search.do"><spring:message code="master.page.finder.search" /></a>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('HACKER')">
+			<li>
+				<a class="fNiv" href="finder/hacker/edit.do"><spring:message code="master.page.finder.edit" /></a>
 			</li>
 		</security:authorize>
 		
@@ -41,6 +54,9 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
+			<li>
+				<a class="fNiv" href="finder/search.do"><spring:message code="master.page.finder.search" /></a>
+			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNIv"><spring:message code="master.page.register" /></a>
 				<ul><li class="arrow"></li>
@@ -50,6 +66,9 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+			<li>
+				<a class="fNiv" href="messageBox/list.do"><spring:message code="master.page.boxes" /></a>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

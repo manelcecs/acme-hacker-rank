@@ -113,7 +113,7 @@ public class AdministratorService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
 		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
-		//TODO:añadir los inputs de varios surnames
+		//TODO:aï¿½adir los inputs de varios surnames
 		final String surnames[] = adminForm.getSurnames().split(",");
 		final List<String> surNames = new ArrayList<>();
 		for (int i = 0; i < surnames.length; i++)
@@ -149,6 +149,113 @@ public class AdministratorService {
 
 	public void flush() {
 		this.adminRepository.flush();
+	}
+
+	//DASHBOARD-------------------------------------------------------------
+
+	public Double getAvgOfPositionsPerCompany() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getAvgOfPositionsPerCompany();
+	}
+
+	public Integer getMinimumOfPositionsPerCompany() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMinimumOfPositionsPerCompany();
+	}
+
+	public Integer getMaximumOfPositionsPerCompany() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMaximumOfPositionsPerCompany();
+	}
+
+	public Double getSDOfPositionsPerCompany() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getSDOfPositionsPerCompany();
+	}
+
+	public Double getAvgOfApplicationsPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getAvgOfApplicationsPerHacker();
+	}
+
+	public Integer getMinimumOfApplicationsPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMinimumOfApplicationsPerHacker();
+	}
+
+	public Integer getMaximumOfApplicationsPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMaximumOfApplicationsPerHacker();
+	}
+
+	public Double getSDOfApplicationsPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getSDOfApplicationsPerHacker();
+	}
+
+	public Double getAvgOfSalariesOffered() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getAvgOfSalariesOffered();
+	}
+
+	public Integer getMinimumOfSalariesOffered() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMinimumOfSalariesOffered();
+	}
+
+	public Integer getMaximumOfSalariesOffered() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMaximumOfSalariesOffered();
+	}
+
+	public Double getSDOfSalariesOffered() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getSDOfSalariesOffered();
+	}
+
+	public Double getAvgOfCurriculaPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getAvgOfCurriculaPerHacker();
+	}
+
+	public Integer getMinimumOfCurriculaPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMinimumOfCurriculaPerHacker();
+	}
+
+	public Integer getMaximumOfCurriculaPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMaximumOfCurriculaPerHacker();
+	}
+
+	public Double getSDOfCurriculaPerHacker() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getSDOfCurriculaPerHacker();
+	}
+
+	public Double getRatioOfEmptyVsNotEmptyFinders() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getRatioOfEmptyVsNotEmptyFinders();
+	}
+
+	public Double getAvgOfResultsInFinders() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getAvgOfResultsInFinders();
+	}
+
+	public Integer getMinimumOfResultsInFinders() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMinimumOfResultsInFinders();
+	}
+
+	public Integer getMaximumOfResultsInFinders() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getMaximumOfResultsInFinders();
+	}
+
+	public Double getSDOfResultsInFinders() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.adminRepository.getSDOfResultsInFinders();
 	}
 
 	public Boolean validateEmail(final String email) {

@@ -39,4 +39,9 @@ public class ActorService {
 		return this.actorRepository.getByMessageBox(idBox);
 	}
 
+	// Workaround for the problem of hibernate with inheritances
+	public Actor getActor(final int idActor) {
+		return this.actorRepository.getActor(idActor);
+	}
+
 }

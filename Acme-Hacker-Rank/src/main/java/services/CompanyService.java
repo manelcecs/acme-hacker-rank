@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -134,6 +135,13 @@ public class CompanyService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	//DASHBOARD----------------------------------------------------
+
+	public Collection<Company> getCompaniesWithMoreOffersOfPositions() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.companyRepository.getCompaniesWithMoreOffersOfPositions();
 	}
 
 	public Company reconstruct(final Company company, final BindingResult binding) {
