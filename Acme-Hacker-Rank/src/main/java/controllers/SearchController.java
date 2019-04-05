@@ -17,24 +17,24 @@ import domain.Position;
 import forms.SearchForm;
 
 @Controller
-@RequestMapping("/finder")
-public class FinderController extends AbstractController {
+@RequestMapping("/search")
+public class SearchController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
 
 
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView search() {
 		final ModelAndView result;
 
 		final SearchForm searchForm = new SearchForm();
 
 		result = this.createEditModelAndView(searchForm);
-		result.addObject("requestURI", "finder/search.do");
+		result.addObject("requestURI", "search/display.do");
 		return result;
 	}
-	@RequestMapping(value = "/search", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/display", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final SearchForm searchForm, final BindingResult binding) {
 		ModelAndView result;
 
@@ -42,13 +42,13 @@ public class FinderController extends AbstractController {
 			result = this.createEditModelAndView(searchForm);
 		else
 			try {
-				result = new ModelAndView("finder/search");
+				result = new ModelAndView("search/display");
 				final Collection<Position> positions = this.positionService.getFilterPositionsByKeyword(searchForm.getKeyword());
 				result.addObject("positions", positions);
-				result.addObject("requestURI", "finder/search.do");
+				result.addObject("requestURI", "search/display.do");
 
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(searchForm, "finder.commit.error");
+				result = this.createEditModelAndView(searchForm, "search.commit.error");
 			}
 
 		return result;
@@ -65,7 +65,7 @@ public class FinderController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final SearchForm searchForm, final String messageCode) {
 		final ModelAndView result;
 
-		result = new ModelAndView("finder/search");
+		result = new ModelAndView("search/display");
 
 		result.addObject("searchForm", searchForm);
 

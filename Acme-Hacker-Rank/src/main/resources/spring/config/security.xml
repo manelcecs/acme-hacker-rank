@@ -30,7 +30,7 @@
 		<security:intercept-url pattern="/" access="permitAll" /> 
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
-		<security:intercept-url pattern="/finder/search.do" access="permitAll" /> 
+		<security:intercept-url pattern="/search/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/finder/hacker/edit.do" access="hasRole('HACKER')" /> 
 		
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
