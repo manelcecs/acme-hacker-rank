@@ -22,24 +22,24 @@
 
 	<form:form modelAttribute="adminConfigForm" action="adminConfig/administrator/save.do" method="Post">
 	
-		<acme:inputNumber code="finder.edit.cacheFinder" path="cacheFinder"/>
-		<acme:inputNumber code="finder.edit.resultsFinder" path="resultsFinder"/>
-		<acme:textbox code="finder.edit.systemName" path="systemName"/>
-		<acme:textbox code="finder.edit.welcomeMessageEN" path="welcomeMessageEN"/>
-		<acme:textbox code="finder.edit.welcomeMessageES" path="welcomeMessageES"/>
-		<acme:textbox code="finder.edit.countryCode" path="countryCode"/>
-		<acme:textbox code="finder.edit.bannerURL" path="bannerURL"/>
-		<acme:textbox code="finder.edit.spamWord" path="spamWord"/>
+		<acme:inputNumber code="adminConfig.edit.cacheFinder" path="cacheFinder"/>
+		<acme:inputNumber code="adminConfig.edit.resultsFinder" path="resultsFinder"/>
+		<acme:textbox code="adminConfig.edit.systemName" path="systemName"/>
+		<acme:textbox code="adminConfig.edit.welcomeMessageEN" path="welcomeMessageEN"/>
+		<acme:textbox code="adminConfig.edit.welcomeMessageES" path="welcomeMessageES"/>
+		<acme:textbox code="adminConfig.edit.countryCode" path="countryCode"/>
+		<acme:textbox code="adminConfig.edit.bannerURL" path="bannerURL"/>
+		<acme:textbox code="adminConfig.edit.spamWord" path="spamWord"/>
 		
-		<acme:submit name="save" code="finder.edit.save"/>
-		<acme:button url="adminConfig/administrator/display.do" type="button" code="finder.edit.back"/>
+		<acme:submit name="save" code="adminConfig.edit.save"/>
+		<acme:button url="adminConfig/administrator/display.do" type="button" code="adminConfig.edit.back"/>
 
 	</form:form>
 
 	<display:table name="spamWords" id="spamWord" requestURI="${requestURI}" pagesize="5" >
-		<display:column titleKey="finder.display.spamWords" ><acme:text value="${spamWord}"/></display:column>
+		<display:column titleKey="adminConfig.display.spamWords" ><acme:text value="${spamWord}"/></display:column>
 		<display:column>
-			<acme:deleteWithForm  url="adminConfig/administrator/deleteSpamWord.do" name="spamWord" id="${spamWord}" code="finder.edit.delete"/>
+			<acme:deleteWithForm  url="adminConfig/administrator/deleteSpamWord.do" name="spamWord" id="${spamWord}" code="adminConfig.edit.delete"/>
 		</display:column>
 	</display:table>
 
