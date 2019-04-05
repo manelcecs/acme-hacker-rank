@@ -3,6 +3,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
@@ -16,8 +18,10 @@ import org.springframework.validation.Validator;
 
 import repositories.HackerRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
+import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
 import domain.Hacker;
 import forms.HackerForm;
@@ -30,8 +34,10 @@ public class HackerService {
 	private UserAccountRepository	accountRepository;
 	@Autowired
 	private HackerRepository		hackerRepository;
-	//@Autowired
-	//private AdminConfigRepository	adminConfigRepository;
+	@Autowired
+	private AdminConfigService		adminConfigService;
+	@Autowired
+	private MessageBoxService		messageBoxService;
 	@Autowired
 	private Validator				validator;
 
@@ -41,7 +47,7 @@ public class HackerService {
 		res.setSpammer(false);
 		res.setBanned(false);
 		//TODO: aï¿½adir finder
-		//TODO: aï¿½adir cajas de mensajes
+		res.setMessageBoxes(this.messageBoxService.initializeNewUserBoxes());
 		return res;
 	}
 
@@ -84,23 +90,36 @@ public class HackerService {
 	}
 
 	public Hacker reconstruct(final HackerForm hackerForm, final BindingResult binding) {
+
+		if (!this.validateEmail(hackerForm.getEmail()))
+			binding.rejectValue("email", "hacker.edit.email.error");
+		if (!hackerForm.getUserAccount().getPassword().equals(hackerForm.getConfirmPassword()))
+			binding.rejectValue("confirmPassword", "hacker.edit.confirmPassword.error");
+		if (this.accountRepository.findByUsername(hackerForm.getUserAccount().getUsername()) != null)
+			binding.rejectValue("userAccount.username", "hacker.edit.userAccount.username.error");
+		if (!hackerForm.getTermsAndConditions())
+			binding.rejectValue("termsAndConditions", "hacker.edit.termsAndConditions.error");
+		if (hackerForm.getSurnames().isEmpty())
+			binding.rejectValue("surnames", "hacker.edit.surnames.error");
+
 		final Hacker result;
 		result = this.create();
 
 		final UserAccount account = hackerForm.getUserAccount();
 
 		final Authority a = new Authority();
-		a.setAuthority(Authority.ADMINISTRATOR);
+		a.setAuthority(Authority.HACKER);
 		account.addAuthority(a);
 
 		result.setUserAccount(account);
 		result.setAddress(hackerForm.getAddress());
 		result.setEmail(hackerForm.getEmail());
 		result.setName(hackerForm.getName());
-		//TODO:
-		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.hackerConfigService.getAdminConfig().getCountryCode(), hackerForm.getPhoneNumber()));
+		result.setVatNumber(hackerForm.getVatNumber());
+		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), hackerForm.getPhoneNumber()));
 		result.setPhoneNumber(hackerForm.getPhoneNumber());
 		result.setPhoto(hackerForm.getPhoto());
+		//TODO:añadir los inputs de varios surnames
 		final String surnames[] = hackerForm.getSurnames().split(" ");
 		final List<String> surNames = new ArrayList<>();
 		for (int i = 0; i < surnames.length; i++)
@@ -114,6 +133,36 @@ public class HackerService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	public Hacker reconstruct(final Hacker hacker, final BindingResult binding) {
+		final Hacker result;
+		result = this.findByPrincipal(LoginService.getPrincipal().getId());
+		result.setAddress(hacker.getAddress());
+		result.setEmail(hacker.getEmail());
+		result.setName(hacker.getName());
+		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), hacker.getPhoneNumber()));
+		result.setPhoto(hacker.getPhoto());
+		result.setVatNumber(hacker.getVatNumber());
+		result.setSurnames(hacker.getSurnames());
+
+		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
+		return result;
+	}
+
+	public Boolean validateEmail(final String email) {
+
+		Boolean valid = false;
+
+		final Pattern emailPattern = Pattern.compile("^([0-9a-zA-Z ]{1,}[ ]{1}[<]{1}[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,}[>]{1}|[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,})$");
+
+		final Matcher mEmail = emailPattern.matcher(email.toLowerCase());
+		if (mEmail.matches())
+			valid = true;
+		return valid;
 	}
 
 }

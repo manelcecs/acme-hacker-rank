@@ -22,7 +22,12 @@
 	<form:form action="administrator/administrator/save.do"
 		modelAttribute="administrator">
 		<acme:textbox code="administrator.edit.name" path="name" />
-		<acme:textarea code="administrator.edit.surnames" path="surnames" />
+		<form:label class="textboxLabel" path="surnames"><spring:message code="administrator.edit.surnames" /></form:label>
+    	<div id="surnames">
+    		<form:input class="textbox" path="surnames" type="text"/>    
+   		 </div>			
+    	<form:errors path="surnames" cssClass="error" />  
+		
 		<acme:textbox code="administrator.edit.photoURL" path="photo" />
 		<acme:textbox code="administrator.edit.address" path="address" />
 		<acme:textbox code="administrator.edit.vat" path="vatNumber" />
@@ -39,6 +44,7 @@
 		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" />
 		<acme:cancel url="/" code="administrator.edit.cancel" />
 	</form:form>
+	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="administrator.edit.surnames.add" /></button>
 </jstl:if>
 <jstl:if test="${not edit }">
 	<form:form action="administrator/save.do"
@@ -51,7 +57,11 @@
 			path="confirmPassword" />
 
 		<acme:textbox code="administrator.edit.name" path="name" />
-		<acme:textarea code="administrator.edit.surnames" path="surnames" />
+		<div id="surnames">
+    		<form:input class="textbox" path="surnames" type="text"/>    
+   		 </div>			
+    	<form:errors path="surnames" cssClass="error" />  
+		
 		<acme:textbox code="administrator.edit.photoURL" path="photo" />
 		<acme:textbox code="administrator.edit.address" path="address" />
 		<acme:textbox code="administrator.edit.vat" path="vatNumber" />
@@ -74,4 +84,5 @@
 			onclick="return checkPhone(this.form.phone.value)" />
 		<acme:cancel url="/" code="administrator.edit.cancel" />
 	</form:form>
+	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="administrator.edit.surnames.add" /></button>
 </jstl:if>

@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.ValidationException;
 
@@ -29,7 +31,7 @@ public class AdminConfigService {
 
 
 	public AdminConfig getAdminConfig() {
-		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
+		//AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
 		return this.adminConfigRepository.findAll().get(0);
 	}
 
@@ -68,6 +70,21 @@ public class AdminConfigService {
 			throw new ValidationException();
 
 		return adminConfig;
+	}
+
+	public boolean existSpamWord(final String s) {
+		final String palabras[] = s.split("[.,:;()¿?" + " " + "\t!¡]");
+		//FIXME Ojo con la codificaci�n de git. Sustituir por la exclamacion e interrogacion espa�olas
+		final List<String> listaPalabras = Arrays.asList(palabras);
+		boolean exist = false;
+		final AdminConfig administratorConfig = this.getAdminConfig();
+		final Collection<String> spamWord = administratorConfig.getSpamWords();
+		for (final String palabraLista : listaPalabras)
+			if (spamWord.contains(palabraLista.toLowerCase().trim())) {
+				exist = true;
+				break;
+			}
+		return exist;
 	}
 
 	public void deleteSpamWord(final String spamWord) {

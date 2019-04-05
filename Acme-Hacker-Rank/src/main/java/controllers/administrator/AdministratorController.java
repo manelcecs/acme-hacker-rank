@@ -13,7 +13,6 @@ package controllers.administrator;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,32 +44,21 @@ public class AdministratorController extends AbstractController {
 		super();
 	}
 
-	@RequestMapping("/register")
+	@RequestMapping("/administrator/register")
 	public ModelAndView register() {
 		ModelAndView res;
 
 		final AdministratorForm adminForm = new AdministratorForm();
 
-		res = this.createModelAndViewRegister(adminForm);
+		res = this.createModelAndViewEdit(adminForm);
 
 		return res;
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView save(@Valid final AdministratorForm adminForm, final BindingResult binding) {
+	public ModelAndView save(final AdministratorForm adminForm, final BindingResult binding) {
 
 		ModelAndView res;
-
-		if (!this.adminService.validateEmail(adminForm.getEmail()))
-			binding.rejectValue("email", "administrator.edit.email.error");
-		if (!adminForm.getUserAccount().getPassword().equals(adminForm.getConfirmPassword()))
-			binding.rejectValue("confirmPassword", "administrator.edit.confirmPassword.error");
-		if (this.userAccountRepository.findByUsername(adminForm.getUserAccount().getUsername()) != null)
-			binding.rejectValue("userAccount.username", "administrator.edit.userAccount.username.error");
-		if (!adminForm.getTermsAndConditions())
-			binding.rejectValue("termsAndConditions", "administrator.edit.termsAndConditions.error");
-		if (adminForm.getSurnames().isEmpty())
-			binding.rejectValue("surnames", "administrator.edit.surnames.error");
 
 		try {
 			final Administrator adminRect = this.adminService.reconstruct(adminForm, binding);
@@ -112,19 +100,6 @@ public class AdministratorController extends AbstractController {
 	 * 
 	 * **CREATEmodelANDview's
 	 */
-
-	protected ModelAndView createModelAndViewRegister(final AdministratorForm adminForm) {
-
-		final ModelAndView res = new ModelAndView("administrator/edit");
-
-		res.addObject("administratorForm", adminForm);
-
-		//TODO: añadir el banner y el sysname
-		//this.configValues(res);
-
-		return res;
-
-	}
 
 	protected ModelAndView createModelAndViewEdit(final AdministratorForm adminForm, final String... messages) {
 

@@ -21,6 +21,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
+import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
 import domain.Administrator;
 import forms.AdministratorForm;
@@ -33,8 +34,10 @@ public class AdministratorService {
 	private UserAccountRepository	accountRepository;
 	@Autowired
 	private AdministratorRepository	adminRepository;
-	//@Autowired
-	//private AdminConfigRepository	adminConfigRepository;
+	@Autowired
+	private AdminConfigService		adminConfigService;
+	@Autowired
+	private MessageBoxService		messageBoxService;
 	@Autowired
 	private Validator				validator;
 
@@ -43,7 +46,7 @@ public class AdministratorService {
 		final Administrator res = new Administrator();
 		res.setSpammer(false);
 		res.setBanned(false);
-		//TODO: aï¿½adir cajas de mensajes
+		res.setMessageBoxes(this.messageBoxService.initializeNewUserBoxes());
 		return res;
 	}
 
@@ -76,15 +79,23 @@ public class AdministratorService {
 		return this.adminRepository.findOne(adminId);
 	}
 
-	public Administrator findByPrincipal(final int principalId) {
-		return this.adminRepository.findByPrincipal(principalId);
-	}
-
 	public Administrator findByPrincipal(final UserAccount principal) {
-		return this.findByPrincipal(principal.getId());
+		return this.adminRepository.findByPrincipal(principal.getId());
 	}
 
 	public Administrator reconstruct(final AdministratorForm adminForm, final BindingResult binding) {
+
+		if (!this.validateEmail(adminForm.getEmail()))
+			binding.rejectValue("email", "administrator.edit.email.error");
+		if (!adminForm.getUserAccount().getPassword().equals(adminForm.getConfirmPassword()))
+			binding.rejectValue("confirmPassword", "administrator.edit.confirmPassword.error");
+		if (this.accountRepository.findByUsername(adminForm.getUserAccount().getUsername()) != null)
+			binding.rejectValue("userAccount.username", "administrator.edit.userAccount.username.error");
+		if (!adminForm.getTermsAndConditions())
+			binding.rejectValue("termsAndConditions", "administrator.edit.termsAndConditions.error");
+		if (adminForm.getSurnames().isEmpty())
+			binding.rejectValue("surnames", "administrator.edit.surnames.error");
+
 		final Administrator result;
 		result = this.create();
 
@@ -99,10 +110,10 @@ public class AdministratorService {
 		result.setEmail(adminForm.getEmail());
 		result.setName(adminForm.getName());
 		result.setVatNumber(adminForm.getVatNumber());
-		//TODO:
-		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
+		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
 		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
+		//TODO:añadir los inputs de varios surnames
 		final String surnames[] = adminForm.getSurnames().split(",");
 		final List<String> surNames = new ArrayList<>();
 		for (int i = 0; i < surnames.length; i++)
@@ -120,14 +131,13 @@ public class AdministratorService {
 
 	public Administrator reconstruct(final Administrator admin, final BindingResult binding) {
 		final Administrator result;
-		result = this.findByPrincipal(LoginService.getPrincipal().getId());
+		result = this.findByPrincipal(LoginService.getPrincipal());
 		result.setAddress(admin.getAddress());
 		result.setEmail(admin.getEmail());
 		result.setName(admin.getName());
-		//TODO:
-		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), admin.getPhoneNumber()));
+		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), admin.getPhoneNumber()));
 		result.setPhoto(admin.getPhoto());
-
+		result.setVatNumber(admin.getVatNumber());
 		result.setSurnames(admin.getSurnames());
 
 		this.validator.validate(result, binding);
