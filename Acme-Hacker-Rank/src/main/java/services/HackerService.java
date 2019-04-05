@@ -75,11 +75,8 @@ public class HackerService {
 		return this.hackerRepository.findOne(hackerId);
 	}
 
-	public Hacker findByPrincipal(final int principalId) {
-		return this.hackerRepository.findByPrincipal(principalId);
-	}
 	public Hacker findByPrincipal(final UserAccount principal) {
-		return this.findByPrincipal(principal.getId());
+		return this.hackerRepository.findByPrincipal(principal.getId());
 	}
 
 	public Hacker reconstruct(final HackerForm hackerForm, final BindingResult binding) {
