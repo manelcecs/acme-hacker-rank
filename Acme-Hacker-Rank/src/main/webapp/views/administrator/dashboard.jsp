@@ -8,6 +8,7 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<h3 id="position"><spring:message code="administrator.dashboard.position" /> </h3>
 
 <table>
 	<tr>
@@ -26,6 +27,26 @@
 
 <table>
 	<tr>
+		<th> <spring:message code='administrator.dashboard.companiesWithMoreOffersOfPositions'/> </th>
+	</tr>
+	<tr>
+		<td> 
+			<jstl:forEach var="companyWithMoreOffersOfPositions" items="${companiesWithMoreOffersOfPositions}" >
+				- <jstl:out value="${companyWithMoreOffersOfPositions.companyName}"/>
+				<jstl:out value="(${companyWithMoreOffersOfPositions.id})"/>
+				
+				<br/>
+			</jstl:forEach>	
+		</td>
+	</tr>
+</table>
+
+<hr>
+
+<h3 id="application"><spring:message code="administrator.dashboard.application" /> </h3>
+
+<table>
+	<tr>
 		<th> <spring:message code="administrator.dashboard.avgOfApplicationsPerHacker"/> </th>
 		<th> <spring:message code='administrator.dashboard.minimumOfApplicationsPerHacker'/> </th>
 		<th> <spring:message code='administrator.dashboard.maximumOfApplicationsPerHacker'/> </th>
@@ -41,6 +62,27 @@
 
 <table>
 	<tr>
+		<th> <spring:message code='administrator.dashboard.hackersWithMoreApplications'/> </th>
+	</tr>
+	<tr>
+		<td> 
+			<jstl:forEach var="hackerWithMoreApplications" items="${hackersWithMoreApplications}" >
+				- <jstl:out value="${hackerWithMoreApplications.name}"/>
+				<jstl:forEach var="surname" items="${hackerWithMoreApplications.surnames}" >
+					<jstl:out value=" ${surname}"/>
+				</jstl:forEach>
+				<jstl:out value="(${hackerWithMoreApplications.id})"/>
+				<br/>  
+			</jstl:forEach>	
+		</td>
+	</tr>
+</table>
+
+<hr>
+
+<h3 id="salary"><spring:message code="administrator.dashboard.salary" /> </h3>
+<table>
+	<tr>
 		<th> <spring:message code="administrator.dashboard.avgOfSalariesOffered"/> </th>
 		<th> <spring:message code='administrator.dashboard.minimumOfSalariesOffered'/> </th>
 		<th> <spring:message code='administrator.dashboard.maximumOfSalariesOffered'/> </th>
@@ -54,37 +96,6 @@
 	</tr>
 </table>
 
-<table>
-	<tr>
-		<th> <spring:message code="administrator.dashboard.avgOfCurriculaPerHacker"/> </th>
-		<th> <spring:message code='administrator.dashboard.minimumOfCurriculaPerHacker'/> </th>
-		<th> <spring:message code='administrator.dashboard.maximumOfCurriculaPerHacker'/> </th>
-		<th> <spring:message code='administrator.dashboard.sDOfCurriculaPerHacker'/> 	  </th>
-	</tr>
-	<tr>
-		<td> <jstl:out value="${avgOfCurriculaPerHacker}"/>	</td>
-		<td> <jstl:out value="${minimumOfCurriculaPerHacker}"/>	</td>
-		<td> <jstl:out value="${maximumOfCurriculaPerHacker}"/>	</td>
-		<td> <jstl:out value="${sDOfCurriculaPerHacker}"/>	</td>
-	</tr>
-</table>
-
-<table>
-	<tr>
-		<th> <spring:message code="administrator.dashboard.avgOfResultsInFinders"/> </th>
-		<th> <spring:message code='administrator.dashboard.minimumOfResultsInFinders'/> </th>
-		<th> <spring:message code='administrator.dashboard.maximumOfResultsInFinders'/> </th>
-		<th> <spring:message code='administrator.dashboard.sDOfResultsInFinders'/> 	  </th>
-		<th> <spring:message code='administrator.dashboard.ratioOfEmptyVsNotEmptyFinders'/> 	  </th>
-	</tr>
-	<tr>
-		<td> <jstl:out value="${avgOfResultsInFinders}"/>	</td>
-		<td> <jstl:out value="${minimumOfResultsInFinders}"/>	</td>
-		<td> <jstl:out value="${maximumOfResultsInFinders}"/>	</td>
-		<td> <jstl:out value="${sDOfResultsInFinders}"/>	</td>
-		<td> <jstl:out value="${ratioOfEmptyVsNotEmptyFinders}"/>	</td>
-	</tr>
-</table>
 
 <table>
 	<tr>
@@ -107,37 +118,44 @@
 	</tr>
 </table>
 
-<table>
-	<tr>
-		<th> <spring:message code='administrator.dashboard.hackersWithMoreApplications'/> </th>
-	</tr>
-	<tr>
-		<td> 
-			<jstl:forEach var="hackerWithMoreApplications" items="${hackersWithMoreApplications}" >
-				- <jstl:out value="${hackerWithMoreApplications.name}"/>
-				<jstl:forEach var="surname" items="${hackerWithMoreApplications.surnames}" >
-					<jstl:out value=" ${surname}"/>
-				</jstl:forEach>
-				<jstl:out value="(${hackerWithMoreApplications.id})"/>
-				<br/>  
-			</jstl:forEach>	
-		</td>
-	</tr>
-</table>
+<hr>
+
+<h3 id="curricula"><spring:message code="administrator.dashboard.curricula" /> </h3>
 
 <table>
 	<tr>
-		<th> <spring:message code='administrator.dashboard.companiesWithMoreOffersOfPositions'/> </th>
+		<th> <spring:message code="administrator.dashboard.avgOfCurriculaPerHacker"/> </th>
+		<th> <spring:message code='administrator.dashboard.minimumOfCurriculaPerHacker'/> </th>
+		<th> <spring:message code='administrator.dashboard.maximumOfCurriculaPerHacker'/> </th>
+		<th> <spring:message code='administrator.dashboard.sDOfCurriculaPerHacker'/> 	  </th>
 	</tr>
 	<tr>
-		<td> 
-			<jstl:forEach var="companyWithMoreOffersOfPositions" items="${companiesWithMoreOffersOfPositions}" >
-				- <jstl:out value="${companyWithMoreOffersOfPositions.companyName}"/>
-				<jstl:out value="(${companyWithMoreOffersOfPositions.id})"/>
-				
-				<br/>
-			</jstl:forEach>	
-		</td>
+		<td> <jstl:out value="${avgOfCurriculaPerHacker}"/>	</td>
+		<td> <jstl:out value="${minimumOfCurriculaPerHacker}"/>	</td>
+		<td> <jstl:out value="${maximumOfCurriculaPerHacker}"/>	</td>
+		<td> <jstl:out value="${sDOfCurriculaPerHacker}"/>	</td>
 	</tr>
 </table>
+
+<hr>
+
+<h3 id="finder"><spring:message code="administrator.dashboard.finder" /> </h3>
+
+<table>
+	<tr>
+		<th> <spring:message code="administrator.dashboard.avgOfResultsInFinders"/> </th>
+		<th> <spring:message code='administrator.dashboard.minimumOfResultsInFinders'/> </th>
+		<th> <spring:message code='administrator.dashboard.maximumOfResultsInFinders'/> </th>
+		<th> <spring:message code='administrator.dashboard.sDOfResultsInFinders'/> 	  </th>
+		<th> <spring:message code='administrator.dashboard.ratioOfEmptyVsNotEmptyFinders'/> 	  </th>
+	</tr>
+	<tr>
+		<td> <jstl:out value="${avgOfResultsInFinders}"/>	</td>
+		<td> <jstl:out value="${minimumOfResultsInFinders}"/>	</td>
+		<td> <jstl:out value="${maximumOfResultsInFinders}"/>	</td>
+		<td> <jstl:out value="${sDOfResultsInFinders}"/>	</td>
+		<td> <jstl:out value="${ratioOfEmptyVsNotEmptyFinders}"/>	</td>
+	</tr>
+</table>
+
 
