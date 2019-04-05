@@ -97,5 +97,9 @@ public class PositionService {
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
 		return this.positionRepository.getPositionsWithTheWorstSalary();
 	}
+	//FINDER-------------------------------------------------------------------
 
+	public Collection<Position> getFilterPositionsByKeyword(final String keyword) {
+		return this.positionRepository.getFilterPositionsByKeyword(keyword);
+	}
 }

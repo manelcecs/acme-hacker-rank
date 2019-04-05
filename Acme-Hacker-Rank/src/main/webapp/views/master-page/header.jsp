@@ -30,6 +30,12 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="isAuthenticated()">
+			<li>
+				<a class="fNiv" href="finder/search.do"><spring:message code="master.page.finder.search" /></a>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('CUSTOMER')">
 			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
 				<ul>
@@ -41,6 +47,9 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
+			<li>
+				<a class="fNiv" href="finder/search.do"><spring:message code="master.page.finder.search" /></a>
+			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
 		

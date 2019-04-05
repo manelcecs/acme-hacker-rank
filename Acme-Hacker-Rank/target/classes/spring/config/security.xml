@@ -30,6 +30,7 @@
 		<security:intercept-url pattern="/" access="permitAll" /> 
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
+		<security:intercept-url pattern="/finder/search.do" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
 		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
@@ -41,6 +42,7 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
+		<security:intercept-url pattern="/dashboard/administrator/display.do" access="hasRole('ADMINISTRATOR')" /> 
 
 		<security:intercept-url pattern="/adminConfig/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
 

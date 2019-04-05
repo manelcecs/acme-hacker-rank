@@ -17,4 +17,10 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p from Position p where p.salaryOffered = 1*(select min(p.salaryOffered) from Position p)")
 	Collection<Position> getPositionsWithTheWorstSalary();
+
+	//FINDERS
+
+	@Query("select distinct(p) from Position p JOIN p.skillsRequired s JOIN p.technologiesRequired t where (p.draft = false AND p.cancelled = false) AND (p.company.companyName LIKE %?1% OR p.title LIKE %?1% OR p.description LIKE %?1% OR p.profileRequired LIKE %?1% OR s LIKE %?1% OR t LIKE %?1%)")
+	Collection<Position> getFilterPositionsByKeyword(String keyword);
+
 }
