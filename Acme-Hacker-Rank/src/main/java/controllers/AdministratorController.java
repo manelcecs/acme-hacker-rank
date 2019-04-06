@@ -1,49 +1,62 @@
-/*
- * AdministratorController.java
- * 
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the
- * TDG Licence, a copy of which you may download from
- * http://www.tdg-seville.info/License.html
- */
 
 package controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import security.LoginService;
+import services.ActorService;
+import domain.Actor;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
 
-	// Constructors -----------------------------------------------------------
+	@Autowired
+	private ActorService	actorService;
 
-	public AdministratorController() {
-		super();
-	}
 
-	// Action-1 ---------------------------------------------------------------		
-
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
-		ModelAndView result;
-
-		result = new ModelAndView("administrator/action-1");
-
+	@RequestMapping(value = "/process", method = RequestMethod.GET)
+	public ModelAndView dashboard() {
+		final ModelAndView result = new ModelAndView("administrator/process");
+		result.addObject("spamActors", this.actorService.getSpammerActors());
+		result.addObject("actorLogged", LoginService.getPrincipal());
 		return result;
 	}
 
-	// Action-2 ---------------------------------------------------------------
-
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
-		ModelAndView result;
-
-		result = new ModelAndView("administrator/action-2");
-
+	@RequestMapping(value = "/updateSpam", method = RequestMethod.GET)
+	public ModelAndView updateSpam() {
+		this.actorService.updateSpam();
+		final ModelAndView result = new ModelAndView("redirect:/");
 		return result;
+	}
+
+	@RequestMapping(value = "/ban", method = RequestMethod.GET)
+	public ModelAndView ban(@RequestParam final Integer idActor) {
+		final ModelAndView res = new ModelAndView("redirect:process.do");
+		try {
+			final Actor actor = this.actorService.getActor(idActor);
+			this.actorService.ban(actor);
+		} catch (final Throwable oops) {
+			res.addObject("message", "administrator.commit.error");
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/unban", method = RequestMethod.GET)
+	public ModelAndView unban(@RequestParam final Integer idActor) {
+		final ModelAndView res = new ModelAndView("redirect:process.do");
+		try {
+			final Actor actor = this.actorService.getActor(idActor);
+			this.actorService.unban(actor);
+		} catch (final Throwable oops) {
+			res.addObject("message", "administrator.commit.error");
+		}
+		return res;
 	}
 
 }

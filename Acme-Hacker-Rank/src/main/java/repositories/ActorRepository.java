@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,13 +13,16 @@ import domain.Actor;
 public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
 	@Query("select a from Actor a where a.userAccount.id = ?1")
-	public Actor getByUserAccount(int userAccountId);
+	Actor getByUserAccount(int userAccountId);
 
 	@Query("select a from Actor a join a.messageBoxes mb where mb.id = ?1")
-	public Actor getByMessageBox(int idBox);
+	Actor getByMessageBox(int idBox);
+
+	@Query("select a from Actor a where a.spammer = true")
+	Collection<Actor> findSpamActors();
 
 	// Workaround for the problem of hibernate with inheritances
 	@Query("select a from Actor a where a.id = ?1")
-	public Actor getActor(int idActor);
+	Actor getActor(int idActor);
 
 }

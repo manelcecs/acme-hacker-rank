@@ -176,4 +176,17 @@ public class MessageService {
 		return this.messageRepository.getRecipients(idMessage);
 	}
 
+	public Integer getSpamMessagges(final Collection<Message> allMessages) {
+		Integer s = 0;
+		String text = "";
+		for (final Message m : allMessages) {
+			text = m.getBody() + " " + m.getSubject();
+			for (final String tag : m.getTags())
+				text = text + " " + tag;
+			if (this.adminConfigService.existSpamWord(text))
+				s++;
+		}
+		return s;
+	}
+
 }
