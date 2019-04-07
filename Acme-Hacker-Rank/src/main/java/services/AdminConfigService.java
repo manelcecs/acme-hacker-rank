@@ -31,7 +31,6 @@ public class AdminConfigService {
 
 
 	public AdminConfig getAdminConfig() {
-		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
 		return this.adminConfigRepository.findAll().get(0);
 	}
 
@@ -70,10 +69,10 @@ public class AdminConfigService {
 		final Collection<String> spamWords = adminConfig.getSpamWords();
 
 		if (!(adminConfigForm.getSpamWord().trim().isEmpty())) {
-			if (spamWords.contains(adminConfigForm.getSpamWord()))
+			if (spamWords.contains(adminConfigForm.getSpamWord().toLowerCase()))
 				binding.rejectValue("spamWord", "adminConfig.error.existSpamWord");
 
-			spamWords.add(adminConfigForm.getSpamWord());
+			spamWords.add(adminConfigForm.getSpamWord().toLowerCase());
 		}
 		adminConfig.setSpamWords(spamWords);
 

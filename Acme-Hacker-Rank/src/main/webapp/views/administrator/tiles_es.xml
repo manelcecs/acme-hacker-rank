@@ -14,8 +14,13 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
       
-<tiles-definitions>
-
+<tiles-definitions>	
+	
+	<definition name="administrator/process" extends="master.page">	
+		<put-attribute name="title" value="Lanzar procesos del administrador" />
+		<put-attribute name="body" value="/views/administrator/process.jsp" />
+	</definition>
+		
 	<definition name="administrator/dashboard" extends="master.page">	
 		<put-attribute name="title" value="Panel del administrador" />
 		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />

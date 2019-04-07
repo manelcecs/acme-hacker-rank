@@ -24,8 +24,16 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="adminConfig/administrator/display.do"><spring:message code="master.page.administrator.configuration" /></a></li>					
-					<li><a href="dashboard/administrator/display.do"><spring:message code="master.page.header.dashboard" /></a></li>
+					<li>
+						<a href="adminConfig/administrator/display.do"><spring:message code="master.page.administrator.configuration" /></a>
+					</li>
+					
+					<li>
+						<a href="administrator/process.do"><spring:message code="master.page.process.launch" /></a>
+					</li>					
+					<li>
+					    <a href="dashboard/administrator/display.do"><spring:message code="master.page.header.dashboard" /></a>
+					</li>
 				</ul>
 			</li>
 		</security:authorize>

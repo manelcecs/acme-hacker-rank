@@ -15,7 +15,19 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
+<security:authorize access="hasRole('BAN')">
+		<h3><spring:message code="welcomer.banned" /></h3>
+</security:authorize>
 
-<p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
+<security:authorize access="not(hasRole('BAN'))">
+	<p>
+		<spring:message code="welcome.greeting.prefix" />
+		${name}
+		<spring:message code="welcome.greeting.suffix" />
+	</p>
+
+	<acme:text value="${moment}" label="welcome.greeting.current.time"/>
+
+</security:authorize>
