@@ -81,6 +81,7 @@ public class MessageController extends AbstractController {
 		result.addObject("tags", message.getTags());
 		result.addObject("boxesToMove", boxesToMove);
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -97,6 +98,7 @@ public class MessageController extends AbstractController {
 			result.addObject("message", "message.commit.error");
 		}
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -113,12 +115,12 @@ public class MessageController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = this.addModelAndView(message, "message.commit.error");
 			}
-
+		this.configValues(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/removeFrom", method = RequestMethod.GET)
-	public ModelAndView add(@RequestParam final int idMessageBox, final int idMessage) {
+	public ModelAndView removeFrom(@RequestParam final int idMessageBox, final int idMessage) {
 		ModelAndView result;
 		final Message message = this.messageService.findOne(idMessage);
 		Assert.notNull(message);
@@ -133,6 +135,7 @@ public class MessageController extends AbstractController {
 			result.addObject("message", "message.commit.error");
 		}
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -160,8 +163,10 @@ public class MessageController extends AbstractController {
 
 		result.addObject("message", messageCode);
 
+		this.configValues(result);
 		return result;
 	}
+
 	protected ModelAndView addModelAndView(final Message message) {
 
 		final ModelAndView result;
@@ -181,6 +186,7 @@ public class MessageController extends AbstractController {
 		result.addObject("boxesToMove", boxesToMove);
 
 		result.addObject("message", messageCode);
+		this.configValues(result);
 		return result;
 	}
 }

@@ -64,7 +64,7 @@ public class FinderHackerController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(finder, "finder.commit.error");
 			}
-
+		this.configValues(result);
 		return result;
 	}
 
@@ -78,7 +78,7 @@ public class FinderHackerController extends AbstractController {
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(finder, "finder.commit.error");
 		}
-
+		this.configValues(result);
 		return result;
 	}
 
@@ -101,6 +101,7 @@ public class FinderHackerController extends AbstractController {
 
 		result.addObject("message", messageCode);
 
+		this.configValues(result);
 		return result;
 	}
 }

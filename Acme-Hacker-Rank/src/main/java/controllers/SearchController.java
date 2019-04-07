@@ -71,6 +71,7 @@ public class SearchController extends AbstractController {
 
 		result.addObject("message", messageCode);
 
+		this.configValues(result);
 		return result;
 	}
 }

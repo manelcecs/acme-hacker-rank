@@ -50,6 +50,7 @@ public class MessageBoxController extends AbstractController {
 		result.addObject("messages", boxDefault.getMessages());
 		result.addObject("requestURI", "messageBox/list.do");
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -70,6 +71,7 @@ public class MessageBoxController extends AbstractController {
 		result.addObject("messages", boxDefault.getMessages());
 		result.addObject("requestURI", "messageBox/show.do?idBox=" + idBox);
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -80,6 +82,8 @@ public class MessageBoxController extends AbstractController {
 		final MessageBox messageBox = this.messageBoxService.create();
 
 		result = this.createEditModelAndView(messageBox);
+
+		this.configValues(result);
 		return result;
 	}
 
@@ -90,6 +94,8 @@ public class MessageBoxController extends AbstractController {
 		final MessageBox box = this.messageBoxService.findOne(idMessageBox);
 		Assert.notNull(box);
 		result = this.createEditModelAndView(box);
+
+		this.configValues(result);
 		return result;
 	}
 
@@ -120,9 +126,9 @@ public class MessageBoxController extends AbstractController {
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:list.do");
 			result.addObject("message", "messageBox.commit.error");
-			oops.printStackTrace();
 		}
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -148,8 +154,9 @@ public class MessageBoxController extends AbstractController {
 
 		result.addObject("messageBox", messageBox);
 		result.addObject("posibleParents", posibleParents);
-
 		result.addObject("message", messageCode);
+
+		this.configValues(result);
 		return result;
 	}
 }

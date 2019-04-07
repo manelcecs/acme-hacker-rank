@@ -13,13 +13,14 @@ import services.AdministratorService;
 import services.CompanyService;
 import services.HackerService;
 import services.PositionService;
+import controllers.AbstractController;
 import domain.Company;
 import domain.Hacker;
 import domain.Position;
 
 @Controller
 @RequestMapping("/dashboard")
-public class DashboardController {
+public class DashboardController extends AbstractController {
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -176,6 +177,7 @@ public class DashboardController {
 		final Collection<Company> companiesWithMoreOffersOfPositions = this.companyService.getCompaniesWithMoreOffersOfPositions();
 		result.addObject("companiesWithMoreOffersOfPositions", companiesWithMoreOffersOfPositions);
 
+		this.configValues(result);
 		return result;
 	}
 }

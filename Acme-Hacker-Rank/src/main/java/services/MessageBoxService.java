@@ -229,4 +229,8 @@ public class MessageBoxService {
 		return acum;
 	}
 
+	public void flush() {
+		this.messageBoxRepository.flush();
+	}
+
 }

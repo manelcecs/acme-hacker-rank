@@ -32,6 +32,7 @@ public class AdminConfigController extends AbstractController {
 		final AdminConfig adminConfig = this.adminConfigService.getAdminConfig();
 		result.addObject("adminConfig", adminConfig);
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -75,6 +76,7 @@ public class AdminConfigController extends AbstractController {
 			oops.printStackTrace();
 		}
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -87,10 +89,11 @@ public class AdminConfigController extends AbstractController {
 		final List<String> spamWords = (List<String>) this.adminConfigService.getAdminConfig().getSpamWords();
 
 		result.addObject("adminConfigForm", adminConfigForm);
-		result.addObject("requestURI", "adminConfig/administrator/edit.do"); //:TODO no va y no se porque
+		result.addObject("requestURI", "adminConfig/administrator/edit.do");
 		result.addObject("spamWords", spamWords);
 		result.addObject("message", message);
 
+		this.configValues(result);
 		return result;
 	}
 }

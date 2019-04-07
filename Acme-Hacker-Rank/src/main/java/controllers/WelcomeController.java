@@ -43,6 +43,8 @@ public class WelcomeController extends AbstractController {
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 
+		this.configValues(result);
+
 		return result;
 	}
 }

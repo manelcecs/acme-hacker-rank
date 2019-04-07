@@ -21,10 +21,11 @@ public class AdministratorController extends AbstractController {
 
 
 	@RequestMapping(value = "/process", method = RequestMethod.GET)
-	public ModelAndView dashboard() {
+	public ModelAndView process() {
 		final ModelAndView result = new ModelAndView("administrator/process");
 		result.addObject("spamActors", this.actorService.getSpammerActors());
 		result.addObject("actorLogged", LoginService.getPrincipal());
+		this.configValues(result);
 		return result;
 	}
 
@@ -36,6 +37,7 @@ public class AdministratorController extends AbstractController {
 		} catch (final Throwable oops) {
 			result.addObject("message", "administrator.commit.error");
 		}
+		this.configValues(result);
 		return result;
 	}
 
@@ -48,6 +50,7 @@ public class AdministratorController extends AbstractController {
 		} catch (final Throwable oops) {
 			result.addObject("message", "administrator.commit.error");
 		}
+		this.configValues(result);
 		return result;
 	}
 
@@ -60,6 +63,7 @@ public class AdministratorController extends AbstractController {
 		} catch (final Throwable oops) {
 			result.addObject("message", "administrator.commit.error");
 		}
+		this.configValues(result);
 		return result;
 	}
 
