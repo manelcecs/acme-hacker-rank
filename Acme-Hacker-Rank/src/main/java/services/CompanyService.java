@@ -28,7 +28,7 @@ import forms.CompanyForm;
 public class CompanyService {
 
 	@Autowired
-	private UserAccountRepository	accountRepository;
+	private CompanyRepository	companyRepository;
 	@Autowired
 	private CompanyRepository		companyRepository;
 	//@Autowired
@@ -37,8 +37,8 @@ public class CompanyService {
 	private Validator				validator;
 
 
-	public Company create() {
-		final Company res = new Company();
+	public Company findByPrincipal(final int idPrincipal) {
+		return this.companyRepository.findByPrincipal(idPrincipal);
 
 		//TODO: a�adir cajas de mensajes
 
@@ -83,8 +83,8 @@ public class CompanyService {
 		return this.findByPrincipal(principal.getId());
 	}
 
-	public Company reconstruct(final CompanyForm companyForm, final BindingResult binding) {
-		final Company result;
+	public Collection<Company> findAll() {
+		return this.companyRepository.findAll();
 		result = this.create();
 
 		final UserAccount account = companyForm.getUserAccount();

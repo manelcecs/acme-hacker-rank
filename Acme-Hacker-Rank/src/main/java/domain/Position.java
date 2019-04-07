@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -71,6 +72,7 @@ public class Position extends DomainEntity {
 	}
 
 	@SafeHtml
+	@NotBlank
 	public String getProfileRequired() {
 		return this.profileRequired;
 	}
@@ -97,7 +99,7 @@ public class Position extends DomainEntity {
 		this.technologiesRequired = technologiesRequired;
 	}
 
-	@Valid
+	@Min(0)
 	public Double getSalaryOffered() {
 		return this.salaryOffered;
 	}

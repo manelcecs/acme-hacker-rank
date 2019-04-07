@@ -26,15 +26,20 @@ public class TickerService {
 			while (companyName.length() < 4)
 				companyName = companyName + "X";
 		else if (companyName.length() > 4)
-			companyName = companyName.substring(0, 3);
+			companyName = companyName.substring(0, 4);
 
 		int attempts = 50;
 
 		while (attempts > 0) {
 			//Generate Random number
-			final int randomNumber = (int) Math.round((Math.random() * 9999));
+			final Integer randomNumber = (int) Math.round((Math.random() * 9999));
 
-			final String identifier = companyName + "-" + randomNumber;
+			String randonNumberString = randomNumber.toString();
+
+			while (randonNumberString.length() < 4)
+				randonNumberString = "0" + randonNumberString;
+
+			final String identifier = companyName + "-" + randonNumberString;
 			ticker.setIdentifier(identifier);
 
 			try {
@@ -47,6 +52,11 @@ public class TickerService {
 		}
 
 		return result;
+	}
+
+	public void delete(final Ticker ticker) {
+		this.tickerRepository.delete(ticker);
+
 	}
 
 }
