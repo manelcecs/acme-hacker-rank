@@ -30,33 +30,37 @@ public class AdministratorController extends AbstractController {
 
 	@RequestMapping(value = "/updateSpam", method = RequestMethod.GET)
 	public ModelAndView updateSpam() {
-		this.actorService.updateSpam();
-		final ModelAndView result = new ModelAndView("redirect:/");
+		final ModelAndView result = new ModelAndView("redirect:process.do");
+		try {
+			this.actorService.updateSpam();
+		} catch (final Throwable oops) {
+			result.addObject("message", "administrator.commit.error");
+		}
 		return result;
 	}
 
 	@RequestMapping(value = "/ban", method = RequestMethod.GET)
 	public ModelAndView ban(@RequestParam final Integer idActor) {
-		final ModelAndView res = new ModelAndView("redirect:process.do");
+		final ModelAndView result = new ModelAndView("redirect:process.do");
 		try {
 			final Actor actor = this.actorService.getActor(idActor);
 			this.actorService.ban(actor);
 		} catch (final Throwable oops) {
-			res.addObject("message", "administrator.commit.error");
+			result.addObject("message", "administrator.commit.error");
 		}
-		return res;
+		return result;
 	}
 
 	@RequestMapping(value = "/unban", method = RequestMethod.GET)
 	public ModelAndView unban(@RequestParam final Integer idActor) {
-		final ModelAndView res = new ModelAndView("redirect:process.do");
+		final ModelAndView result = new ModelAndView("redirect:process.do");
 		try {
 			final Actor actor = this.actorService.getActor(idActor);
 			this.actorService.unban(actor);
 		} catch (final Throwable oops) {
-			res.addObject("message", "administrator.commit.error");
+			result.addObject("message", "administrator.commit.error");
 		}
-		return res;
+		return result;
 	}
 
 }

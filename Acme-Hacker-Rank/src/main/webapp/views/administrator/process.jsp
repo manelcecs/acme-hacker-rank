@@ -17,15 +17,29 @@
 
 <br>
 
-<display:table pagesize="5" name="spamActors" id="actor" requestURI="/administrator/dashboard.do"> <!-- TODO request dashboard  -->
-	<display:column titleKey="administrator.process.userName"><jstl:out value="${actor.userAccount.username}"/></display:column>
+<display:table pagesize="5" name="spamActors" id="actor" requestURI="${requestURI}">
+
+	<display:column titleKey="administrator.process.userName">
+		<jstl:out value="${actor.userAccount.username}"/>
+	</display:column>
+	
 	<jstl:if test="${actor.userAccount != actorLogged}">
 		<jstl:if test="${actor.banned}">
-			<display:column><acme:button url="administrator/unban.do?id=${actor.id }" type="button" code="administrator.process.unban"/></display:column>
+			<display:column>
+				<acme:button url="administrator/unban.do?idActor=${actor.id }" type="button" code="administrator.process.unban"/>
+			</display:column>
 		</jstl:if>
 		
 		<jstl:if test="${not actor.banned}">
-			<display:column><acme:button url="administrator/ban.do?id=${actor.id}" type="button" code="administrator.process.ban"/></display:column>
+			<display:column>
+				<acme:button url="administrator/ban.do?idActor=${actor.id}" type="button" code="administrator.process.ban"/>
+			</display:column>
 		</jstl:if>
 	</jstl:if>	
+	
+	<jstl:if test="${actor.userAccount == actorLogged}">
+		<display:column>
+		</display:column>
+	</jstl:if>	
+	
 </display:table>

@@ -71,8 +71,8 @@ public class ActorService {
 			final Collection<Message> allMessages = this.messageService.findAllByActor(a.getId());
 			if (allMessages.size() > 0) {
 				final Integer totalMessages = allMessages.size();
-				final Integer spamMessages = this.messageService.getSpamMessagges(allMessages);
-				final boolean spammer = spamMessages > 0.1 * totalMessages;
+				final Integer spamMessages = this.messageService.getSpamMessages(allMessages);
+				final boolean spammer = spamMessages >= 0.1 * totalMessages;
 				if (a.getSpammer() != null) {
 					if (a.getSpammer() != spammer) {
 						a.setSpammer(spammer);

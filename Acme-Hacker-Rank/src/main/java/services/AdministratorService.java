@@ -30,8 +30,7 @@ public class AdministratorService {
 	private UserAccountRepository	accountRepository;
 	@Autowired
 	private AdministratorRepository	adminRepository;
-	//@Autowired
-	//private AdminConfigRepository	adminConfigRepository;
+
 	@Autowired
 	private Validator				validator;
 

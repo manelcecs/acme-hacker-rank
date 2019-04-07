@@ -176,7 +176,7 @@ public class MessageService {
 		return this.messageRepository.getRecipients(idMessage);
 	}
 
-	public Integer getSpamMessagges(final Collection<Message> allMessages) {
+	public Integer getSpamMessages(final Collection<Message> allMessages) {
 		Integer s = 0;
 		String text = "";
 		for (final Message m : allMessages) {
