@@ -40,6 +40,7 @@ public class Authority implements GrantedAuthority {
 	public static final String	ADMINISTRATOR	= "ADMINISTRATOR";
 	public static final String	COMPANY			= "COMPANY";
 	public static final String	HACKER			= "HACKER";
+	public static final String	BAN				= "BAN";
 
 	// Attributes -------------------------------------------------------------
 
@@ -47,7 +48,7 @@ public class Authority implements GrantedAuthority {
 
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.COMPANY + "|" + Authority.HACKER + "$")
+	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.COMPANY + "|" + Authority.HACKER + "|" + Authority.BAN + "$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
@@ -73,6 +74,10 @@ public class Authority implements GrantedAuthority {
 
 		authority = new Authority();
 		authority.setAuthority(Authority.HACKER);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.BAN);
 		result.add(authority);
 
 		return result;

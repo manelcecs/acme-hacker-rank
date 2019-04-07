@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -74,11 +75,8 @@ public class HackerService {
 		return this.hackerRepository.findOne(hackerId);
 	}
 
-	public Hacker findByPrincipal(final int principalId) {
-		return this.hackerRepository.findByPrincipal(principalId);
-	}
 	public Hacker findByPrincipal(final UserAccount principal) {
-		return this.findByPrincipal(principal.getId());
+		return this.hackerRepository.findByPrincipal(principal.getId());
 	}
 
 	public Hacker reconstruct(final HackerForm hackerForm, final BindingResult binding) {
@@ -112,6 +110,13 @@ public class HackerService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	//DASHBOARD---------------------------------------------------------
+
+	public Collection<Hacker> getHackersWithMoreApplications() {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
+		return this.hackerRepository.getHackersWithMoreApplications();
 	}
 
 }

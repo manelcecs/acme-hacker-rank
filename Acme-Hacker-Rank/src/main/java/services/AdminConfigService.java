@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.ValidationException;
 
@@ -29,13 +31,26 @@ public class AdminConfigService {
 
 
 	public AdminConfig getAdminConfig() {
-		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
 		return this.adminConfigRepository.findAll().get(0);
 	}
 
 	public AdminConfig save(final AdminConfig adminConfig) {
 		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
 		return this.adminConfigRepository.save(adminConfig);
+	}
+
+	public boolean existSpamWord(final String s) {
+		final String palabras[] = s.split("[.,:;()?¿" + " " + "\t!¡]"); //:FIXME Ojo con la codificación de git. Sustituir por la exclamacion e interrogacion españolas
+		final List<String> listaPalabras = Arrays.asList(palabras);
+		boolean exist = false;
+		final AdminConfig administratorConfig = this.getAdminConfig();
+		final Collection<String> spamWord = administratorConfig.getSpamWords();
+		for (final String palabraLista : listaPalabras)
+			if (spamWord.contains(palabraLista.toLowerCase().trim())) {
+				exist = true;
+				break;
+			}
+		return exist;
 	}
 
 	public AdminConfig reconstruct(final AdminConfigForm adminConfigForm, final BindingResult binding) {
@@ -53,12 +68,11 @@ public class AdminConfigService {
 
 		final Collection<String> spamWords = adminConfig.getSpamWords();
 
-		//:TODO Espacios no controlados
-		if (!(adminConfigForm.getSpamWord().isEmpty())) {
-			if (spamWords.contains(adminConfigForm.getSpamWord()))
+		if (!(adminConfigForm.getSpamWord().trim().isEmpty())) {
+			if (spamWords.contains(adminConfigForm.getSpamWord().toLowerCase()))
 				binding.rejectValue("spamWord", "adminConfig.error.existSpamWord");
 
-			spamWords.add(adminConfigForm.getSpamWord());
+			spamWords.add(adminConfigForm.getSpamWord().toLowerCase());
 		}
 		adminConfig.setSpamWords(spamWords);
 

@@ -20,16 +20,16 @@
 	<section>
 	
 		<display:table name="adminConfig" id="adminConfig">
-			<display:column titleKey="finder.display.cacheFinder" ><acme:text value="${adminConfig.cacheFinder}"/></display:column>
-			<display:column titleKey="finder.display.resultsFinder" ><acme:text value="${adminConfig.resultsFinder}"/></display:column>
-			<display:column titleKey="finder.display.systemName" ><acme:text value="${adminConfig.systemName}"/></display:column>
-			<display:column titleKey="finder.display.countryCode" ><acme:text value="${adminConfig.countryCode}"/></display:column>
- 			<display:column titleKey="finder.display.bannerURL" ><acme:link value="${adminConfig.bannerURL}"/></display:column>
-			<display:column titleKey="finder.display.welcomeMessage" > <acme:text value="${adminConfig.welcomeMessageEN}"/><acme:text value="${adminConfig.welcomeMessageES}"/></display:column>
-			<display:column titleKey="finder.display.spamWords" ><acme:text value="${adminConfig.spamWords}"/></display:column>
+			<display:column titleKey="adminConfig.display.cacheFinder" ><acme:text value="${adminConfig.cacheFinder}"/></display:column>
+			<display:column titleKey="adminConfig.display.resultsFinder" ><acme:text value="${adminConfig.resultsFinder}"/></display:column>
+			<display:column titleKey="adminConfig.display.systemName" ><acme:text value="${adminConfig.systemName}"/></display:column>
+			<display:column titleKey="adminConfig.display.countryCode" ><acme:text value="${adminConfig.countryCode}"/></display:column>
+ 			<display:column titleKey="adminConfig.display.bannerURL" ><acme:link value="${adminConfig.bannerURL}"/></display:column>
+			<display:column titleKey="adminConfig.display.welcomeMessage" > <acme:text value="${adminConfig.welcomeMessageEN}"/><acme:text value="${adminConfig.welcomeMessageES}"/></display:column>
+			<display:column titleKey="adminConfig.display.spamWords" ><acme:text value="${adminConfig.spamWords}"/></display:column>
 		</display:table>
 		
-	<acme:button url="adminConfig/administrator/edit.do" type="button" code="finder.display.edit"/>
+	<acme:button url="adminConfig/administrator/edit.do" type="button" code="adminConfig.display.edit"/>
 	
 	</section>
 	
