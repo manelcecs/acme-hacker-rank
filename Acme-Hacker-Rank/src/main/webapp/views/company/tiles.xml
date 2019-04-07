@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- 
- * tiles_es.xml
+ * tiles.xml
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -13,18 +13,12 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+       
 <tiles-definitions>
 
-	<definition name="adminConfig/display" extends="master.page">	
-		<put-attribute name="title" value="Configuración" />
-		<put-attribute name="body" value="/views/adminConfig/display.jsp" />
+	<definition name="company/list" extends="master.page">	
+		<put-attribute name="title" value="List of companies" />
+		<put-attribute name="body" value="/views/company/list.jsp" />
 	</definition>
-	
-	<definition name="adminConfig/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar configuración" />
-		<put-attribute name="body" value="/views/adminConfig/edit.jsp" />
-	</definition>
-	
 	
 </tiles-definitions>

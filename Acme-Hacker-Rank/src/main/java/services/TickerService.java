@@ -54,4 +54,9 @@ public class TickerService {
 		return result;
 	}
 
+	public void delete(final Ticker ticker) {
+		this.tickerRepository.delete(ticker);
+
+	}
+
 }

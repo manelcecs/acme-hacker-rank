@@ -15,37 +15,54 @@
 			<jstl:if test="${owner}">
 				<!-- Columna de see more -->
 				<display:column titleKey="position.list.seeMore">
-					<acme:button url="position/company/show.do?idParade=${position.id}" type="button" code="position.list.seeMore"/>
+					<acme:button url="position/company/display.do?idPosition=${position.id}" type="button" code="position.list.seeMore"/>
 				</display:column>
-				
+								
 				<!-- Columna de draft -->
 				<display:column titleKey="position.list.changeDraft">
-					<jstl:if test="${position.draft}">
-						<acme:button url="position/company/changeDraft.do?idParade=${position.id}" type="button" code="position.list.changeDraft"/>
+					<jstl:if test="${position.draft && positionsChangeDraft.contains(position)}">
+						<acme:button url="position/company/changeDraft.do?idPosition=${position.id}" type="button" code="position.list.changeDraft"/>
 					</jstl:if>
 				</display:column>
 
 				<!-- Columna de edit -->
 				<display:column titleKey="position.list.edit">
 					<jstl:if test="${position.draft}">
-						<acme:button url="position/company/edit.do?idParade=${position.id}" type="button" code="position.list.edit"/>
+						<acme:button url="position/company/edit.do?idPosition=${position.id}" type="button" code="position.list.edit"/>
 					</jstl:if>
 				</display:column>
 
 				<!-- Columna de delete-->
 				<display:column titleKey="position.list.delete">
 					<jstl:if test="${position.draft}">
-						<acme:button url="position/company/delete.do?idParade=${position.id}" type="button" code="position.list.delete"/>
+						<acme:button url="position/company/delete.do?idPosition=${position.id}" type="button" code="position.list.delete"/>
 					</jstl:if>
 				</display:column>
 
 				<!-- Columna de cancel -->
 				<display:column titleKey="position.list.cancel">
 					<jstl:if test="${!position.draft}">
-						<acme:button url="position/company/edit.do?idParade=${position.id}" type="button" code="position.list.edit"/>
+						<acme:button url="position/company/changeCancellation.do?idPosition=${position.id}" type="button" code="position.list.cancel"/>
 					</jstl:if>
 				</display:column>
 				
 				
+			</jstl:if>
+			<jstl:if test="${viewAll}">
+				<display:column titleKey="position.list.seeMore">
+					<acme:button url="position/display.do?idPosition=${position.id}" type="button" code="position.list.seeMore"/>
+				</display:column>
+				
+				<!-- Columna de info la company -->
+				<display:column titleKey="position.list.company">
+						<jstl:out value="${position.company.companyName}"/>
+				</display:column>
+								
+				<!-- Columna de ver la company -->
+				<display:column titleKey="position.list.viewCompany">
+						<acme:button url="" type="button" code="position.list.viewCompany"/>
+				</display:column>
+
+			
 			</jstl:if>
 </display:table>

@@ -18,6 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Company;
 import domain.Position;
+import domain.Problem;
 import forms.PositionForm;
 
 @Service
@@ -35,6 +36,9 @@ public class PositionService {
 
 	@Autowired
 	Validator			validator;
+
+	@Autowired
+	ProblemService		problemService;
 
 
 	public Position findOne(final int idPosition) {
@@ -87,6 +91,10 @@ public class PositionService {
 	}
 
 	public Position save(final Position position) {
+
+		//TODO: Checkear utilities para la authority
+		//TODO: Asegurar que este en draft
+
 		final UserAccount principal = LoginService.getPrincipal();
 		final Authority authority = new Authority();
 		authority.setAuthority("COMPANY");
@@ -105,6 +113,7 @@ public class PositionService {
 
 	public Position changeDraft(final Position position) {
 
+		//TODO: Asegurar que no este cancelled
 		final UserAccount principal = LoginService.getPrincipal();
 		final Authority authority = new Authority();
 		authority.setAuthority("COMPANY");
@@ -114,10 +123,65 @@ public class PositionService {
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
+		//		final Collection<Problem> problems = this.problemService.getProblemsOfParade(position.getId());
+		//		Assert.isTrue(problems.size() >= 2);
+
 		position.setDraft(false);
 
 		return this.positionRepository.save(position);
 
 	}
 
+	//TODO: Al hacer delete hay que borrar la position en el finder? En principio si pero hay que echarle un ojo al rendimiento
+	public void delete(final Position position) {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		final Authority authority = new Authority();
+		authority.setAuthority("COMPANY");
+		Assert.isTrue(principal.getAuthorities().contains(authority));
+
+		final Company company = this.companyService.findByPrincipal(principal.getId());
+
+		Assert.isTrue(position.getCompany().getId() == company.getId());
+
+		Assert.isTrue(position.getDraft());
+
+		final Collection<Problem> problems = this.problemService.getProblemsOfParade(position.getId());
+
+		this.problemService.deleteCollectionOfProblems(problems);
+		this.positionRepository.delete(position);
+		this.tickerService.delete(position.getTicker());
+
+	}
+
+	public Position changeCancellation(final Position position) {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		final Authority authority = new Authority();
+		authority.setAuthority("COMPANY");
+		Assert.isTrue(principal.getAuthorities().contains(authority));
+
+		final Company company = this.companyService.findByPrincipal(principal.getId());
+
+		Assert.isTrue(position.getCompany().getId() == company.getId());
+
+		Assert.isTrue(!position.getDraft());
+
+		position.setCancelled(!position.getCancelled());
+
+		return this.positionRepository.save(position);
+
+	}
+
+	public Collection<Position> getPositionCanChangedraft() {
+		return this.positionRepository.getPositionCanChangedraft();
+	}
+
+	public Collection<Position> getAllParadesFiltered() {
+		return this.positionRepository.getAllParadesFiltered();
+	}
+
+	public Collection<Position> getAllParadesFilteredOfCompany(final Integer idCompany) {
+		return this.positionRepository.getAllParadesFilteredOfCompany(idCompany);
+	}
 }

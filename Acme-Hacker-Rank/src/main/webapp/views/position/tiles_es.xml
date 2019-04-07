@@ -26,5 +26,10 @@
 		<put-attribute name="body" value="/views/position/list.jsp" />
 	</definition>
 	
+	<definition name="position/display" extends="master.page">	
+		<put-attribute name="title" value="Información de una posición" />
+		<put-attribute name="body" value="/views/position/display.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>

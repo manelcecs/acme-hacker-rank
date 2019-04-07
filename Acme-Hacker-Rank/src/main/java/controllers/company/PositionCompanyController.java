@@ -22,8 +22,8 @@ import domain.Position;
 import forms.PositionForm;
 
 @Controller
-@RequestMapping("/position")
-public class PositionController extends AbstractController {
+@RequestMapping("/position/company")
+public class PositionCompanyController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
@@ -32,14 +32,14 @@ public class PositionController extends AbstractController {
 	private CompanyService	companyService;
 
 
-	@RequestMapping(value = "/company/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final PositionForm positionForm = new PositionForm();
 		return this.createEditModelAndView(positionForm);
 
 	}
 
-	@RequestMapping(value = "/company/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int idPosition) {
 		ModelAndView result;
 
@@ -70,7 +70,8 @@ public class PositionController extends AbstractController {
 	}
 
 	//TODO: Las colecciones de position controlar que no están vacias. Ask toni y deivid
-	@RequestMapping(value = "/company/save", method = RequestMethod.POST)
+	//TODO: Meter en el reconstruct si es 0 la id, que la fecha sea futuro. Comprobar que en modo draft sea una fecha futura
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final PositionForm positionForm, final BindingResult binding) {
 		ModelAndView result;
 
@@ -87,23 +88,12 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/company/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		//		final ModelAndView result = new ModelAndView("position/list");
-		//
-		//		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
-		//
-		//		final Collection<Position> positions = this.positionService.getPositionsOfCompany(company.getId());
-		//
-		//		result.addObject("positions", positions);
-		//		result.addObject("owner", true);
-		//		result.addObject("requestURI", "position/company/list.do");
-		//
-		//		return result;
 		return this.listModelAndView(null);
 	}
 
-	@RequestMapping(value = "/company/changeDraft", method = RequestMethod.GET)
+	@RequestMapping(value = "/changeDraft", method = RequestMethod.GET)
 	public ModelAndView changeDraft(@RequestParam final int idPosition) {
 		ModelAndView result;
 		final Position position = this.positionService.findOne(idPosition);
@@ -112,36 +102,37 @@ public class PositionController extends AbstractController {
 			this.positionService.changeDraft(position);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			//			result = new ModelAndView("position/list");
-			//			final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
-			//			final Collection<Position> positions = this.positionService.getPositionsOfCompany(company.getId());
-			//			result.addObject("positions", positions);
-			//			result.addObject("owner", true);
-			//			result.addObject("requestURI", "position/company/list.do");
-			//			result.addObject("error", "cannot.change.draft");
 			result = this.listModelAndView("position.cannot.changeDraft");
 		}
 		return result;
 
 	}
 
-	@RequestMapping(value = "/company/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int idPosition) {
 		ModelAndView result;
 		final Position position = this.positionService.findOne(idPosition);
 
 		try {
-			this.positionService.changeDraft(position);
+			this.positionService.delete(position);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			//			result = new ModelAndView("position/list");
-			//			final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
-			//			final Collection<Position> positions = this.positionService.getPositionsOfCompany(company.getId());
-			//			result.addObject("positions", positions);
-			//			result.addObject("owner", true);
-			//			result.addObject("requestURI", "position/company/list.do");
-			//			result.addObject("error", "cannot.change.draft");
 			result = this.listModelAndView("position.cannot.delete");
+		}
+		return result;
+
+	}
+
+	@RequestMapping(value = "/changeCancellation", method = RequestMethod.GET)
+	public ModelAndView cancel(@RequestParam final int idPosition) {
+		ModelAndView result;
+		final Position position = this.positionService.findOne(idPosition);
+
+		try {
+			this.positionService.changeCancellation(position);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.listModelAndView("position.cannot.cancel");
 		}
 		return result;
 
@@ -151,11 +142,31 @@ public class PositionController extends AbstractController {
 		final ModelAndView result = new ModelAndView("position/list");
 		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
 		final Collection<Position> positions = this.positionService.getPositionsOfCompany(company.getId());
+		final Collection<Position> positionsChangeDraft = this.positionService.getPositionCanChangedraft();
 		result.addObject("positions", positions);
+		result.addObject("positionsChangeDraft", positionsChangeDraft);
 		result.addObject("owner", true);
 		result.addObject("requestURI", "position/company/list.do");
 		result.addObject("message", message);
-		return null;
+		return result;
+	}
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int idPosition) {
+		ModelAndView result;
+
+		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal());
+		final Position position = this.positionService.findOne(idPosition);
+
+		if (position.getCompany().getId() != company.getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			result = new ModelAndView("position/display");
+			result.addObject("position", position);
+		}
+
+		return result;
+
 	}
 
 }

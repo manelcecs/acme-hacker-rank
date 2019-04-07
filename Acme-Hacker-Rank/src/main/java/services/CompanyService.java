@@ -1,7 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -27,7 +27,7 @@ import forms.CompanyForm;
 public class CompanyService {
 
 	@Autowired
-	CompanyRepository	companyRepository;
+	private CompanyRepository	companyRepository;
 	@Autowired
 	private CompanyRepository		companyRepository;
 	//@Autowired
@@ -82,8 +82,8 @@ public class CompanyService {
 		return this.findByPrincipal(principal.getId());
 	}
 
-	public Company reconstruct(final CompanyForm companyForm, final BindingResult binding) {
-		final Company result;
+	public Collection<Company> findAll() {
+		return this.companyRepository.findAll();
 		result = this.create();
 
 		final UserAccount account = companyForm.getUserAccount();
