@@ -13,23 +13,23 @@
 
 	<form:form action="messageBox/edit.do" modelAttribute="messageBox">
 		
-		<p><spring:message code="messageBox.restriccion.originalName"/><p>
+		<p><spring:message code="messageBox.edit.notLikeOriginalName"/><p>
 		
 		<acme:hidden path="id"/>
 		
-		<acme:textbox code="messageBox.nameBox" path="name"/>
+		<acme:textbox code="messageBox.edit.nameBox" path="name"/>
 		
 		<jstl:choose>
 			<jstl:when test="${empty posibleParents}">
 				<acme:hidden path="parent"/>
 			</jstl:when>
 			<jstl:otherwise>
-				<acme:select items="${posibleParents}" itemLabel="name" code="messageBox.parent" path="parent"/>
+				<acme:select items="${posibleParents}" itemLabel="name" code="messageBox.edit.parent" path="parent"/>
 			</jstl:otherwise>
 		</jstl:choose>
 
-		<acme:submit name="save" code="messageBox.save"/>
-		<acme:cancel url="messageBox/list.do" code="messageBox.cancel"/>
+		<acme:submit name="save" code="messageBox.edit.save"/>
+		<acme:cancel url="messageBox/list.do" code="messageBox.edit.cancel"/>
 		
 	</form:form>
 

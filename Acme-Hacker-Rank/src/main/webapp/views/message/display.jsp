@@ -13,47 +13,54 @@
 
 	<section id="displayMessage">
 
-		<p>
-			<strong><spring:message code="message.sender"/></strong>
-			<jstl:out value="${Message.sender.name}"></jstl:out>
-			<jstl:out value="${Message.sender.surname}"></jstl:out>
-			(
-			<jstl:out value="${Message.sender.email}"></jstl:out>
-			)
-		</p>
-		<p class="right">
-			<strong><spring:message code="message.timeSend"/></strong>
-			<jstl:out value="${Message.moment}"></jstl:out>
-		</p>
-		<hr>
-		<p>
-			<strong><spring:message code="message.subject"/></strong>
-			<jstl:out value="${Message.subject}"></jstl:out>
-		</p>
-		<p class="right">
-			<strong><spring:message code="message.priority"/></strong>
-			<jstl:out value="${Message.priority}"></jstl:out>
-		</p>
-		<hr>
-		<p>
-			<strong><spring:message code="message.body"/></strong>
-			<jstl:out value="${Message.body}"></jstl:out>
-		</p>
-		<hr>
-		<p><strong><spring:message code="message.tags"/></strong></p>
-		<jstl:forEach items="${tags}" var="tag">
 			<p>
-				<jstl:out value="${tag}"></jstl:out>
+				<strong><spring:message code="message.display.sender"/></strong>
+				<jstl:out value="${Message.sender.name}"/>
+				<jstl:forEach items="${Message.sender.surnames}" var="surname"><jstl:out value="${surname}"/></jstl:forEach> 
+				(<jstl:out value="${Message.sender.email}"></jstl:out>)
 			</p>
-		</jstl:forEach>
+			
+			<p class="right">
+				<strong><spring:message code="message.display.timeSend"/></strong>
+				<jstl:out value="${Message.moment}"></jstl:out>
+			</p>
+			
+		<hr>
+		
+			<p>
+				<strong><spring:message code="message.display.subject"/></strong>
+				<jstl:out value="${Message.subject}"></jstl:out>
+			</p>
+			
+			<p class="right">
+				<strong><spring:message code="message.display.priority"/></strong>
+				<jstl:out value="${Message.priority}"></jstl:out>
+			</p>
 		
 		<hr>
-		<p><strong><spring:message code="message.recipients"/></strong></p>
-		<jstl:forEach items="${recipients}" var="recipient">
+		
 			<p>
-				<jstl:out value="${recipient.email}"></jstl:out>
+				<strong><spring:message code="message.display.body"/></strong>
+				<jstl:out value="${Message.body}"></jstl:out>
 			</p>
-		</jstl:forEach>
+		
+		<hr>
+		
+			<p><strong><spring:message code="message.display.tags"/></strong></p>
+			<jstl:forEach items="${tags}" var="tag">
+				<p>
+					<jstl:out value="${tag}"></jstl:out>
+				</p>
+			</jstl:forEach>
+		
+		<hr>
+		
+			<p><strong><spring:message code="message.display.recipients"/></strong></p>
+			<jstl:forEach items="${recipients}" var="recipient">
+				<p>
+					<jstl:out value="${recipient.email}"></jstl:out>
+				</p>
+			</jstl:forEach>
 
 	</section>
 
@@ -62,20 +69,17 @@
 		<form:form action="message/addTo.do" modelAttribute="Message">
 
 			<acme:hidden path="id" />
-			<acme:select items="${boxesToMove}" itemLabel="name"
-				code="message.addTo" path="messageBoxes" />
+			<acme:select items="${boxesToMove}" itemLabel="name" code="message.display.addTo" path="messageBoxes" />
 	
-		<div class="botones">		
-			<acme:submit name="save" code="message.confirm" />
-			<acme:cancel url="messageBox/list.do" code="messageBox.cancel" />
-		</div>
+			<div class="botones">		
+				<acme:submit name="save" code="message.display.confirm" />
+				<acme:cancel url="messageBox/list.do" code="message.display.cancel" />
+			</div>
 
 		</form:form>
 
 
 	</section>
-
-
 
 <hr>
 </section>

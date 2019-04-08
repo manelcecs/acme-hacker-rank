@@ -7,7 +7,6 @@ import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
-import security.UserAccount;
 import services.ActorService;
 import services.MessageBoxService;
 import domain.Actor;
@@ -35,43 +33,22 @@ public class MessageBoxController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
-		final Collection<MessageBox> boxes;
-		final UserAccount principal = LoginService.getPrincipal();
 
-		final Actor actor = this.actorService.findByUserAccount(principal);
-
+		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 		final MessageBox boxDefault = this.messageBoxService.findOriginalBox(actor.getId(), "In Box");
 
-		boxes = actor.getMessageBoxes();
-
-		result = new ModelAndView("messageBox/list");
-		result.addObject("boxes", boxes);
-		result.addObject("boxSelect", boxDefault);
-		result.addObject("messages", boxDefault.getMessages());
+		result = this.listModelAndView(boxDefault);
 		result.addObject("requestURI", "messageBox/list.do");
 
 		this.configValues(result);
 		return result;
 	}
 
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int idBox) {
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int idBox) {
 		final ModelAndView result;
-		final Collection<MessageBox> boxes;
-		final UserAccount principal = LoginService.getPrincipal();
-
-		final Actor actor = this.actorService.findByUserAccount(principal);
-		final MessageBox boxDefault = this.messageBoxService.findOne(idBox);
-
-		boxes = actor.getMessageBoxes();
-
-		result = new ModelAndView("messageBox/list");
-		result.addObject("boxes", boxes);
-		result.addObject("boxSelect", boxDefault);
-		result.addObject("messages", boxDefault.getMessages());
+		result = this.listModelAndView(this.messageBoxService.findOne(idBox));
 		result.addObject("requestURI", "messageBox/show.do?idBox=" + idBox);
-
-		this.configValues(result);
 		return result;
 	}
 
@@ -91,9 +68,8 @@ public class MessageBoxController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int idMessageBox) {
 		final ModelAndView result;
 
-		final MessageBox box = this.messageBoxService.findOne(idMessageBox);
-		Assert.notNull(box);
-		result = this.createEditModelAndView(box);
+		final MessageBox messageBox = this.messageBoxService.findOne(idMessageBox);
+		result = this.createEditModelAndView(messageBox);
 
 		this.configValues(result);
 		return result;
@@ -120,6 +96,7 @@ public class MessageBoxController extends AbstractController {
 	public ModelAndView delete(@RequestParam final int idMessageBox) {
 		ModelAndView result;
 		final MessageBox box = this.messageBoxService.findOne(idMessageBox);
+
 		try {
 			this.messageBoxService.delete(box);
 			result = new ModelAndView("redirect:list.do");
@@ -132,25 +109,32 @@ public class MessageBoxController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final MessageBox messageBox) {
+	protected ModelAndView listModelAndView(final MessageBox boxDefault) {
+		final ModelAndView result = new ModelAndView("messageBox/list");
 
-		final ModelAndView result;
+		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
-		result = this.createEditModelAndView(messageBox, null);
+		result.addObject("boxes", actor.getMessageBoxes());
+		result.addObject("boxSelect", boxDefault);
+		result.addObject("messages", boxDefault.getMessages());
+
+		this.configValues(result);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final MessageBox messageBox, final String messageCode) {
-		final ModelAndView result;
+	protected ModelAndView createEditModelAndView(final MessageBox messageBox) {
+		return this.createEditModelAndView(messageBox, null);
+	}
 
-		result = new ModelAndView("messageBox/edit");
+	protected ModelAndView createEditModelAndView(final MessageBox messageBox, final String messageCode) {
+		final ModelAndView result = new ModelAndView("messageBox/edit");
 
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		final Collection<MessageBox> posibleParents = this.messageBoxService.findPosibleParents(actor.getId());
-		posibleParents.remove(messageBox); //Elimino a la box editable
+		posibleParents.remove(messageBox);
 		final Collection<MessageBox> childrens = this.messageBoxService.findChildren(messageBox.getId());
-		posibleParents.remove(childrens); //Y elimino a sus hijos, que no pueden ser sus padres
+		posibleParents.remove(childrens);
 
 		result.addObject("messageBox", messageBox);
 		result.addObject("posibleParents", posibleParents);

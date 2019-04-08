@@ -1,13 +1,11 @@
 
 package controllers;
 
+import java.text.ParseException;
 import java.util.Collection;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,21 +35,31 @@ public class MessageController extends AbstractController {
 	private MessageService		messageService;
 
 
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int idMessage) {
+		final ModelAndView result;
+
+		final Message message = this.messageService.findOne(idMessage);
+		result = this.displayModelAndView(message);
+
+		return result;
+	}
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
 
-		final Actor sender = this.actorService.findByUserAccount(LoginService.getPrincipal());
-
-		final Message message = this.messageService.create(sender);
+		final Message message = this.messageService.create();
 
 		result = this.createEditModelAndView(message);
 		return result;
 	}
 
 	@RequestMapping(value = "/send", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("Message") @Valid final Message message, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("Message") Message message, final BindingResult binding) throws ParseException {
 		ModelAndView result;
+
+		message = this.messageService.reconstruct(message, binding);
 
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(message);
@@ -66,20 +74,37 @@ public class MessageController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int idMessage) {
-		final ModelAndView result;
+	@RequestMapping(value = "/addTo", method = RequestMethod.POST)
+	public ModelAndView addTo(@ModelAttribute("Message") Message message, final BindingResult binding) throws ParseException {
+		ModelAndView result;
+		message = this.messageService.reconstruct(message, binding);
 
+		if (binding.hasErrors())
+			result = this.displayModelAndView(message);
+		else
+			try {
+				this.messageService.save(message);
+				result = new ModelAndView("redirect:../messageBox/list.do");
+			} catch (final Throwable oops) {
+				result = this.displayModelAndView(message, "message.commit.error");
+			}
+		this.configValues(result);
+		return result;
+	}
+
+	@RequestMapping(value = "/removeFrom", method = RequestMethod.GET)
+	public ModelAndView removeFrom(@RequestParam final int idMessageBox, final int idMessage) {
+		ModelAndView result;
 		final Message message = this.messageService.findOne(idMessage);
-		Assert.notNull(idMessage);
-		final Collection<MessageBox> boxesToMove = this.messageBoxService.findBoxToMove(message);
+		final MessageBox messageBox = this.messageBoxService.findOne(idMessageBox);
 
-		result = new ModelAndView("message/display");
-
-		result.addObject("Message", message);
-		result.addObject("recipients", this.messageService.getRecipients(idMessage));
-		result.addObject("tags", message.getTags());
-		result.addObject("boxesToMove", boxesToMove);
+		try {
+			this.messageService.removeFrom(message, messageBox);
+			result = new ModelAndView("redirect:../messageBox/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:../messageBox/list.do");
+			result.addObject("message", "message.commit.error");
+		}
 
 		this.configValues(result);
 		return result;
@@ -102,49 +127,8 @@ public class MessageController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/addTo", method = RequestMethod.POST)
-	public ModelAndView addTo(@ModelAttribute("Message") Message message, final BindingResult binding) {
-		ModelAndView result;
-		message = this.messageService.reconstruct(message, binding);
-		if (binding.hasErrors())
-			result = this.addModelAndView(message);
-		else
-			try {
-				this.messageService.addToBox(message);
-				result = new ModelAndView("redirect:../messageBox/list.do");
-			} catch (final Throwable oops) {
-				result = this.addModelAndView(message, "message.commit.error");
-			}
-		this.configValues(result);
-		return result;
-	}
-
-	@RequestMapping(value = "/removeFrom", method = RequestMethod.GET)
-	public ModelAndView removeFrom(@RequestParam final int idMessageBox, final int idMessage) {
-		ModelAndView result;
-		final Message message = this.messageService.findOne(idMessage);
-		Assert.notNull(message);
-		final MessageBox messageBox = this.messageBoxService.findOne(idMessageBox);
-		Assert.notNull(messageBox);
-
-		try {
-			this.messageService.removeFrom(message, messageBox);
-			result = new ModelAndView("redirect:../messageBox/list.do");
-		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:../messageBox/list.do");
-			result.addObject("message", "message.commit.error");
-		}
-
-		this.configValues(result);
-		return result;
-	}
-
 	protected ModelAndView createEditModelAndView(final Message message) {
-
-		final ModelAndView result;
-
-		result = this.createEditModelAndView(message, null);
-		return result;
+		return this.createEditModelAndView(message, null);
 	}
 
 	protected ModelAndView createEditModelAndView(final Message message, final String messageCode) {
@@ -157,35 +141,29 @@ public class MessageController extends AbstractController {
 		final Collection<Actor> actors = this.actorService.findAll();
 		actors.remove(sender);
 
-		result.addObject("actors", actors);
-
 		result.addObject("Message", message);
-
+		result.addObject("actors", actors);
 		result.addObject("message", messageCode);
 
 		this.configValues(result);
 		return result;
 	}
 
-	protected ModelAndView addModelAndView(final Message message) {
-
-		final ModelAndView result;
-
-		result = this.addModelAndView(message, null);
-		return result;
+	protected ModelAndView displayModelAndView(final Message message) {
+		return this.displayModelAndView(message, null);
 	}
 
-	protected ModelAndView addModelAndView(final Message message, final String messageCode) {
-		final ModelAndView result;
-
-		result = new ModelAndView("message/display");
+	protected ModelAndView displayModelAndView(final Message message, final String messageCode) {
+		final ModelAndView result = new ModelAndView("message/display");
 
 		final Collection<MessageBox> boxesToMove = this.messageBoxService.findBoxToMove(message);
 
 		result.addObject("Message", message);
+		result.addObject("recipients", this.messageService.getRecipients(message.getId()));
+		result.addObject("tags", message.getTags());
 		result.addObject("boxesToMove", boxesToMove);
-
 		result.addObject("message", messageCode);
+
 		this.configValues(result);
 		return result;
 	}

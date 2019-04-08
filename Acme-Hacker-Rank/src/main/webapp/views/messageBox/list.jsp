@@ -9,14 +9,14 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<acme:button url="message/create.do" type="button" code="messageBox.sendMessage"/>
-<acme:button url="messageBox/create.do" type="button" code="messageBox.createBox"/>
+<acme:button url="message/create.do" type="button" code="messageBox.list.sendMessage"/>
+<acme:button url="messageBox/create.do" type="button" code="messageBox.list.createBox"/>
 
 <section id="main">
 
 
 	<jstl:if test="${empty boxes}">
-		<p><spring:message code="messageBox.emptyBox"/></p>
+		<p><spring:message code="messageBox.list.emptyBox"/></p>
 	</jstl:if>
 
 	<section id="displayBoxes">
@@ -30,8 +30,8 @@
 				
 				<jstl:if test="${box.deleteable == true}">
 		
-					<a href="messageBox/edit.do?idMessageBox=${box.id}"><spring:message code="messageBox.Editar"/></a>
-					<a href="messageBox/delete.do?idMessageBox=${box.id}"><spring:message code="messageBox.delete"/></a>
+					<a href="messageBox/edit.do?idMessageBox=${box.id}"><spring:message code="messageBox.list.edit"/></a>
+					<a href="messageBox/delete.do?idMessageBox=${box.id}"><spring:message code="messageBox.list.delete"/></a>
 		
 				</jstl:if>
 				
@@ -40,7 +40,7 @@
 
 			<jstl:otherwise>
 				<div class="boxNoSelect" >
-					<a href="messageBox/show.do?idBox=${box.id}">${box.name}</a>
+					<a href="messageBox/display.do?idBox=${box.id}">${box.name}</a>
 				</div>
 			</jstl:otherwise>
 		</jstl:choose>
@@ -54,13 +54,13 @@
 	<section id="displayMessages">
 
 		<display:table pagesize="5" name="messages" id="message" requestURI="${requestURI}">
-			<display:column titleKey="message.moment"><jstl:out value="${message.moment}"/></display:column>
-			<display:column property="sender.email" titleKey="sender.email" ><jstl:out value="${message.sender.email}"/></display:column>
-			<display:column titleKey="message.subject"><jstl:out value="${message.subject}"/></display:column>
-			<display:column titleKey="message.priority"><jstl:out value="${message.priority}"/></display:column>
-			<display:column><acme:button url="message/display.do?idMessage=${message.id}" type="button" code="message.masdetalles"/></display:column>
-			<display:column><acme:button url="message/delete.do?idMessage=${message.id}" type="button" code="message.delete"/></display:column>
-			<display:column><acme:button url="message/removeFrom.do?idMessageBox=${boxSelect.id}&idMessage=${message.id}" type="button" code="message.quitar"/></display:column>
+			<display:column titleKey="messageBox.list.moment"><jstl:out value="${message.moment}"/></display:column>
+			<display:column titleKey="messageBox.list.email" ><jstl:out value="${message.sender.email}"/></display:column>
+			<display:column titleKey="messageBox.list.subject"><jstl:out value="${message.subject}"/></display:column>
+			<display:column titleKey="messageBox.list.priority"><jstl:out value="${message.priority}"/></display:column>
+			<display:column><acme:button url="message/display.do?idMessage=${message.id}" type="button" code="messageBox.list.moreDetails"/></display:column>
+			<display:column><acme:button url="message/delete.do?idMessage=${message.id}" type="button" code="messageBox.list.deleteMessage"/></display:column>
+			<display:column><acme:button url="message/removeFrom.do?idMessageBox=${boxSelect.id}&idMessage=${message.id}" type="button" code="messageBox.list.remove"/></display:column>
 		</display:table>
 
 	</section>

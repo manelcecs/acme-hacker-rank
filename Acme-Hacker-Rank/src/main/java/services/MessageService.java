@@ -18,6 +18,7 @@ import org.springframework.validation.Validator;
 import repositories.MessageRepository;
 import security.Authority;
 import security.LoginService;
+import utiles.AuthorityMethods;
 import domain.Actor;
 import domain.Message;
 import domain.MessageBox;
@@ -42,66 +43,46 @@ public class MessageService {
 	private Validator			validator;
 
 
-	public Message create(final Actor sender) {
+	public Message create() {
 		final Message message = new Message();
-
-		try {
-			message.setMoment(this.getDateNow());
-		} catch (final ParseException e) {
-			e.printStackTrace();
-		}
-		message.setSender(sender);
-
 		return message;
 	}
-	public Message save(final Message message) {
+
+	public Message save(final Message message) throws ParseException {
+		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		if (message.getId() == 0) {
-			Assert.isTrue(LoginService.getPrincipal().equals(message.getSender().getUserAccount()));
+			Assert.isTrue(this.actorService.findByUserAccount(LoginService.getPrincipal()).equals(message.getSender()));
 			this.messageToBoxByDefault(message);
 		}
 		return this.messageRepository.save(message);
 	}
 
 	public Message findOne(final int id) {
+		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		return this.messageRepository.findOne(id);
 	}
 
 	private void messageToBoxByDefault(final Message message) {
 		final Collection<MessageBox> boxes = new ArrayList<>();
-		boxes.add(this.messageBoxService.findOriginalBox(message.getSender().getId(), "Out Box"));
-		String text = message.getBody() + " " + message.getSubject();
-		for (final String tag : message.getTags())
-			text = text + " " + tag;
 
-		final Authority administrator = new Authority();
-		administrator.setAuthority("ADMINISTRATOR");
+		boxes.add(this.messageBoxService.findOriginalBox(message.getSender().getId(), "Out Box"));
 
 		String boxName = "In Box";
-		if ((message.getRecipients().size() == this.actorService.findAll().size() - 1) && (LoginService.getPrincipal().getAuthorities().contains(administrator)))
+		if (this.isABroadCastMessage(message))
 			boxName = "Notification Box";
+
+		final String text = this.allTextFromAMessage(message);
 
 		for (final Actor recipient : message.getRecipients())
 			if (this.adminConfigService.existSpamWord(text))
 				boxes.add(this.messageBoxService.findOriginalBox(recipient.getId(), "Spam Box"));
 			else
 				boxes.add(this.messageBoxService.findOriginalBox(recipient.getId(), boxName));
+
 		message.setMessageBoxes(boxes);
 	}
-	private Date getDateNow() throws ParseException {
-		final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		final LocalDateTime datetimenow = LocalDateTime.now();
-		final String month = (datetimenow.getMonthOfYear() <= 9) ? "0" + datetimenow.getMonthOfYear() : datetimenow.getMonthOfYear() + "";
-		final String day = (datetimenow.getDayOfMonth() <= 9) ? "0" + datetimenow.getDayOfMonth() : datetimenow.getDayOfMonth() + "";
-		final String hour = (datetimenow.getHourOfDay() <= 9) ? "0" + datetimenow.getHourOfDay() : datetimenow.getHourOfDay() + "";
-		final String minute = (datetimenow.getMinuteOfHour() <= 9) ? "0" + datetimenow.getMinuteOfHour() : datetimenow.getMinuteOfHour() + "";
-		final String second = (datetimenow.getSecondOfMinute() <= 9) ? "0" + datetimenow.getSecondOfMinute() : datetimenow.getSecondOfMinute() + "";
 
-		final Date actual = format.parse(datetimenow.getYear() + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second);
-
-		return actual;
-	}
-
-	public void delete(final Message message) {
+	public void delete(final Message message) throws ParseException {
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		final MessageBox trashBox = this.messageBoxService.findOriginalBox(actor.getId(), "Trash Box");
@@ -123,15 +104,14 @@ public class MessageService {
 		}
 	}
 
-	public Message addToBox(final Message message) {
-		return this.messageRepository.save(message);
-	}
-
-	public Message reconstruct(final Message message, final BindingResult binding) {
+	public Message reconstruct(final Message message, final BindingResult binding) throws ParseException {
 		Message result;
-		if (message.getId() == 0)
+		if (message.getId() == 0) {
+			message.setSender(this.actorService.findByUserAccount(LoginService.getPrincipal()));
+			message.setMoment(this.getDateNow());
 			result = message;
-		else {
+
+		} else {
 			result = this.messageRepository.findOne(message.getId());
 
 			final Collection<MessageBox> boxesBD = result.getMessageBoxes();
@@ -147,9 +127,12 @@ public class MessageService {
 
 	public Message removeFrom(Message message, final MessageBox messageBox) {
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
+
 		final MessageBox trashBox = this.messageBoxService.findOriginalBox(actor.getId(), "Trash Box");
-		final Collection<MessageBox> messageBoxesByPrincipal = this.messageBoxService.findAllMessageBoxByActorContainsAMessage(actor.getId(), message.getId()); //Hay que coger las messageBox de un actor en las que esta el message
+
+		final Collection<MessageBox> messageBoxesByPrincipal = this.messageBoxService.findAllMessageBoxByActorContainsAMessage(actor.getId(), message.getId());
 		final Collection<MessageBox> messageBoxesByMessage = message.getMessageBoxes();
+
 		if (messageBoxesByPrincipal.size() > 1)
 			messageBoxesByMessage.remove(messageBox);
 		else if (messageBox.equals(trashBox))
@@ -165,6 +148,7 @@ public class MessageService {
 			message.setMessageBoxes(messageBoxesByMessage);
 			message = this.messageRepository.save(message);
 		}
+
 		return message;
 	}
 
@@ -187,6 +171,40 @@ public class MessageService {
 				s++;
 		}
 		return s;
+	}
+
+	//Utilities
+
+	private String allTextFromAMessage(final Message message) {
+		String text = message.getBody() + " " + message.getSubject();
+		for (final String tag : message.getTags())
+			text = text + " " + tag;
+		return text;
+	}
+
+	private boolean isABroadCastMessage(final Message message) {
+		boolean res = false;
+
+		final Authority administrator = new Authority();
+		administrator.setAuthority("ADMINISTRATOR");
+
+		if ((message.getRecipients().size() == this.actorService.findAll().size() - 1) && (LoginService.getPrincipal().getAuthorities().contains(administrator)))
+			res = true;
+
+		return res;
+	}
+	private Date getDateNow() throws ParseException {
+		final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		final LocalDateTime datetimenow = LocalDateTime.now();
+		final String month = (datetimenow.getMonthOfYear() <= 9) ? "0" + datetimenow.getMonthOfYear() : datetimenow.getMonthOfYear() + "";
+		final String day = (datetimenow.getDayOfMonth() <= 9) ? "0" + datetimenow.getDayOfMonth() : datetimenow.getDayOfMonth() + "";
+		final String hour = (datetimenow.getHourOfDay() <= 9) ? "0" + datetimenow.getHourOfDay() : datetimenow.getHourOfDay() + "";
+		final String minute = (datetimenow.getMinuteOfHour() <= 9) ? "0" + datetimenow.getMinuteOfHour() : datetimenow.getMinuteOfHour() + "";
+		final String second = (datetimenow.getSecondOfMinute() <= 9) ? "0" + datetimenow.getSecondOfMinute() : datetimenow.getSecondOfMinute() + "";
+
+		final Date actual = format.parse(datetimenow.getYear() + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second);
+
+		return actual;
 	}
 
 }

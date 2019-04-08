@@ -1,5 +1,9 @@
 #./src/main/resources/Entities.map
+<<<<<<< HEAD
 #Fri Apr 05 10:50:22 CEST 2019
+=======
+#Sun Apr 07 12:13:59 CEST 2019
+>>>>>>> message
 ticker00=241
 adminConfig=244
 problem11=261

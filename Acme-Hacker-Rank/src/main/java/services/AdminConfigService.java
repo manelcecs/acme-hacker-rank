@@ -40,7 +40,7 @@ public class AdminConfigService {
 	}
 
 	public boolean existSpamWord(final String s) {
-		final String palabras[] = s.split("[.,:;()?¿" + " " + "\t!¡]"); //:FIXME Ojo con la codificación de git. Sustituir por la exclamacion e interrogacion españolas
+		final String palabras[] = s.split("[.,:;()?ï¿½" + " " + "\t!ï¿½]"); //:FIXME Ojo con la codificaciï¿½n de git. Sustituir por la exclamacion e interrogacion espaï¿½olas
 		final List<String> listaPalabras = Arrays.asList(palabras);
 		boolean exist = false;
 		final AdminConfig administratorConfig = this.getAdminConfig();
@@ -93,5 +93,9 @@ public class AdminConfigService {
 		spamWords.remove(spamWord);
 		adminConfig.setSpamWords(spamWords);
 		this.save(adminConfig);
+	}
+
+	public void flush() {
+		this.adminConfigRepository.flush();
 	}
 }

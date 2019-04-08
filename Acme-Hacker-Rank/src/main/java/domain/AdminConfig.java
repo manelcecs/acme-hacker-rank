@@ -102,8 +102,8 @@ public class AdminConfig extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml
 	@URL
+	@SafeHtml
 	public String getBannerURL() {
 		return this.bannerURL;
 	}

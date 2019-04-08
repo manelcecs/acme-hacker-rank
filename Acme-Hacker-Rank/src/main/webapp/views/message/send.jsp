@@ -12,15 +12,12 @@
 <section id="SendMessage">
 
 	<form:form action="message/send.do" modelAttribute="Message">
+			
+		<acme:textbox code="message.send.subject" path="subject"/>
 		
-		<acme:hidden path="id"/>
-		<acme:hidden path="moment"/>
-		<acme:hidden path="sender"/>
+		<acme:textarea code="message.send.body" path="body"/>
 		
-		<acme:textbox code="message.subject" path="subject"/>
-		<acme:textarea code="message.body" path="body"/>
-		
-   		<form:label path="priority"><spring:message code="message.priority"/></form:label>
+   		<form:label path="priority"><spring:message code="message.send.priority"/></form:label>
      		<form:select path="priority" multiple="false" >
      			<form:option value="HIGH" ><jstl:out value="HIGH"/></form:option>
      			<form:option value="MEDIUM" ><jstl:out value="MEDIUM"/></form:option>
@@ -28,17 +25,17 @@
    		</form:select>
    	
    		
-   		<form:label class="textboxLabel" path="tags"><spring:message code="message.tags" /></form:label>
+   		<form:label class="textboxLabel" path="tags"><spring:message code="message.send.tags" /></form:label>
     	<div id="tags">
     		<form:input class="textbox" path="tags" type="text"/>    
    		 </div>
     	<form:errors path="tags" cssClass="error" />   
    				
    		
-		<form:label path="recipients"><spring:message code="message.recipient" /></form:label>
+		<form:label path="recipients"><spring:message code="message.send.recipient" /></form:label>
      	<form:select path="recipients" multiple="false" >
      		<security:authorize access="hasRole('ADMINISTRATOR')">
-     			<form:option value="${actors}" ><spring:message code="message.broadCastMessage" /></form:option>
+     			<form:option value="${actors}" ><spring:message code="message.send.broadCastMessage" /></form:option>
      		</security:authorize>
     		<form:options items="${actors}" itemValue="id" itemLabel="email"/>
    		</form:select>
@@ -46,12 +43,13 @@
 		
 		
 		<div class="botones">
-			<acme:submit name="save" code="message.save"/>
-			<acme:cancel url="messageBox/list.do" code="message.cancel"/>	
+			<acme:submit name="save" code="message.send.save"/>
+			<acme:cancel url="messageBox/list.do" code="message.send.cancel"/>	
 		</div>
 		
 	</form:form>
-	<button class="addTag" onclick="addComment('tags','tags', 'textbox')"><spring:message code="message.addTag" /></button>
+	
+	<button class="addTag" onclick="addComment('tags','tags', 'textbox')"><spring:message code="message.send.addTag" /></button>
 
 </section>
 
