@@ -11,21 +11,19 @@ import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import services.ActorService;
 import services.AdministratorService;
 import services.CompanyService;
 import services.HackerService;
 import utiles.AuthorityMethods;
+import controllers.AbstractController;
 import domain.Administrator;
 import domain.Company;
 import domain.Hacker;
 
 @Controller
 @RequestMapping("/actor")
-public class ActorAdministratorController {
+public class ActorAdministratorController extends AbstractController {
 
-	@Autowired
-	private ActorService			actorService;
 	@Autowired
 	private HackerService			hackerService;
 	@Autowired
@@ -78,7 +76,7 @@ public class ActorAdministratorController {
 			break;
 		}
 
-		//TODO: this.configValues(result);
+		this.configValues(result);
 		return result;
 	}
 

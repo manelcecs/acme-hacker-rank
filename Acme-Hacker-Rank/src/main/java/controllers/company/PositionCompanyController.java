@@ -45,7 +45,7 @@ public class PositionCompanyController extends AbstractController {
 
 		final Position position = this.positionService.findOne(idPosition);
 
-		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
+		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal());
 
 		if (!position.getCompany().equals(company))
 			result = new ModelAndView("redirect:list.do");
@@ -140,7 +140,7 @@ public class PositionCompanyController extends AbstractController {
 
 	protected ModelAndView listModelAndView(final String message) {
 		final ModelAndView result = new ModelAndView("position/list");
-		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
+		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal());
 		final Collection<Position> positions = this.positionService.getPositionsOfCompany(company.getId());
 		final Collection<Position> positionsChangeDraft = this.positionService.getPositionCanChangedraft();
 		result.addObject("positions", positions);

@@ -121,6 +121,7 @@ public class ActorController extends AbstractController {
 			break;
 		}
 
+		this.configValues(res);
 		return res;
 	}
 

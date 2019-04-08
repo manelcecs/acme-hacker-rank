@@ -42,7 +42,8 @@
 		<acme:textbox code="hacker.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="hacker.edit.creditcard.expirationYear.placeholder"/>
 		<acme:textbox code="hacker.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
-		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" ><spring:message code="hacker.edit.submit" /></input>
+		<spring:message code="hacker.edit.submit" var="submit"/>
+		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" value="${ submit}" />
 		<acme:cancel url="/" code="hacker.edit.cancel" />
 	</form:form>
 	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="hacker.edit.surnames.add" /></button>
@@ -81,8 +82,8 @@
 		<b><spring:message code="hacker.edit.termsAndConditions" /></b>
 		<form:errors path="termsAndConditions" cssClass="error" />
 		<br />
-		<input type="submit" name="submit"
-			onclick="return checkPhone(this.form.phone.value)"><spring:message code="hacker.edit.submit" /></input>
+		<spring:message code="hacker.edit.submit" var="submit"/>
+		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" value="${ submit}"/>
 		<acme:cancel url="/" code="hacker.edit.cancel" />
 	</form:form>
 	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="hacker.edit.surnames.add" /></button>

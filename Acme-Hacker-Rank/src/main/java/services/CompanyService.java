@@ -83,11 +83,8 @@ public class CompanyService {
 		return this.companyRepository.findOne(companyId);
 	}
 
-	public Company findByPrincipal(final int principalId) {
-		return this.companyRepository.findByPrincipal(principalId);
-	}
 	public Company findByPrincipal(final UserAccount principal) {
-		return this.findByPrincipal(principal.getId());
+		return this.companyRepository.findByPrincipal(principal.getId());
 	}
 
 	public Company reconstruct(final CompanyForm companyForm, final BindingResult binding) {
@@ -156,7 +153,7 @@ public class CompanyService {
 			binding.rejectValue("surnames", "company.edit.surnames.error");
 
 		final Company result;
-		result = this.findByPrincipal(LoginService.getPrincipal().getId());
+		result = this.findByPrincipal(LoginService.getPrincipal());
 
 		result.setCompanyName(company.getCompanyName());
 		result.setAddress(company.getAddress());

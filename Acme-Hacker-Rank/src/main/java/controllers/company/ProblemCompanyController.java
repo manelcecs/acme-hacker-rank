@@ -114,7 +114,7 @@ public class ProblemCompanyController extends AbstractController {
 
 	protected ModelAndView listModelAndView(final String message) {
 		final ModelAndView result = new ModelAndView("problem/list");
-		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
+		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal());
 		final Collection<Problem> problems = this.problemService.getProblemsOfCompany(company.getId());
 		result.addObject("problems", problems);
 		result.addObject("company", true);
@@ -146,7 +146,7 @@ public class ProblemCompanyController extends AbstractController {
 		final ModelAndView result = new ModelAndView("problem/edit");
 
 		final UserAccount principal = LoginService.getPrincipal();
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 		final Collection<Position> positions = this.positionService.getPositionsOfCompany(company.getId());
 
 		result.addObject("problem", problem);

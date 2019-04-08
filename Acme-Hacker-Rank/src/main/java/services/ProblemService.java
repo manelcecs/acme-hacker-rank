@@ -75,7 +75,7 @@ public class ProblemService {
 	public Problem save(final Problem problem) {
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 		final UserAccount principal = LoginService.getPrincipal();
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 		if (problem.getId() != 0)
 			Assert.isTrue(problem.getPosition().getCompany().getId() == company.getId());
 
@@ -87,7 +87,7 @@ public class ProblemService {
 		final UserAccount principal = LoginService.getPrincipal();
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 
 		Assert.isTrue(problem.getPosition().getCompany().getId() == company.getId());
 
@@ -102,7 +102,7 @@ public class ProblemService {
 		final UserAccount principal = LoginService.getPrincipal();
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 
 		Assert.isTrue(problem.getPosition().getCompany().getId() == company.getId());
 

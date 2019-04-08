@@ -80,7 +80,7 @@ public class AdministratorService {
 	}
 
 	public Administrator findByPrincipal(final UserAccount principal) {
-		return this.adminRepository.findOne(principal.getId());
+		return this.adminRepository.findByPrincipal(principal.getId());
 	}
 
 	public Administrator reconstruct(final AdministratorForm adminForm, final BindingResult binding) {

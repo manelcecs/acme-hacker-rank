@@ -48,7 +48,7 @@ public class PositionService {
 	}
 
 	public Position reconstruct(final PositionForm positionForm, final BindingResult binding) {
-		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal().getId());
+		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal());
 
 		Position position;
 		if (positionForm.getId() == 0) {
@@ -102,7 +102,7 @@ public class PositionService {
 		authority.setAuthority("COMPANY");
 		Assert.isTrue(principal.getAuthorities().contains(authority));
 
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
@@ -131,7 +131,6 @@ public class PositionService {
 		return this.positionRepository.getFilterPositionsByFinder(keyword, deadlineA, deadlineB, maximumDeadline, minimumSalary);
 	}
 
-
 	public Collection<Position> getPositionsOfCompany(final int idCompany) {
 		return this.positionRepository.getPositionsOfCompany(idCompany);
 	}
@@ -144,7 +143,7 @@ public class PositionService {
 		authority.setAuthority("COMPANY");
 		Assert.isTrue(principal.getAuthorities().contains(authority));
 
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
@@ -165,7 +164,7 @@ public class PositionService {
 		authority.setAuthority("COMPANY");
 		Assert.isTrue(principal.getAuthorities().contains(authority));
 
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
@@ -186,7 +185,7 @@ public class PositionService {
 		authority.setAuthority("COMPANY");
 		Assert.isTrue(principal.getAuthorities().contains(authority));
 
-		final Company company = this.companyService.findByPrincipal(principal.getId());
+		final Company company = this.companyService.findByPrincipal(principal);
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 

@@ -104,8 +104,7 @@ public class CompanyController extends AbstractController {
 			messageCodes.add(s);
 		result.addObject("messages", messageCodes);
 
-		//TODO: añadir el banner y el sysname
-		//this.configValues(res);
+		this.configValues(result);
 
 		return result;
 
@@ -123,8 +122,7 @@ public class CompanyController extends AbstractController {
 			messageCodes.add(s);
 		result.addObject("messages", messageCodes);
 
-		//TODO: añadir el banner y el sysname
-		//this.configValues(res);
+		this.configValues(result);
 
 		return result;
 
