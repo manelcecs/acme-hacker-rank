@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
-import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utiles.AuthorityMethods;
@@ -94,13 +93,11 @@ public class PositionService {
 
 	public Position save(final Position position) {
 
-		//TODO: Checkear utilities para la authority
-		//TODO: Asegurar que este en draft
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
+
+		Assert.isTrue(position.getDraft());
 
 		final UserAccount principal = LoginService.getPrincipal();
-		final Authority authority = new Authority();
-		authority.setAuthority("COMPANY");
-		Assert.isTrue(principal.getAuthorities().contains(authority));
 
 		final Company company = this.companyService.findByPrincipal(principal.getId());
 
@@ -131,23 +128,20 @@ public class PositionService {
 		return this.positionRepository.getFilterPositionsByFinder(keyword, deadlineA, deadlineB, maximumDeadline, minimumSalary);
 	}
 
-
 	public Collection<Position> getPositionsOfCompany(final int idCompany) {
 		return this.positionRepository.getPositionsOfCompany(idCompany);
 	}
 
 	public Position changeDraft(final Position position) {
 
-		//TODO: Asegurar que no este cancelled
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 		final UserAccount principal = LoginService.getPrincipal();
-		final Authority authority = new Authority();
-		authority.setAuthority("COMPANY");
-		Assert.isTrue(principal.getAuthorities().contains(authority));
 
 		final Company company = this.companyService.findByPrincipal(principal.getId());
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
+		//FIXME: Cuando se puedan meter problemas, descomentar esto
 		//		final Collection<Problem> problems = this.problemService.getProblemsOfParade(position.getId());
 		//		Assert.isTrue(problems.size() >= 2);
 
@@ -161,9 +155,8 @@ public class PositionService {
 	public void delete(final Position position) {
 
 		final UserAccount principal = LoginService.getPrincipal();
-		final Authority authority = new Authority();
-		authority.setAuthority("COMPANY");
-		Assert.isTrue(principal.getAuthorities().contains(authority));
+
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 
 		final Company company = this.companyService.findByPrincipal(principal.getId());
 
@@ -171,7 +164,7 @@ public class PositionService {
 
 		Assert.isTrue(position.getDraft());
 
-		final Collection<Problem> problems = this.problemService.getProblemsOfParade(position.getId());
+		final Collection<Problem> problems = this.problemService.getProblemsOfPosition(position.getId());
 
 		this.problemService.deleteCollectionOfProblems(problems);
 		this.positionRepository.delete(position);
@@ -182,9 +175,8 @@ public class PositionService {
 	public Position changeCancellation(final Position position) {
 
 		final UserAccount principal = LoginService.getPrincipal();
-		final Authority authority = new Authority();
-		authority.setAuthority("COMPANY");
-		Assert.isTrue(principal.getAuthorities().contains(authority));
+
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 
 		final Company company = this.companyService.findByPrincipal(principal.getId());
 

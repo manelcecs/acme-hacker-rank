@@ -13,9 +13,6 @@ import domain.Problem;
 public interface ProblemRepository extends JpaRepository<Problem, Integer> {
 
 	@Query("select p from Problem p where p.position.id = ?1")
-	Collection<Problem> getProblemsOfParade(int idPosition);
-
-	@Query("select p from Problem p join p.position pt where pt.company.id = ?1")
-	Collection<Problem> getProblemsOfCompany(int idCompany);
+	Collection<Problem> getProblemsOfPosition(int idPosition);
 
 }

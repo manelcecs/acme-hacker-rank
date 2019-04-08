@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -26,7 +25,6 @@ public class Application extends DomainEntity {
 	private String		status;
 
 	private Curricula	curricula;
-	private Answer		answer;
 	private Hacker		hacker;
 	private Problem		problem;
 
@@ -69,16 +67,6 @@ public class Application extends DomainEntity {
 
 	public void setCurricula(final Curricula curricula) {
 		this.curricula = curricula;
-	}
-
-	@Valid
-	@OneToOne(optional = true, cascade = CascadeType.REMOVE)
-	public Answer getAnswer() {
-		return this.answer;
-	}
-
-	public void setAnswer(final Answer answer) {
-		this.answer = answer;
 	}
 
 	@Valid

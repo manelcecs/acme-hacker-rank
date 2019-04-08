@@ -18,6 +18,8 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<acme:button code="position.edit.cancel" type="button" url="/position/company/list.do"/>
+
 <form:form modelAttribute="positionForm" action="position/company/save.do">
 		<acme:hidden path="id"/>
 		<acme:hidden path="version"/>
