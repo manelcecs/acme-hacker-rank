@@ -16,6 +16,7 @@ import repositories.ProblemRepository;
 import security.LoginService;
 import security.UserAccount;
 import utiles.AuthorityMethods;
+import utiles.ValidateCollectionURL;
 import domain.Company;
 import domain.Problem;
 
@@ -60,6 +61,11 @@ public class ProblemService {
 			result.setAttachments(problem.getAttachments());
 			result.setDraft(problem.getDraft());
 		}
+
+		if (result.getAttachments() != null)
+			if (ValidateCollectionURL.validateURLCollection(result.getAttachments()) != true)
+				binding.rejectValue("attachments", "problem.edit.attachments.error.url");
+
 		this.validator.validate(result, binding);
 		if (binding.hasErrors())
 			throw new ValidationException();

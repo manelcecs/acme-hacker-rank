@@ -18,6 +18,7 @@ import security.UserAccount;
 import services.CompanyService;
 import services.PositionService;
 import services.ProblemService;
+import utiles.ValidateCollectionURL;
 import controllers.AbstractController;
 import domain.Company;
 import domain.Position;
@@ -58,7 +59,10 @@ public class ProblemCompanyController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final Problem problem, final BindingResult binding) {
 		ModelAndView result;
-
+		if (problem.getAttachments() != null) {
+			final Collection<String> urls = ValidateCollectionURL.deleteURLBlanksInCollection(problem.getAttachments());
+			problem.setAttachments(urls);
+		}
 		try {
 			final Problem problemRec = this.problemService.reconstruct(problem, binding);
 			this.problemService.save(problemRec);
