@@ -100,10 +100,9 @@ public class MessageController extends AbstractController {
 
 		try {
 			this.messageService.removeFrom(message, messageBox);
-			result = new ModelAndView("redirect:../messageBox/list.do");
+			result = this.listModelAndView(this.messageBoxService.findOne(idMessageBox));
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:../messageBox/list.do");
-			result.addObject("message", "message.commit.error");
+			result = this.listModelAndView(this.messageBoxService.findOne(idMessageBox), "message.commit.error");
 		}
 
 		this.configValues(result);
@@ -114,13 +113,16 @@ public class MessageController extends AbstractController {
 	public ModelAndView delete(@RequestParam final int idMessage) {
 		ModelAndView result;
 		final Message message = this.messageService.findOne(idMessage);
+		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		try {
 			this.messageService.delete(message);
-			result = new ModelAndView("redirect:../messageBox/list.do");
+			final MessageBox trashBox = this.messageBoxService.findOriginalBox(actor.getId(), "Trash Box");
+			result = this.listModelAndView(trashBox);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:../messageBox/list.do");
-			result.addObject("message", "message.commit.error");
+			final MessageBox inBox = this.messageBoxService.findOriginalBox(actor.getId(), "In Box");
+			result = this.listModelAndView(inBox, "message.commit.error");
+
 		}
 
 		this.configValues(result);
@@ -139,6 +141,7 @@ public class MessageController extends AbstractController {
 		final Actor sender = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		final Collection<Actor> actors = this.actorService.findAll();
+		//:TODO Excluir eliminados del sistema
 		actors.remove(sender);
 
 		result.addObject("Message", message);
@@ -164,6 +167,22 @@ public class MessageController extends AbstractController {
 		result.addObject("boxesToMove", boxesToMove);
 		result.addObject("message", messageCode);
 
+		this.configValues(result);
+		return result;
+	}
+
+	protected ModelAndView listModelAndView(final MessageBox boxSelect) {
+		return this.listModelAndView(boxSelect, null);
+	}
+	protected ModelAndView listModelAndView(final MessageBox boxSelect, final String messageCode) {
+		final ModelAndView result;
+		result = new ModelAndView("messageBox/list");
+
+		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
+		result.addObject("boxes", actor.getMessageBoxes());
+		result.addObject("boxSelect", boxSelect);
+		result.addObject("messages", boxSelect.getMessages());
+		result.addObject("message", messageCode);
 		this.configValues(result);
 		return result;
 	}

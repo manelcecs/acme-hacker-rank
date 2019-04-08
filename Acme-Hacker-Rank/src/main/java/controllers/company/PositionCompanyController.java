@@ -69,7 +69,7 @@ public class PositionCompanyController extends AbstractController {
 		return result;
 	}
 
-	//TODO: Las colecciones de position controlar que no están vacias. Ask toni y deivid
+	//TODO: Las colecciones de position controlar que no estï¿½n vacias. Ask toni y deivid
 	//TODO: Meter en el reconstruct si es 0 la id, que la fecha sea futuro. Comprobar que en modo draft sea una fecha futura
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final PositionForm positionForm, final BindingResult binding) {

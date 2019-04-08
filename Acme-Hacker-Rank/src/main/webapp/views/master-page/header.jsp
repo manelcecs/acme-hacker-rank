@@ -89,6 +89,10 @@
 			<li>
 				<a class="fNiv" href="messageBox/list.do"><spring:message code="master.page.boxes" /></a>
 			</li>
+			
+			<li>
+				<a class="fNiv" href="actor/displayData.do"><spring:message code="master.page.settings" /></a>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message	code="master.page.actor.profile" />
