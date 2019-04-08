@@ -35,7 +35,7 @@ public class AdminConfigService {
 	}
 
 	public AdminConfig save(final AdminConfig adminConfig) {
-		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
 		return this.adminConfigRepository.save(adminConfig);
 	}
 
@@ -86,8 +86,7 @@ public class AdminConfigService {
 	}
 
 	public void deleteSpamWord(final String spamWord) {
-		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
-
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
 		final AdminConfig adminConfig = this.getAdminConfig();
 		final Collection<String> spamWords = adminConfig.getSpamWords();
 		Assert.isTrue(spamWords.contains(spamWord));
