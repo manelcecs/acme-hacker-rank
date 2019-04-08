@@ -2,6 +2,7 @@
 package controllers.company;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.ValidationException;
@@ -72,6 +73,18 @@ public class CompanyController extends AbstractController {
 			oops.printStackTrace();
 		}
 		return res;
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		final ModelAndView result = new ModelAndView("company/list");
+
+		final Collection<Company> companies = this.companyService.findAll();
+
+		result.addObject("companies", companies);
+		result.addObject("requestURI", "company/list.do");
+
+		return result;
 	}
 
 	/*

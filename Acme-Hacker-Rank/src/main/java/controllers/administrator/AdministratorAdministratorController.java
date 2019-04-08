@@ -29,7 +29,7 @@ import forms.AdministratorForm;
 
 @Controller
 @RequestMapping("/administrator")
-public class AdministratorController extends AbstractController {
+public class AdministratorAdministratorController extends AbstractController {
 
 	@Autowired
 	private AdministratorService	adminService;
@@ -37,7 +37,7 @@ public class AdministratorController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public AdministratorController() {
+	public AdministratorAdministratorController() {
 		super();
 	}
 
