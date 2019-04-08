@@ -65,10 +65,7 @@
 		<security:intercept-url pattern="/messageBox/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/administrator/**" access="hasRole('ADMINISTRATOR')" />
-<<<<<<< HEAD
 		<security:intercept-url pattern="/problem/company/**" access="hasRole('COMPANY')" />
-=======
->>>>>>> message
 		
 		
 	
