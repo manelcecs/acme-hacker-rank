@@ -43,6 +43,8 @@
 		<security:intercept-url pattern="/position/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/company/list.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/problem/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/problem/display.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
@@ -63,6 +65,7 @@
 		<security:intercept-url pattern="/messageBox/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/administrator/**" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/problem/company/**" access="hasRole('COMPANY')" />
 		
 		
 	

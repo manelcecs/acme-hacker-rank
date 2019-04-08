@@ -62,6 +62,14 @@
 					<li><a href="position/company/list.do"><spring:message code="master.page.company.list" /></a></li>			
 				</ul>
 			</li>
+			
+			<li><a class="fNiv"><spring:message	code="master.page.problems" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="problem/company/create.do"><spring:message code="master.page.company.problem.create" /></a></li>
+					<li><a href="problem/company/list.do"><spring:message code="master.page.company.problem.list" /></a></li>			
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">

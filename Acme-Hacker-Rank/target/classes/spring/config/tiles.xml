@@ -32,6 +32,8 @@
 		<value>/views/message/tiles.xml</value>
 		<value>/views/messageBox/tiles.xml</value>
 		
+		<value>/views/problem/tiles.xml</value>
+		
 		<value>/views/position/tiles.xml</value>
 		<value>/views/company/tiles.xml</value>
 	</util:list>
