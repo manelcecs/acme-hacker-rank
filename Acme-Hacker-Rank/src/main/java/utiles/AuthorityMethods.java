@@ -1,6 +1,7 @@
 
 package utiles;
 
+import security.Authority;
 import security.LoginService;
 
 public class AuthorityMethods {
@@ -41,6 +42,24 @@ public class AuthorityMethods {
 			res = false;
 		}
 
+		return res;
+	}
+
+	/**
+	 * Intenta coger la cuenta loggeada, si puede<br/>
+	 * devuelve el Authority asociado. Si no, fallar�. <br/>
+	 * <b>Authority</b>:<u>si hay alguien loggeado</u><br/>
+	 * <b>Null</b>:<u>no hay nadie loggeado</u>
+	 * 
+	 * @return Authority
+	 */
+	public static Authority getLoggedAuthority() {
+		Authority res;
+		try {
+			res = LoginService.getPrincipal().getAuthorities().iterator().next();
+		} catch (final Throwable oops) {
+			res = null;
+		}
 		return res;
 	}
 

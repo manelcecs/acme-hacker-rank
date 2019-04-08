@@ -7,7 +7,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <section id="SendMessage">
 
@@ -46,7 +46,7 @@
 			<acme:submit name="save" code="message.send.save"/>
 			<acme:cancel url="messageBox/list.do" code="message.send.cancel"/>	
 		</div>
-		
+
 	</form:form>
 	
 	<button class="addTag" onclick="addComment('tags','tags', 'textbox')"><spring:message code="message.send.addTag" /></button>
@@ -56,8 +56,7 @@
 
 
 <style>
-
-#SendMessage{
+#SendMessage {
 	border: 1px solid black;
 	width: 15%;
 	padding: 10px 20px 20px 20px;
@@ -65,59 +64,55 @@
 	position: relative;
 }
 
-.botones{
-  	margin-left: 70px;
+.botones {
+	margin-left: 70px;
 }
 
-.botones > button{
+.botones>button {
 	margin-left: 10px;
 }
 
-.selectLabel{
+.selectLabel {
 	width: 100%;
 	float: left;
 	margin-bottom: 5px;
 }
 
-.select{
+.select {
 	width: 100%;
 	float: left;
 	margin-bottom: 20px;
 }
 
-.textboxLabel{
+.textboxLabel {
 	width: 100%;
 	float: left;
 	margin-top: 20px;
 	margin-bottom: 5px;
 }
 
-.textbox{
+.textbox {
 	width: 100%;
 	float: left;
 	margin-bottom: 20px;
 }
 
-.textAreaLabel{
+.textAreaLabel {
 	width: 100%;
 	float: left;
 	margin-top: 20px;
 	margin-bottom: 5px;
 }
 
-.textArea{
+.textArea {
 	width: 100%;
 	float: left;
 	margin-bottom: 20px;
 }
 
-.addTag{
+.addTag {
 	position: absolute;
 	top: 250px;
 	right: 5%;
 }
-
-
-
-
 </style>

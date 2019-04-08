@@ -51,6 +51,24 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
+		<!-- ADMINISTRATOR REGISTER/EDIT-->
+		<security:intercept-url pattern="/administrator/administrator/register.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/administrator/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/administrator/administrator/save.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMINISTRATOR')" /> 
+		
+		<!-- COMPANY REGISTER/EDIT-->
+		<security:intercept-url pattern="/company/register.do" access="permitAll" /> 
+		<security:intercept-url pattern="/company/save.do" access="permitAll" />
+		<security:intercept-url pattern="/company/company/edit.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/company/company/save.do" access="hasRole('COMPANY')" />
+		
+		<!-- HACKER REGISTER/EDIT-->
+		<security:intercept-url pattern="/hacker/register.do" access="permitAll" /> 
+		<security:intercept-url pattern="/hacker/save.do" access="permitAll" />
+		<security:intercept-url pattern="/hacker/hacker/edit.do" access="hasRole('HACKER')" /> 
+		<security:intercept-url pattern="/hacker/hacker/save.do" access="hasRole('HACKER')" />
+		
 		<security:intercept-url pattern="/dashboard/administrator/display.do" access="hasRole('ADMINISTRATOR')" /> 
 
 		<security:intercept-url pattern="/adminConfig/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
@@ -67,7 +85,9 @@
 		<security:intercept-url pattern="/administrator/**" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/problem/company/**" access="hasRole('COMPANY')" />
 		
-		
+		<!-- ACTOR - DISPLAY/EDIT -->
+		<security:intercept-url pattern="/actor/edit.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/actor/display.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

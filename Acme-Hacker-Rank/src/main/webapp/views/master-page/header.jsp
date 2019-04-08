@@ -42,6 +42,7 @@
 			<li>
 				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
 			</li>
+			
 		</security:authorize>
 		
 		<security:authorize access="hasRole('HACKER')">
@@ -77,6 +78,11 @@
 				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
 			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNIv"><spring:message code="master.page.register" /></a>
+				<ul><li class="arrow"></li>
+					<li><a href="company/register.do"><spring:message code="master.page.register.company" /></a></li>
+					<li><a href="hacker/register.do"><spring:message code="master.page.register.hacker" /></a></li></ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -85,14 +91,14 @@
 			</li>
 			<li>
 				<a class="fNiv"> 
-					<spring:message code="master.page.profile" /> 
+					<spring:message	code="master.page.actor.profile" />
 			        (<security:authentication property="principal.username" />)
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+					<li><a href="actor/display.do"><spring:message code="master.page.actor.profile" /></a></li>			
+					<li><a href="actor/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
+					<li><a href="actor/socialProfile/display.do"><spring:message code="master.page.actor.socialProfile" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

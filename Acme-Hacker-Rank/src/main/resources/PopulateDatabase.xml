@@ -79,13 +79,50 @@
 		<property name="userAccount" ref="userAccount1" />
 
 	</bean>
+	
+	<bean id="messageBox001" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox002" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox003" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox004" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="messageBox005" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
 
 	<!-- Companies -->
 	<!-- Company0 -->
 
 	<bean id="userAccount20" class="security.UserAccount">
-		<property name="username" value="company" />
-		<property name="password" value="df655f976f7c9d3263815bd981225cd9" />
+		<property name="username" value="company0" />
+		<property name="password" value="8a1032ae1b582d623ed2404e4f37ae57" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -139,11 +176,11 @@
 
 		<property name="messageBoxes">
 			<list>
-				<ref bean="messageBox006" />
-				<ref bean="messageBox007" />
-				<ref bean="messageBox008" />
-				<ref bean="messageBox009" />
 				<ref bean="messageBox010" />
+				<ref bean="messageBox011" />
+				<ref bean="messageBox012" />
+				<ref bean="messageBox013" />
+				<ref bean="messageBox014" />
 			</list>
 		</property>
 
@@ -154,12 +191,48 @@
 		<property value="Micro-Star International" name="companyName" />
 
 	</bean>
+	
+	<bean id="messageBox010" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox011" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox012" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox013" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox014" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
 
 	<!-- Company1 -->
 
 	<bean id="userAccount21" class="security.UserAccount">
 		<property name="username" value="company1" />
-		<property name="password" value="d196a28097115067fefd73d25b0c0be8" />
+		<property name="password" value="df655f976f7c9d3263815bd981225cd9" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -216,18 +289,63 @@
 		<!-- Creo que la asociación de socilProfile está mal -->
 
 		<property name="userAccount" ref="userAccount21" />
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox015" />
+				<ref bean="messageBox016" />
+				<ref bean="messageBox017" />
+				<ref bean="messageBox018" />
+				<ref bean="messageBox019" />
+			</list>
+		</property>
 
 		<!-- Propios de Company -->
 
 		<property value="HP Develpment Company L.P." name="companyName" />
 
 	</bean>
+	<bean id="messageBox015" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox016" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox017" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox018" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox019" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
 
-	<!-- Company0 -->
+	<!-- Company2 -->
 
 	<bean id="userAccount22" class="security.UserAccount">
 		<property name="username" value="company2" />
-		<property name="password" value="e828ae3339b8d80b3902c1564578804e" />
+		<property name="password" value="d196a28097115067fefd73d25b0c0be8" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -280,6 +398,15 @@
 		<property name="creditCard" ref="creditcard22" />
 
 		<!-- Creo que la asociación de socilProfile está mal -->
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox020" />
+				<ref bean="messageBox021" />
+				<ref bean="messageBox022" />
+				<ref bean="messageBox023" />
+				<ref bean="messageBox024" />
+			</list>
+		</property>
 
 		<property name="userAccount" ref="userAccount22" />
 
@@ -287,6 +414,42 @@
 
 		<property value="Apple Inc." name="companyName" />
 
+	</bean>
+	
+	<bean id="messageBox020" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox021" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox022" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox023" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox024" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
 	</bean>
 
 	<!-- Hackers -->
@@ -326,6 +489,75 @@
 		<property name="maximumDeadLine" value="07/30/2019" />
 		<property name="minimumSalary" value="2000.0" />
 	</bean>
+	
+	<!-- original curricula -->
+	<bean class="domain.Curricula" id="curricula00">
+		<property name="copy" value="false" />
+		<property name="hacker" ref="hacker0" />
+	</bean>
+	<bean class="domain.EducationData" id="educationalData00">
+		<property name="degree" value="Computer Science" />
+		<property name="institution" value="Chicago University" />
+		<property name="mark" value="B+" />
+		<property name="startDate" value="10/01/2005" />
+		<property name="endDate" value="06/25/2010" />
+		<property name="curricula" ref="curricula00" />
+	</bean>
+	<bean class="domain.MiscellaneousData" id="miscellaneousData00">
+		<property name="text" value="I can travel around the globe" />
+		<property name="attachments" ><list></list></property>
+		<property name="curricula" ref="curricula00" />
+	</bean>
+	<bean class="domain.PersonalData" id="personalData00">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula00" />
+	</bean>
+	<bean class="domain.PositionData" id="positionData00">
+		<property name="title" value="PostScripting Manager" />
+		<property name="description" value="Developing script to check backend application security" />
+		<property name="startDate" value="02/28/2012" />
+		<property name="endDate" value="12/20/2014" />
+		<property name="curricula" ref="curricula00" />
+	</bean>
+	
+	
+	<!-- copy curricula -->
+	<bean class="domain.Curricula" id="curricula01">
+		<property name="copy" value="true" />
+		<property name="hacker" ref="hacker0" />
+	</bean>
+	<bean class="domain.EducationData" id="educationData01">
+		<property name="degree" value="Computer Science" />
+		<property name="institution" value="Chicago University" />
+		<property name="mark" value="B+" />
+		<property name="startDate" value="10/01/2005" />
+		<property name="endDate" value="06/25/2010" />
+		<property name="curricula" ref="curricula01" />
+	</bean>
+	<bean class="domain.MiscellaneousData" id="miscellaneousData01">
+		<property name="text" value="I can travel around the globe" />
+		<property name="attachments" ><list></list></property>
+		<property name="curricula" ref="curricula01" />
+	</bean>
+	<bean class="domain.PersonalData" id="personalData01">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula01" />
+	</bean>
+	<bean class="domain.PositionData" id="positionData01">
+		<property name="title" value="PostScripting Manager" />
+		<property name="description" value="Developing script to check backend application security" />
+		<property name="startDate" value="02/28/2012" />
+		<property name="endDate" value="12/20/2014" />
+		<property name="curricula" ref="curricula01" />
+	</bean>
 
 	<bean class="domain.Hacker" id="hacker0">
 
@@ -356,9 +588,55 @@
 		<!-- Creo que la asociación de socilProfile está mal -->
 
 		<property name="userAccount" ref="userAccount30" />
-
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox030" />
+				<ref bean="messageBox031" />
+				<ref bean="messageBox032" />
+				<ref bean="messageBox033" />
+				<ref bean="messageBox034" />
+			</list>
+		</property>
+		
 		<!-- Propios de Hacker -->
 		<property name="finder" ref="finder0" />
+	</bean>
+	
+	<bean id="messageBox030" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox031" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox032" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox033" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox034" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
 	</bean>
 	<!-- Hacker1 -->
 	<bean id="userAccount31" class="security.UserAccount">
@@ -426,10 +704,56 @@
 		<!-- Creo que la asociación de socilProfile está mal -->
 
 		<property name="userAccount" ref="userAccount31" />
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox035" />
+				<ref bean="messageBox036" />
+				<ref bean="messageBox037" />
+				<ref bean="messageBox038" />
+				<ref bean="messageBox039" />
+			</list>
+		</property>
 
 		<!-- Propios de Hacker -->
 		<property name="finder" ref="finder1" />
 
+	</bean>
+	
+	<bean id="messageBox035" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox036" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox037" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox038" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox039" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
 	</bean>
 	<!-- Hacker2 -->
 	<bean id="userAccount32" class="security.UserAccount">
@@ -496,10 +820,55 @@
 		<!-- Creo que la asociación de socilProfile está mal -->
 
 		<property name="userAccount" ref="userAccount32" />
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox040" />
+				<ref bean="messageBox041" />
+				<ref bean="messageBox042" />
+				<ref bean="messageBox043" />
+				<ref bean="messageBox044" />
+			</list>
+		</property>
 
 		<!-- Propios de Hacker -->
 		<property name="finder" ref="finder2" />
 
+	</bean>
+	<bean id="messageBox040" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox041" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox042" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox043" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox044" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
 	</bean>
 
 	<!-- Positions -->
@@ -538,6 +907,42 @@
 
 	<bean class="domain.Ticker" id="ticker00">
 		<property name="identifier" value="MSIX-3433" />
+	</bean>
+	
+	<!-- Company0 -->
+	<bean class="domain.Position" id="position01">
+		<property value="Network Security in DataBase" name="title" />
+		<property value="Here will be problems related to Network Security in DataBase"
+			name="description" />
+		<property value="12/31/2020" name="deadline" />
+		<property value="DBA" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>DBA</value>
+				<value>MITM</value>
+				<value>SQL</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Wireshark</value>
+				<value>RedHat</value>
+				<value>Linux</value>
+			</list>
+		</property>
+
+		<property value="1500" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company0" />
+		<property name="ticker" ref="ticker01" />
+	</bean>
+
+	<bean class="domain.Ticker" id="ticker01">
+		<property name="identifier" value="MSIX-3021" />
 	</bean>
 
 	<!-- Company1 -->
@@ -604,6 +1009,39 @@
 	</bean>
 	<bean class="domain.Ticker" id="ticker20">
 		<property name="identifier" value="AINC-1099" />
+	</bean>
+	<!-- Company2 -->
+	<bean class="domain.Position" id="position21">
+		<property value="Seguridad en iCloud" name="title" />
+		<property
+			value="Se tratará de probar la seguridad de las copias de recuperación en iCloud de los dispositivos móviles."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Apple</value>
+				<value>iOS</value>
+				<value>OsX</value>
+			</list>
+		</property>
+
+		<property value="2908.99" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company2" />
+		<property name="ticker" ref="ticker21" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker21">
+		<property name="identifier" value="AINC-4326" />
 	</bean>
 	
 	<!-- Problemas -->
@@ -717,78 +1155,6 @@
 				<value>un millón</value>
 				<value>ha sido seleccionado</value>
 			</list>
-		</property>
-	</bean>
-	
-	<bean id="messageBox001" class="domain.MessageBox">
-		<property name="name" value="In Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox002" class="domain.MessageBox">
-		<property name="name" value="Out Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox003" class="domain.MessageBox">
-		<property name="name" value="Spam Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox004" class="domain.MessageBox">
-		<property name="name" value="Trash Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox005" class="domain.MessageBox">
-		<property name="name" value="Notification Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	
-	<bean id="messageBox006" class="domain.MessageBox">
-		<property name="name" value="In Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox007" class="domain.MessageBox">
-		<property name="name" value="Out Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox008" class="domain.MessageBox">
-		<property name="name" value="Spam Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox009" class="domain.MessageBox">
-		<property name="name" value="Trash Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
-		</property>
-	</bean>
-	<bean id="messageBox010" class="domain.MessageBox">
-		<property name="name" value="Notification Box" />
-		<property name="deleteable" value="false" />
-		<property name="messages">
-			<list></list>
 		</property>
 	</bean>
 

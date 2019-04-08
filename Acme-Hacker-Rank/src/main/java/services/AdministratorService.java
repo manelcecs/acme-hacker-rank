@@ -3,6 +3,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
@@ -16,8 +18,10 @@ import org.springframework.validation.Validator;
 
 import repositories.AdministratorRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
+import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
 import domain.Administrator;
 import forms.AdministratorForm;
@@ -30,14 +34,19 @@ public class AdministratorService {
 	private UserAccountRepository	accountRepository;
 	@Autowired
 	private AdministratorRepository	adminRepository;
-
+	@Autowired
+	private AdminConfigService		adminConfigService;
+	@Autowired
+	private MessageBoxService		messageBoxService;
 	@Autowired
 	private Validator				validator;
 
 
 	public Administrator create() {
 		final Administrator res = new Administrator();
-		//TODO: a�adir cajas de mensajes
+		res.setSpammer(false);
+		res.setBanned(false);
+		res.setMessageBoxes(this.messageBoxService.initializeNewUserBoxes());
 		return res;
 	}
 
@@ -66,19 +75,27 @@ public class AdministratorService {
 
 	}
 
-	public Administrator findOne(final int adminId) {
-		return this.adminRepository.findOne(adminId);
-	}
-
-	public Administrator findByPrincipal(final int principalId) {
-		return this.adminRepository.findByPrincipal(principalId);
+	public Administrator findOne(final int actorId) {
+		return this.adminRepository.findOne(actorId);
 	}
 
 	public Administrator findByPrincipal(final UserAccount principal) {
-		return this.findByPrincipal(principal.getId());
+		return this.adminRepository.findOne(principal.getId());
 	}
 
 	public Administrator reconstruct(final AdministratorForm adminForm, final BindingResult binding) {
+
+		if (!this.validateEmail(adminForm.getEmail()))
+			binding.rejectValue("email", "administrator.edit.email.error");
+		if (!adminForm.getUserAccount().getPassword().equals(adminForm.getConfirmPassword()))
+			binding.rejectValue("confirmPassword", "administrator.edit.confirmPassword.error");
+		if (this.accountRepository.findByUsername(adminForm.getUserAccount().getUsername()) != null)
+			binding.rejectValue("userAccount.username", "administrator.edit.userAccount.username.error");
+		if (!adminForm.getTermsAndConditions())
+			binding.rejectValue("termsAndConditions", "administrator.edit.termsAndConditions.error");
+		if (adminForm.getSurnames().isEmpty())
+			binding.rejectValue("surnames", "administrator.edit.surnames.error");
+
 		final Administrator result;
 		result = this.create();
 
@@ -92,17 +109,42 @@ public class AdministratorService {
 		result.setAddress(adminForm.getAddress());
 		result.setEmail(adminForm.getEmail());
 		result.setName(adminForm.getName());
-		//TODO:
-		//result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
+		result.setVatNumber(adminForm.getVatNumber());
+		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
 		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
-		final String surnames[] = adminForm.getSurnames().split(" ");
+		//TODO:a�adir los inputs de varios surnames
+		final String surnames[] = adminForm.getSurnames().split(",");
 		final List<String> surNames = new ArrayList<>();
 		for (int i = 0; i < surnames.length; i++)
-			surNames.add(surnames[i]);
+			surNames.add(surnames[i].trim());
 		result.setSurnames(surNames);
 
 		result.setCreditCard(adminForm.getCreditCard());
+
+		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
+		return result;
+	}
+
+	public Administrator reconstruct(final Administrator admin, final BindingResult binding) {
+
+		if (!this.validateEmail(admin.getEmail()))
+			binding.rejectValue("email", "administrator.edit.email.error");
+		if (admin.getSurnames().isEmpty())
+			binding.rejectValue("surnames", "administrator.edit.surnames.error");
+
+		final Administrator result;
+		result = this.findByPrincipal(LoginService.getPrincipal());
+		result.setAddress(admin.getAddress());
+		result.setEmail(admin.getEmail());
+		result.setName(admin.getName());
+		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), admin.getPhoneNumber()));
+		result.setPhoto(admin.getPhoto());
+		result.setVatNumber(admin.getVatNumber());
+		result.setSurnames(admin.getSurnames());
 
 		this.validator.validate(result, binding);
 
@@ -220,6 +262,18 @@ public class AdministratorService {
 	public Double getSDOfResultsInFinders() {
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
 		return this.adminRepository.getSDOfResultsInFinders();
+	}
+
+	public Boolean validateEmail(final String email) {
+
+		Boolean valid = false;
+
+		final Pattern emailPattern = Pattern.compile("^([0-9a-zA-Z ]{1,}[ ]{1}[<]{1}[A-Za-z0-9]{1,}[@]{1}[>]{1}|[A-Za-z0-9]{1,}[@]{1})$");
+
+		final Matcher mEmail = emailPattern.matcher(email.toLowerCase());
+		if (mEmail.matches())
+			valid = true;
+		return valid;
 	}
 
 }

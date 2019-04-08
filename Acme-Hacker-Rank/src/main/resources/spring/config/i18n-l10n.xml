@@ -24,6 +24,8 @@
 		<value>/views/welcome/messages</value>
 		
 		<value>/views/administrator/messages</value>
+		<value>/views/company/messages</value>
+		<value>/views/hacker/messages</value>
 		<value>/views/profile/messages</value>
 		<value>/views/adminConfig/messages</value>
 		<value>/views/message/messages</value>

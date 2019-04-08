@@ -16,6 +16,10 @@
        
 <tiles-definitions>
 
+	<definition name="administrator/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit Administrator" />
+		<put-attribute name="body" value="/views/administrator/edit.jsp" />
+	</definition>	
 	<definition name="administrator/process" extends="master.page">	
 		<put-attribute name="title" value="Launch Administrator Process" />
 		<put-attribute name="body" value="/views/administrator/process.jsp" />

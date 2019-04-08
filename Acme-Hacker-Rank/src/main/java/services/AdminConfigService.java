@@ -39,20 +39,6 @@ public class AdminConfigService {
 		return this.adminConfigRepository.save(adminConfig);
 	}
 
-	public boolean existSpamWord(final String s) {
-		final String palabras[] = s.split("[.,:;()?�" + " " + "\t!�]"); //:FIXME Ojo con la codificaci�n de git. Sustituir por la exclamacion e interrogacion espa�olas
-		final List<String> listaPalabras = Arrays.asList(palabras);
-		boolean exist = false;
-		final AdminConfig administratorConfig = this.getAdminConfig();
-		final Collection<String> spamWord = administratorConfig.getSpamWords();
-		for (final String palabraLista : listaPalabras)
-			if (spamWord.contains(palabraLista.toLowerCase().trim())) {
-				exist = true;
-				break;
-			}
-		return exist;
-	}
-
 	public AdminConfig reconstruct(final AdminConfigForm adminConfigForm, final BindingResult binding) {
 		final AdminConfig adminConfig;
 
@@ -82,6 +68,21 @@ public class AdminConfigService {
 			throw new ValidationException();
 
 		return adminConfig;
+	}
+
+	public boolean existSpamWord(final String s) {
+		final String palabras[] = s.split("[.,:;()¿?" + " " + "\t!¡]");
+		//FIXME Ojo con la codificaci�n de git. Sustituir por la exclamacion e interrogacion espa�olas
+		final List<String> listaPalabras = Arrays.asList(palabras);
+		boolean exist = false;
+		final AdminConfig administratorConfig = this.getAdminConfig();
+		final Collection<String> spamWord = administratorConfig.getSpamWords();
+		for (final String palabraLista : listaPalabras)
+			if (spamWord.contains(palabraLista.toLowerCase().trim())) {
+				exist = true;
+				break;
+			}
+		return exist;
 	}
 
 	public void deleteSpamWord(final String spamWord) {
