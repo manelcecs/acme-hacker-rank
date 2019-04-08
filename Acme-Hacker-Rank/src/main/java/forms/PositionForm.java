@@ -10,6 +10,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -53,6 +54,7 @@ public class PositionForm extends DomainEntity {
 		this.description = description;
 	}
 
+	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@NotNull
@@ -65,6 +67,7 @@ public class PositionForm extends DomainEntity {
 	}
 
 	@SafeHtml
+	@NotBlank
 	public String getProfileRequired() {
 		return this.profileRequired;
 	}

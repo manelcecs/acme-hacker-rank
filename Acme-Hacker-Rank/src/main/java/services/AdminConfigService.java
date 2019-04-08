@@ -35,12 +35,12 @@ public class AdminConfigService {
 	}
 
 	public AdminConfig save(final AdminConfig adminConfig) {
-		//AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
+		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
 		return this.adminConfigRepository.save(adminConfig);
 	}
 
 	public boolean existSpamWord(final String s) {
-		final String palabras[] = s.split("[.,:;()?¿" + " " + "\t!¡]"); //:FIXME Ojo con la codificación de git. Sustituir por la exclamacion e interrogacion españolas
+		final String palabras[] = s.split("[.,:;()?ï¿½" + " " + "\t!ï¿½]"); //:FIXME Ojo con la codificaciï¿½n de git. Sustituir por la exclamacion e interrogacion espaï¿½olas
 		final List<String> listaPalabras = Arrays.asList(palabras);
 		boolean exist = false;
 		final AdminConfig administratorConfig = this.getAdminConfig();

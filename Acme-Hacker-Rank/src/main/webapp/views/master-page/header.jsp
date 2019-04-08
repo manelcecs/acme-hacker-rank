@@ -51,11 +51,23 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
+		
 			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
+		</security:authorize>
+		<security:authorize access="hasRole('COMPANY')">
+			<li><a class="fNiv"><spring:message	code="master.page.positions" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
+					<li><a href="position/company/create.do"><spring:message code="master.page.company.create" /></a></li>
+					<li><a href="position/company/list.do"><spring:message code="master.page.company.list" /></a></li>			
+				</ul>
+			</li>
+			
+			<li><a class="fNiv"><spring:message	code="master.page.problems" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="problem/company/create.do"><spring:message code="master.page.company.problem.create" /></a></li>
+					<li><a href="problem/company/list.do"><spring:message code="master.page.company.problem.list" /></a></li>			
 				</ul>
 			</li>
 		</security:authorize>

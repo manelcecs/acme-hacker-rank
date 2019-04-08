@@ -28,6 +28,12 @@
 		<bean class="converters.MessageBoxToStringConverter"/>
 		<bean class="converters.StringToMessageBoxConverter"/>
 		
+		<bean class="converters.ProblemToStringConverter"/>
+		<bean class="converters.StringToProblemConverter"/>
+		
+		<bean class="converters.PositionToStringConverter"/>
+		<bean class="converters.StringToPositionConverter"/>
+		
 	</util:list>
 	
 </beans>

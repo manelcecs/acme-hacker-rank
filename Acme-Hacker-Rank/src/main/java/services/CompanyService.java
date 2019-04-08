@@ -39,8 +39,9 @@ public class CompanyService {
 
 	public Company create() {
 		final Company res = new Company();
-
-		//TODO: a�adir cajas de mensajes
+		res.setSpammer(false);
+		res.setBanned(false);
+		//TODO: anadir cajas de mensajes
 
 		return res;
 	}
@@ -115,6 +116,10 @@ public class CompanyService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	public Collection<Company> findAll() {
+		return this.companyRepository.findAll();
 	}
 
 	//DASHBOARD----------------------------------------------------
