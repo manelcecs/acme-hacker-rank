@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<a href="#"><img src="images/logo.png" alt="Acme Hacker Rank Co., Inc." /></a>
+	<a href="#"><img src="${banner}" alt="${systemName} Co., Inc." /></a>
 </div>
 
 <div>
@@ -24,8 +24,29 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="adminConfig/administrator/display.do"><spring:message code="master.page.administrator.configuration" /></a></li>					
+					<li>
+						<a href="adminConfig/administrator/display.do"><spring:message code="master.page.administrator.configuration" /></a>
+					</li>
+					
+					<li>
+						<a href="administrator/process.do"><spring:message code="master.page.process.launch" /></a>
+					</li>					
+					<li>
+					    <a href="dashboard/administrator/display.do"><spring:message code="master.page.header.dashboard" /></a>
+					</li>
 				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="isAuthenticated()">
+			<li>
+				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('HACKER')">
+			<li>
+				<a class="fNiv" href="finder/hacker/edit.do"><spring:message code="master.page.finder.edit" /></a>
 			</li>
 		</security:authorize>
 		
@@ -40,6 +61,9 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
+			<li>
+				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
+			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
 		

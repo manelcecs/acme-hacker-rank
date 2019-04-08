@@ -43,30 +43,24 @@ public class MessageBoxService {
 
 
 	public MessageBox create() {
-		final MessageBox box = new MessageBox();
-		box.setDeleteable(true);
-
-		return box;
+		return new MessageBox();
 	}
 
 	public MessageBox save(final MessageBox messageBox) {
+		Assert.isTrue(this.notLikeOriginalName(messageBox.getName()));
+
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
-
-		if (messageBox.getId() != 0) {
-			final MessageBox boxBD = this.messageBoxRepository.findOne(messageBox.getId());
-			Assert.isTrue(boxBD.getDeleteable() == messageBox.getDeleteable());
-			Assert.isTrue(messageBox.getDeleteable());
-		}
-
-		final String nameBox = messageBox.getName().toUpperCase().trim();
-		Assert.isTrue(!(nameBox.equals("IN BOX") || nameBox.equals("TRASH BOX") || nameBox.equals("OUT BOX") || nameBox.equals("SPAM BOX") || nameBox.equals("NOTIFICATION BOX")));
-
 		final MessageBox boxSave = this.messageBoxRepository.save(messageBox);
+
 		if (messageBox.getId() == 0) {
 			final Collection<MessageBox> messageBoxes = actor.getMessageBoxes();
 			messageBoxes.add(boxSave);
 			actor.setMessageBoxes(messageBoxes);
 			this.actorService.save(actor);
+		} else {
+			final MessageBox boxBD = this.messageBoxRepository.findOne(messageBox.getId());
+			Assert.isTrue(boxBD.getDeleteable() == messageBox.getDeleteable());
+			Assert.isTrue(messageBox.getDeleteable());
 		}
 
 		return boxSave;
@@ -78,12 +72,12 @@ public class MessageBoxService {
 		Assert.isTrue(this.actorService.getByMessageBox(messageBox.getId()).equals(actor));
 
 		final Collection<MessageBox> childrens = this.allChildren(messageBox);
-
-		final Collection<Message> messagesAlaTrashBox = new ArrayList<>();
+		final Collection<Message> messagesToTrashBox = new ArrayList<>();
 		final MessageBox trashBox = this.findOriginalBox(actor.getId(), "Trash Box");
+
 		for (final MessageBox childrensAndFather : childrens)
 			if (childrensAndFather.getMessages().size() > 0) {
-				messagesAlaTrashBox.addAll(childrensAndFather.getMessages());
+				messagesToTrashBox.addAll(childrensAndFather.getMessages());
 				for (final Message messageInBox : childrensAndFather.getMessages()) {
 					final Collection<MessageBox> boxes = messageInBox.getMessageBoxes();
 					boxes.remove(childrensAndFather);
@@ -95,8 +89,9 @@ public class MessageBoxService {
 				childrensAndFather.setMessages(null);
 				this.messageBoxRepository.save(childrensAndFather);
 			}
+
 		final Collection<Message> trashBoxMessages = trashBox.getMessages();
-		trashBoxMessages.addAll(messagesAlaTrashBox);
+		trashBoxMessages.addAll(messagesToTrashBox);
 		trashBox.setMessages(trashBoxMessages);
 		this.messageBoxRepository.save(trashBox);
 
@@ -106,14 +101,6 @@ public class MessageBoxService {
 		this.actorRepository.save(actor);
 
 		this.messageBoxRepository.delete(childrens);
-	}
-
-	public MessageBox findOne(final int id) {
-		return this.messageBoxRepository.findOne(id);
-	}
-
-	public MessageBox findOriginalBox(final int id, final String string) {
-		return this.messageBoxRepository.findOriginalBox(id, string);
 	}
 
 	public Collection<MessageBox> findBoxToMove(final Message message) {
@@ -134,7 +121,76 @@ public class MessageBoxService {
 		return messageBoxesToMove;
 	}
 
-	private Collection<MessageBox> findAllMessageBoxByActor(final int id) {
+	public Collection<MessageBox> initializeNewUserBoxes() {
+		final List<MessageBox> initialBoxes = new ArrayList<>();
+
+		MessageBox inBox = this.create();
+		inBox.setDeleteable(false);
+		inBox.setName("In Box");
+		inBox = this.messageBoxRepository.save(inBox);
+
+		MessageBox outBox = this.create();
+		outBox.setDeleteable(false);
+		outBox.setName("Out Box");
+		outBox = this.messageBoxRepository.save(outBox);
+
+		MessageBox spamBox = this.create();
+		spamBox.setDeleteable(false);
+		spamBox.setName("Spam Box");
+		spamBox = this.messageBoxRepository.save(spamBox);
+
+		MessageBox trashBox = this.create();
+		trashBox.setDeleteable(false);
+		trashBox.setName("Trash Box");
+		trashBox = this.messageBoxRepository.save(trashBox);
+
+		MessageBox notificationBox = this.create();
+		notificationBox.setName("Notification Box");
+		notificationBox.setDeleteable(false);
+		notificationBox = this.messageBoxRepository.save(notificationBox);
+
+		initialBoxes.add(inBox);
+		initialBoxes.add(outBox);
+		initialBoxes.add(trashBox);
+		initialBoxes.add(spamBox);
+		initialBoxes.add(notificationBox);
+
+		return initialBoxes;
+	}
+
+	public MessageBox reconstruct(final MessageBox messageBox, final BindingResult binding) {
+		MessageBox result;
+
+		if (messageBox.getId() == 0) {
+			result = this.create();
+			result.setMessages(null);
+			result.setDeleteable(true);
+		} else
+			result = this.findOne(messageBox.getId());
+
+		result.setParent(messageBox.getParent());
+		result.setName(messageBox.getName());
+
+		this.validator.validate(result, binding);
+
+		if (this.likeOriginalName(messageBox.getName()))
+			binding.rejectValue("name", "messageBox.error.OriginalName");
+
+		if (binding.hasErrors())
+			throw new ValidationException();
+
+		return result;
+	}
+
+	public MessageBox findOne(final int id) {
+		return this.messageBoxRepository.findOne(id);
+	}
+
+	public MessageBox findOriginalBox(final int id, final String string) {
+		return this.messageBoxRepository.findOriginalBox(id, string);
+	}
+
+	public Collection<MessageBox> findAllMessageBoxByActor(final int id) {
 		return this.messageBoxRepository.findAllMessageBoxByActor(id);
 	}
 
@@ -150,66 +206,20 @@ public class MessageBoxService {
 		return this.messageBoxRepository.findAllMessageBoxByActorContainsAMessage(idActor, idMessage);
 	}
 
-	public Collection<MessageBox> initializeNewUserBoxes() {
-		final List<MessageBox> res = new ArrayList<>();
-
-		final MessageBox in = this.create();
-		in.setDeleteable(false);
-		in.setName("In Box");
-		final MessageBox inF = this.messageBoxRepository.save(in);
-
-		final MessageBox out = this.create();
-		out.setDeleteable(false);
-		out.setName("Out Box");
-		final MessageBox outF = this.messageBoxRepository.save(out);
-
-		final MessageBox spam = this.create();
-		spam.setDeleteable(false);
-		spam.setName("Spam Box");
-		final MessageBox spamF = this.messageBoxRepository.save(spam);
-		final MessageBox trash = this.create();
-
-		trash.setDeleteable(false);
-		trash.setName("Trash Box");
-		final MessageBox trashF = this.messageBoxRepository.save(trash);
-
-		final MessageBox notification = this.create();
-		notification.setName("Notification Box");
-		notification.setDeleteable(false);
-		final MessageBox notificationF = this.messageBoxRepository.save(notification);
-
-		res.add(inF);
-		res.add(outF);
-		res.add(trashF);
-		res.add(spamF);
-		res.add(notificationF);
-
-		return res;
+	//Utilities
+	private boolean likeOriginalName(final String name) {
+		return !this.notLikeOriginalName(name);
 	}
 
-	public MessageBox reconstruct(final MessageBox messageBox, final BindingResult binding) {
-		MessageBox result;
-		if (messageBox.getId() == 0) {
-			result = this.create();
-			result.setMessages(null);
-			result.setDeleteable(true);
-			result.setParent(messageBox.getParent());
-			result.setName(messageBox.getName());
-		} else {
-			result = this.findOne(messageBox.getId());
-			result.setParent(messageBox.getParent());
-			result.setName(messageBox.getName());
-		}
+	private boolean notLikeOriginalName(final String name) {
+		boolean res = false;
 
-		this.validator.validate(result, binding);
+		final String nameTrim = name.toUpperCase().replace(" ", "");
 
-		final String nameBox = messageBox.getName().toUpperCase().trim();
-		if (((nameBox.equals("IN BOX") || nameBox.equals("TRASH BOX") || nameBox.equals("OUT BOX") || nameBox.equals("SPAM BOX") || nameBox.equals("NOTIFICATION BOX"))))
-			binding.rejectValue("name", "messageBox.error.name");
+		if (!(nameTrim.equals("INBOX") || nameTrim.equals("TRASHBOX") || nameTrim.equals("OUTBOX") || nameTrim.equals("SPAMBOX") || nameTrim.equals("NOTIFICATIONBOX")))
+			res = true;
 
-		if (binding.hasErrors())
-			throw new ValidationException();
-		return result;
+		return res;
 	}
 
 	private Collection<MessageBox> allChildren(final MessageBox box) {
@@ -227,6 +237,10 @@ public class MessageBoxService {
 			acum.add(box);
 		}
 		return acum;
+	}
+
+	public void flush() {
+		this.messageBoxRepository.flush();
 	}
 
 }

@@ -24,6 +24,7 @@ public class Finder extends DomainEntity {
 	private Date					deadline;
 	private Date					maximumDeadLine;
 	private Double					minimumSalary;
+	private Date					lastUpdate;
 
 	//Relationship
 	private Collection<Position>	positions;
@@ -76,6 +77,16 @@ public class Finder extends DomainEntity {
 
 	public void setPositions(final Collection<Position> positions) {
 		this.positions = positions;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	public Date getLastUpdate() {
+		return this.lastUpdate;
+	}
+
+	public void setLastUpdate(final Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 }

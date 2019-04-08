@@ -11,13 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.CompanyService;
 import services.PositionService;
+import controllers.AbstractController;
 import domain.Company;
 import domain.Position;
 import forms.PositionForm;
 
 @Controller
 @RequestMapping("/position")
-public class PositionController {
+public class PositionController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
@@ -30,7 +31,6 @@ public class PositionController {
 	public ModelAndView create() {
 		final PositionForm positionForm = new PositionForm();
 		return this.createEditModelAndView(positionForm);
-
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -59,7 +59,7 @@ public class PositionController {
 
 		result.addObject("positionForm", positionForm);
 		result.addObject("message", message);
-
+		this.configValues(result);
 		return result;
 	}
 

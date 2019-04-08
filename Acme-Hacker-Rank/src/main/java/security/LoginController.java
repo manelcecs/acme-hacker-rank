@@ -50,7 +50,7 @@ public class LoginController extends AbstractController {
 		result = new ModelAndView("security/login");
 		result.addObject("credentials", credentials);
 		result.addObject("showError", showError);
-
+		this.configValues(result);
 		return result;
 	}
 

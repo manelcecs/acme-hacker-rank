@@ -31,12 +31,11 @@ public class AdminConfigService {
 
 
 	public AdminConfig getAdminConfig() {
-		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
 		return this.adminConfigRepository.findAll().get(0);
 	}
 
 	public AdminConfig save(final AdminConfig adminConfig) {
-		AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
+		//AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR");
 		return this.adminConfigRepository.save(adminConfig);
 	}
 
@@ -70,10 +69,10 @@ public class AdminConfigService {
 		final Collection<String> spamWords = adminConfig.getSpamWords();
 
 		if (!(adminConfigForm.getSpamWord().trim().isEmpty())) {
-			if (spamWords.contains(adminConfigForm.getSpamWord()))
+			if (spamWords.contains(adminConfigForm.getSpamWord().toLowerCase()))
 				binding.rejectValue("spamWord", "adminConfig.error.existSpamWord");
 
-			spamWords.add(adminConfigForm.getSpamWord());
+			spamWords.add(adminConfigForm.getSpamWord().toLowerCase());
 		}
 		adminConfig.setSpamWords(spamWords);
 
@@ -94,5 +93,9 @@ public class AdminConfigService {
 		spamWords.remove(spamWord);
 		adminConfig.setSpamWords(spamWords);
 		this.save(adminConfig);
+	}
+
+	public void flush() {
+		this.adminConfigRepository.flush();
 	}
 }
