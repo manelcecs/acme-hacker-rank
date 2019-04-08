@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +16,13 @@ import services.ActorService;
 import services.AdministratorService;
 import services.CompanyService;
 import services.HackerService;
+import services.SocialProfileService;
 import utiles.AuthorityMethods;
 import domain.Actor;
 import domain.Administrator;
 import domain.Company;
 import domain.Hacker;
+import domain.SocialProfile;
 
 @Controller
 @RequestMapping("/actor")
@@ -32,11 +36,32 @@ public class ActorController extends AbstractController {
 	private CompanyService			companyService;
 	@Autowired
 	private AdministratorService	administratorService;
+	@Autowired
+	private SocialProfileService	socialProfileService;
 
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display() {
-		ModelAndView result = new ModelAndView("actor/display");
+		ModelAndView result;
+
+		result = this.createModelAndViewDisplay();
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+
+		ModelAndView res;
+
+		res = this.createModelAndViewEditActor();
+
+		return res;
+
+	}
+
+	protected ModelAndView createModelAndViewDisplay() {
+		final ModelAndView result = new ModelAndView("actor/display");
 
 		final UserAccount principal = LoginService.getPrincipal();
 
@@ -48,6 +73,8 @@ public class ActorController extends AbstractController {
 		final Authority authority = AuthorityMethods.getLoggedAuthority();
 
 		result.addObject("authority", authority.getAuthority());
+
+		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles();
 		switch (authority.getAuthority()) {
 		case "ADMINISTRATOR":
 			final Administrator administrator = this.administratorService.findOne(actor.getId());
@@ -66,27 +93,13 @@ public class ActorController extends AbstractController {
 			System.out.println(company);
 			result.addObject("company", company);
 			break;
-		default:
-			result = new ModelAndView("display.do");
-			break;
 		}
 
-		//TODO: this.configValues(result);
+		result.addObject("socialProfiles", socialProfiles);
+		this.configValues(result);
 		return result;
 
 	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit() {
-
-		ModelAndView res;
-
-		res = this.createModelAndViewEditActor();
-
-		return res;
-
-	}
-
 	protected ModelAndView createModelAndViewEditActor() {
 
 		ModelAndView res;
