@@ -24,8 +24,10 @@
 		<acme:textbox code="administrator.edit.name" path="name" />
 		<form:label class="textboxLabel" path="surnames"><spring:message code="administrator.edit.surnames" /></form:label>
     	<div id="surnames">
-    		<form:input class="textbox" path="surnames" type="text"/>    
-   		 </div>			
+    		<jstl:forEach items="${administrator.surnames }" var="surname">
+    			<form:input class="textbox" path="surnames" type="text" value="${ surname}"/>  
+    		</jstl:forEach>  
+   		 </div>					
     	<form:errors path="surnames" cssClass="error" />  
 		
 		<acme:textbox code="administrator.edit.photoURL" path="photo" />
@@ -37,11 +39,11 @@
 		<acme:textbox code="administrator.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="administrator.edit.creditcard.make" path="creditCard.make"/>
 		<acme:textbox code="administrator.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="administrator.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="MM"/>
-		<acme:textbox code="administrator.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="YY"/>
+		<acme:textbox code="administrator.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="administrator.edit.creditcard.expirationMonth.placeholder"/>
+		<acme:textbox code="administrator.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="administrator.edit.creditcard.expirationYear.placeholder"/>
 		<acme:textbox code="administrator.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
-		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" />
+		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" ><spring:message code="administrator.edit.submit" /></input>
 		<acme:cancel url="/" code="administrator.edit.cancel" />
 	</form:form>
 	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="administrator.edit.surnames.add" /></button>
@@ -57,6 +59,7 @@
 			path="confirmPassword" />
 
 		<acme:textbox code="administrator.edit.name" path="name" />
+		<form:label class="textboxLabel" path="surnames"><spring:message code="administrator.edit.surnames" /></form:label>
 		<div id="surnames">
     		<form:input class="textbox" path="surnames" type="text"/>    
    		 </div>			
@@ -81,7 +84,7 @@
 		<form:errors path="termsAndConditions" cssClass="error" />
 		<br />
 		<input type="submit" name="submit"
-			onclick="return checkPhone(this.form.phone.value)" />
+			onclick="return checkPhone(this.form.phone.value)" ><spring:message code="administrator.edit.submit" /></input>
 		<acme:cancel url="/" code="administrator.edit.cancel" />
 	</form:form>
 	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="administrator.edit.surnames.add" /></button>

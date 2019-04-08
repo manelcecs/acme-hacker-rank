@@ -49,7 +49,6 @@ public class HackerController extends AbstractController {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(hackerForm);
-			oops.printStackTrace();
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(hackerForm, "hacker.edit.commit.error");
 			oops.printStackTrace();
@@ -63,18 +62,15 @@ public class HackerController extends AbstractController {
 	public ModelAndView saveAdmin(final Hacker hacker, final BindingResult binding) {
 		ModelAndView res;
 
-		if (!this.hackerService.validateEmail(hacker.getEmail()))
-			binding.rejectValue("email", "error.email");
 		try {
 			final Hacker hackerRect = this.hackerService.reconstruct(hacker, binding);
 			this.hackerService.save(hackerRect);
 			res = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(hacker);
-
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(hacker);
-
+			oops.printStackTrace();
 		}
 		return res;
 	}

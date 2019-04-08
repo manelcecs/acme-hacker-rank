@@ -75,12 +75,12 @@ public class AdministratorService {
 
 	}
 
-	public Administrator findOne(final int adminId) {
-		return this.adminRepository.findOne(adminId);
+	public Administrator findOne(final int actorId) {
+		return this.adminRepository.findOne(actorId);
 	}
 
 	public Administrator findByPrincipal(final UserAccount principal) {
-		return this.adminRepository.findByPrincipal(principal.getId());
+		return this.adminRepository.findOne(principal.getId());
 	}
 
 	public Administrator reconstruct(final AdministratorForm adminForm, final BindingResult binding) {
@@ -130,6 +130,12 @@ public class AdministratorService {
 	}
 
 	public Administrator reconstruct(final Administrator admin, final BindingResult binding) {
+
+		if (!this.validateEmail(admin.getEmail()))
+			binding.rejectValue("email", "administrator.edit.email.error");
+		if (admin.getSurnames().isEmpty())
+			binding.rejectValue("surnames", "administrator.edit.surnames.error");
+
 		final Administrator result;
 		result = this.findByPrincipal(LoginService.getPrincipal());
 		result.setAddress(admin.getAddress());

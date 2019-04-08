@@ -22,7 +22,13 @@
 	<form:form action="company/company/save.do"
 		modelAttribute="company">
 		<acme:textbox code="company.edit.name" path="name" />
-		<acme:textarea code="company.edit.surnames" path="surnames" />
+		<form:label class="textboxLabel" path="surnames"><spring:message code="company.edit.surnames" /></form:label>
+    	<div id="surnames">
+    		<jstl:forEach items="${company.surnames }" var="surname">
+    			<form:input class="textbox" path="surnames" type="text" value="${ surname}"/>  
+    		</jstl:forEach>  
+   		 </div>					
+    	<form:errors path="surnames" cssClass="error" />  
 		<acme:textbox code="company.edit.companyName" path="companyName" />
 		<acme:textbox code="company.edit.photoURL" path="photo" />
 		<acme:textbox code="company.edit.address" path="address" />
@@ -33,13 +39,14 @@
 		<acme:textbox code="company.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="company.edit.creditcard.make" path="creditCard.make"/>
 		<acme:textbox code="company.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="company.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="MM"/>
-		<acme:textbox code="company.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="YY"/>
+		<acme:textbox code="company.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="company.edit.creditcard.expirationMonth.placeholder"/>
+		<acme:textbox code="company.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="company.edit.creditcard.expirationYear.placeholder"/>
 		<acme:textbox code="company.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
-		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" />
+		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" ><spring:message code="company.edit.submit" /></input>
 		<acme:cancel url="/" code="company.edit.cancel" />
 	</form:form>
+	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="company.edit.surnames.add" /></button>
 </jstl:if>
 <jstl:if test="${not edit }">
 	<form:form action="company/save.do"
@@ -52,7 +59,11 @@
 			path="confirmPassword" />
 
 		<acme:textbox code="company.edit.name" path="name" />
-		<acme:textarea code="company.edit.surnames" path="surnames" />
+		<form:label class="textboxLabel" path="surnames"><spring:message code="company.edit.surnames" /></form:label>
+    	<div id="surnames">
+    		<form:input class="textbox" path="surnames" type="text"/>    
+   		 </div>			
+    	<form:errors path="surnames" cssClass="error" />  
 		<acme:textbox code="company.edit.companyName" path="companyName" />
 		<acme:textbox code="company.edit.photoURL" path="photo" />
 		<acme:textbox code="company.edit.address" path="address" />
@@ -73,7 +84,8 @@
 		<form:errors path="termsAndConditions" cssClass="error" />
 		<br />
 		<input type="submit" name="submit"
-			onclick="return checkPhone(this.form.phone.value)" />
+			onclick="return checkPhone(this.form.phone.value)" ><spring:message code="company.edit.submit" /></input>
 		<acme:cancel url="/" code="company.edit.cancel" />
 	</form:form>
+	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="company.edit.surnames.add" /></button>
 </jstl:if>

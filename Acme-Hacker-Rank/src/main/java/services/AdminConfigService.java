@@ -40,20 +40,6 @@ public class AdminConfigService {
 		return this.adminConfigRepository.save(adminConfig);
 	}
 
-	public boolean existSpamWord(final String s) {
-		final String palabras[] = s.split("[.,:;()?¿" + " " + "\t!¡]"); //:FIXME Ojo con la codificación de git. Sustituir por la exclamacion e interrogacion españolas
-		final List<String> listaPalabras = Arrays.asList(palabras);
-		boolean exist = false;
-		final AdminConfig administratorConfig = this.getAdminConfig();
-		final Collection<String> spamWord = administratorConfig.getSpamWords();
-		for (final String palabraLista : listaPalabras)
-			if (spamWord.contains(palabraLista.toLowerCase().trim())) {
-				exist = true;
-				break;
-			}
-		return exist;
-	}
-
 	public AdminConfig reconstruct(final AdminConfigForm adminConfigForm, final BindingResult binding) {
 		final AdminConfig adminConfig;
 

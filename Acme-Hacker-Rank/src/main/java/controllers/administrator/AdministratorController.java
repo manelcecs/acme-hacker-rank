@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.UserAccountRepository;
 import services.AdministratorService;
 import controllers.AbstractController;
 import domain.Administrator;
@@ -34,8 +33,6 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private AdministratorService	adminService;
-	@Autowired
-	private UserAccountRepository	userAccountRepository;
 
 
 	// Constructors -----------------------------------------------------------
@@ -66,7 +63,6 @@ public class AdministratorController extends AbstractController {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(adminForm);
-			oops.printStackTrace();
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(adminForm, "administrator.edit.commit.error");
 			oops.printStackTrace();
@@ -80,18 +76,15 @@ public class AdministratorController extends AbstractController {
 	public ModelAndView saveAdmin(final Administrator administrator, final BindingResult binding) {
 		ModelAndView res;
 
-		if (!this.adminService.validateEmail(administrator.getEmail()))
-			binding.rejectValue("email", "error.email");
 		try {
 			final Administrator adminRect = this.adminService.reconstruct(administrator, binding);
 			this.adminService.save(adminRect);
 			res = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(administrator);
-
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(administrator);
-
+			oops.printStackTrace();
 		}
 		return res;
 	}

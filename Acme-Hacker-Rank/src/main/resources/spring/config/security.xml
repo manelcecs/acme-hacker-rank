@@ -69,7 +69,9 @@
 		<security:intercept-url pattern="/messageBox/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 		
-		
+		<!-- ACTOR - DISPLAY/EDIT -->
+		<security:intercept-url pattern="/actor/edit.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/actor/display.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

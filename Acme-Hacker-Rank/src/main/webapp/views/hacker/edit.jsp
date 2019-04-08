@@ -22,7 +22,13 @@
 	<form:form action="hacker/hacker/save.do"
 		modelAttribute="hacker">
 		<acme:textbox code="hacker.edit.name" path="name" />
-		<acme:textarea code="hacker.edit.surnames" path="surnames" />
+		<form:label class="textboxLabel" path="surnames"><spring:message code="hacker.edit.surnames" /></form:label>
+    	<div id="surnames">
+    		<jstl:forEach items="${hacker.surnames }" var="surname">
+    			<form:input class="textbox" path="surnames" type="text" value="${ surname}"/>  
+    		</jstl:forEach>  
+   		 </div>			
+    	<form:errors path="surnames" cssClass="error" />  
 		<acme:textbox code="hacker.edit.photoURL" path="photo" />
 		<acme:textbox code="hacker.edit.address" path="address" />
 		<acme:textbox code="hacker.edit.vat" path="vatNumber" />
@@ -32,13 +38,14 @@
 		<acme:textbox code="hacker.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="hacker.edit.creditcard.make" path="creditCard.make"/>
 		<acme:textbox code="hacker.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="hacker.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="MM"/>
-		<acme:textbox code="hacker.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="YY"/>
+		<acme:textbox code="hacker.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="hacker.edit.creditcard.expirationMonth.placeholder"/>
+		<acme:textbox code="hacker.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="hacker.edit.creditcard.expirationYear.placeholder"/>
 		<acme:textbox code="hacker.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
-		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" />
+		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" ><spring:message code="hacker.edit.submit" /></input>
 		<acme:cancel url="/" code="hacker.edit.cancel" />
 	</form:form>
+	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="hacker.edit.surnames.add" /></button>
 </jstl:if>
 <jstl:if test="${not edit }">
 	<form:form action="hacker/save.do"
@@ -51,7 +58,11 @@
 			path="confirmPassword" />
 
 		<acme:textbox code="hacker.edit.name" path="name" />
-		<acme:textarea code="hacker.edit.surnames" path="surnames" />
+		<form:label class="textboxLabel" path="surnames"><spring:message code="hacker.edit.surnames" /></form:label>
+    	<div id="surnames">
+    		<form:input class="textbox" path="surnames" type="text"/>    
+   		 </div>			
+    	<form:errors path="surnames" cssClass="error" />  
 		<acme:textbox code="hacker.edit.photoURL" path="photo" />
 		<acme:textbox code="hacker.edit.address" path="address" />
 		<acme:textbox code="hacker.edit.vat" path="vatNumber" />
@@ -71,7 +82,8 @@
 		<form:errors path="termsAndConditions" cssClass="error" />
 		<br />
 		<input type="submit" name="submit"
-			onclick="return checkPhone(this.form.phone.value)" />
+			onclick="return checkPhone(this.form.phone.value)"><spring:message code="hacker.edit.submit" /></input>
 		<acme:cancel url="/" code="hacker.edit.cancel" />
 	</form:form>
+	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="hacker.edit.surnames.add" /></button>
 </jstl:if>

@@ -54,9 +54,9 @@ public class HackerService {
 
 	public Hacker save(final Hacker hacker) {
 		Assert.isTrue(hacker != null);
-		Assert.isTrue(!AuthorityMethods.checkIsSomeoneLogged());
 
 		if (hacker.getId() == 0) {
+			Assert.isTrue(!AuthorityMethods.checkIsSomeoneLogged());
 			final UserAccount userAccount = hacker.getUserAccount();
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -141,8 +141,14 @@ public class HackerService {
 	}
 
 	public Hacker reconstruct(final Hacker hacker, final BindingResult binding) {
+
+		if (!this.validateEmail(hacker.getEmail()))
+			binding.rejectValue("email", "hacker.edit.email.error");
+		if (hacker.getSurnames().isEmpty())
+			binding.rejectValue("surnames", "hacker.edit.surnames.error");
+
 		final Hacker result;
-		result = this.findByPrincipal(LoginService.getPrincipal().getId());
+		result = this.findByPrincipal(LoginService.getPrincipal());
 		result.setAddress(hacker.getAddress());
 		result.setEmail(hacker.getEmail());
 		result.setName(hacker.getName());
@@ -162,7 +168,8 @@ public class HackerService {
 
 		Boolean valid = false;
 
-		final Pattern emailPattern = Pattern.compile("^([0-9a-zA-Z ]{1,}[ ]{1}[<]{1}[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,}[>]{1}|[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,})$");
+		final Pattern emailPattern = Pattern
+			.compile("^([A-Za-z0-9_.]{1,}[@]{1}[a-z]{1,}[.]{1}[a-z]{1,})|([A-Za-z0-9_.]{1,}[<]{1}[A-Za-z0-9]{1,}[@]{1}[a-z]{2,}[.]{1}[a-z]{2,}[>]{1})|([A-Za-z0-9._]{1,}[<]{1}[A-Za-z0-9]{1,}[@]{1}[>]{1})|([A-Za-z0-9._]{1,}[@]{1})$");
 
 		final Matcher mEmail = emailPattern.matcher(email.toLowerCase());
 		if (mEmail.matches())

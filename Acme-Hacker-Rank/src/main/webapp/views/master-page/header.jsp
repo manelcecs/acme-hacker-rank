@@ -35,6 +35,7 @@
 			<li>
 				<a class="fNiv" href="finder/search.do"><spring:message code="master.page.finder.search" /></a>
 			</li>
+			
 		</security:authorize>
 		
 		<security:authorize access="hasRole('HACKER')">
@@ -71,14 +72,14 @@
 			</li>
 			<li>
 				<a class="fNiv"> 
-					<spring:message code="master.page.profile" /> 
+					<spring:message	code="master.page.actor.profile" />
 			        (<security:authentication property="principal.username" />)
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+					<li><a href="actor/display.do"><spring:message code="master.page.actor.profile" /></a></li>			
+					<li><a href="actor/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
+					<li><a href="actor/socialProfile/display.do"><spring:message code="master.page.actor.socialProfile" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

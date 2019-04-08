@@ -48,7 +48,6 @@ public class CompanyController extends AbstractController {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(companyForm);
-			oops.printStackTrace();
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(companyForm, "company.edit.commit.error");
 			oops.printStackTrace();
@@ -62,18 +61,15 @@ public class CompanyController extends AbstractController {
 	public ModelAndView saveAdmin(final Company company, final BindingResult binding) {
 		ModelAndView res;
 
-		if (!this.companyService.validateEmail(company.getEmail()))
-			binding.rejectValue("email", "error.email");
 		try {
 			final Company companyRect = this.companyService.reconstruct(company, binding);
 			this.companyService.save(companyRect);
 			res = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(company);
-
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(company);
-
+			oops.printStackTrace();
 		}
 		return res;
 	}
