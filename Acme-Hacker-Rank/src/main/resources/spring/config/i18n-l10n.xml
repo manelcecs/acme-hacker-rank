@@ -32,7 +32,7 @@
 		
 		<value>/views/messageBox/messages</value>
 		
-		
+		<value>/views/problem/messages</value>
 		<value>/views/position/messages</value>
 		<value>/views/company/messages</value>
 	</util:list>
