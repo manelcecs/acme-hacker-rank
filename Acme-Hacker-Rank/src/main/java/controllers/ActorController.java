@@ -16,7 +16,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.CompanyService;
 import services.HackerService;
-import services.MessageService;
+import services.SocialProfileService;
 import utiles.AuthorityMethods;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,7 +25,6 @@ import domain.Actor;
 import domain.Administrator;
 import domain.Company;
 import domain.Hacker;
-import domain.Message;
 import domain.SocialProfile;
 
 @Controller
@@ -43,6 +42,8 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private AdministratorService	administratorService;
+	@Autowired
+	private SocialProfileService	socialProfileService;
 
 	@Autowired
 	private MessageService			messageService;
@@ -50,7 +51,26 @@ public class ActorController extends AbstractController {
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display() {
-		ModelAndView result = new ModelAndView("actor/display");
+		ModelAndView result;
+
+		result = this.createModelAndViewDisplay();
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+
+		ModelAndView res;
+
+		res = this.createModelAndViewEditActor();
+
+		return res;
+
+	}
+
+	protected ModelAndView createModelAndViewDisplay() {
+		final ModelAndView result = new ModelAndView("actor/display");
 
 		final UserAccount principal = LoginService.getPrincipal();
 
@@ -62,6 +82,8 @@ public class ActorController extends AbstractController {
 		final Authority authority = AuthorityMethods.getLoggedAuthority();
 
 		result.addObject("authority", authority.getAuthority());
+
+		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles();
 		switch (authority.getAuthority()) {
 		case "ADMINISTRATOR":
 			final Administrator administrator = this.administratorService.findOne(actor.getId());
@@ -80,24 +102,13 @@ public class ActorController extends AbstractController {
 			System.out.println(company);
 			result.addObject("company", company);
 			break;
-		default:
-			result = new ModelAndView("display.do");
-			break;
 		}
 
+		result.addObject("socialProfiles", socialProfiles);
 		this.configValues(result);
 		return result;
 
 	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit() {
-		ModelAndView result;
-		result = this.createModelAndViewEditActor();
-		return result;
-
-	}
-
 	protected ModelAndView createModelAndViewEditActor() {
 		ModelAndView result;
 

@@ -4,7 +4,6 @@ package controllers.hacker;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class HackerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView save(@Valid final HackerForm hackerForm, final BindingResult binding) {
+	public ModelAndView save(final HackerForm hackerForm, final BindingResult binding) {
 
 		ModelAndView res;
 

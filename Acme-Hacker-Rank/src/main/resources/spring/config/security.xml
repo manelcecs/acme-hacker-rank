@@ -73,8 +73,6 @@
 
 		<security:intercept-url pattern="/adminConfig/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
 
-		
-	
 		<security:intercept-url pattern="/position/company/**" access="hasRole('COMPANY')" />
 		<security:intercept-url pattern="/messageBox/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
@@ -86,6 +84,10 @@
 		<!-- ACTOR - DISPLAY/EDIT -->
 		<security:intercept-url pattern="/actor/edit.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/actor/display.do" access="isAuthenticated()" /> 
+		
+		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/socialProfile/save.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

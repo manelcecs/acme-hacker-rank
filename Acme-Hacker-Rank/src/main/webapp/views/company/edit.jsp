@@ -43,6 +43,7 @@
 		<acme:textbox code="company.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="company.edit.creditcard.expirationYear.placeholder"/>
 		<acme:textbox code="company.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
+		<spring:message code="company.edit.submit" var="submit"/>
 		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" value="${ submit}" />
 		<acme:cancel url="/" code="company.edit.cancel" />
 	</form:form>
@@ -83,6 +84,7 @@
 		<b><spring:message code="company.edit.termsAndConditions" /></b>
 		<form:errors path="termsAndConditions" cssClass="error" />
 		<br />
+		<spring:message code="company.edit.submit" var="submit"/>
 		<input type="submit" name="submit"
 			onclick="return checkPhone(this.form.phone.value)" value="${ submit}" />
 		<acme:cancel url="/" code="company.edit.cancel" />

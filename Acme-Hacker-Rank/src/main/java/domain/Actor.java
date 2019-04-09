@@ -74,6 +74,7 @@ public abstract class Actor extends DomainEntity {
 		this.vatNumber = vatNumber;
 	}
 
+	@NotNull
 	@Valid
 	@NotNull
 	public CreditCard getCreditCard() {
@@ -112,6 +113,7 @@ public abstract class Actor extends DomainEntity {
 		this.email = email;
 	}
 
+	@NotBlank
 	@SafeHtml
 	public String getPhoneNumber() {
 		return this.phoneNumber;
