@@ -177,6 +177,8 @@ public class DashboardController extends AbstractController {
 		final Collection<Company> companiesWithMoreOffersOfPositions = this.companyService.getCompaniesWithMoreOffersOfPositions();
 		result.addObject("companiesWithMoreOffersOfPositions", companiesWithMoreOffersOfPositions);
 
+		result.addObject("requestURI", "dashboard/administrator/display.do");
+
 		this.configValues(result);
 		return result;
 	}

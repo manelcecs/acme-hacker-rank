@@ -18,7 +18,7 @@
 <p><strong><spring:message code="problem.display.attachments" />:</strong> </p> 
 <ul>
 	<jstl:forEach var="attachment" items="${problem.attachments}">
-	<li><jstl:out value="attachment"/></li>
+	<li><jstl:out value="${attachment}"/></li>
 	</jstl:forEach>
 </ul>
 
