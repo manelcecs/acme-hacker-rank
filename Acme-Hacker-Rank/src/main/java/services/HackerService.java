@@ -1,6 +1,7 @@
 
 package services;
 
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,25 +33,31 @@ public class HackerService {
 
 	@Autowired
 	private UserAccountRepository	accountRepository;
+
 	@Autowired
 	private HackerRepository		hackerRepository;
+
 	@Autowired
 	private AdminConfigService		adminConfigService;
+
 	@Autowired
 	private MessageBoxService		messageBoxService;
+
+	@Autowired
+	private FinderService			finderService;
+
 	@Autowired
 	private Validator				validator;
 
 
-	public Hacker create() {
+	public Hacker create() throws ParseException {
 		final Hacker res = new Hacker();
 		res.setSpammer(false);
 		res.setBanned(false);
-		//TODO: a�adir finder
+		res.setFinder(this.finderService.generateNewFinder());
 		res.setMessageBoxes(this.messageBoxService.initializeNewUserBoxes());
 		return res;
 	}
-
 	public Hacker save(final Hacker hacker) {
 		Assert.isTrue(hacker != null);
 
@@ -86,7 +93,7 @@ public class HackerService {
 		return this.hackerRepository.findByPrincipal(principal.getId());
 	}
 
-	public Hacker reconstruct(final HackerForm hackerForm, final BindingResult binding) {
+	public Hacker reconstruct(final HackerForm hackerForm, final BindingResult binding) throws ParseException {
 
 		if (!this.validateEmail(hackerForm.getEmail()))
 			binding.rejectValue("email", "hacker.edit.email.error");

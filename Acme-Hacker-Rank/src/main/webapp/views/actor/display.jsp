@@ -23,7 +23,7 @@
 		<jstl:out value="${company.name }" />
 		<br />
 		<b><spring:message code="actor.surname" /></b>:
-		<jstl:forEach items="${company.surnames }" var="surname" >
+		<jstl:forEach items="${company.surnames }" var="surname">
 			<jstl:out value="${surname }" />
 		</jstl:forEach>
 		<br />
@@ -59,13 +59,13 @@
 	</jstl:when>
 
 
-	
+
 	<jstl:when test="${authority == 'ADMINISTRATOR'}">
 		<b><spring:message code="actor.name" /></b>:
 		<jstl:out value="${administrator.name }" />
 		<br />
 		<b><spring:message code="actor.surname" /></b>:
-		<jstl:forEach items="${administrator.surnames }" var="surname" >
+		<jstl:forEach items="${administrator.surnames }" var="surname">
 			<jstl:out value="${surname }" />
 		</jstl:forEach>
 		<br />
@@ -81,7 +81,7 @@
 		<b><spring:message code="actor.phoneNumber" /></b>:
 		<jstl:out value="${administrator.phoneNumber }" />
 		<br />
-		
+
 		<security:authorize access="hasRole('ADMINISTRATOR')">
 			<b><spring:message code="actor.spammer" /></b>
 			<jstl:if test="${ administrator.spammer eq null}">
@@ -102,7 +102,7 @@
 		<jstl:out value="${hacker.name }" />
 		<br />
 		<b><spring:message code="actor.surname" /></b>:
-		<jstl:forEach items="${hacker.surnames }" var="surname" >
+		<jstl:forEach items="${hacker.surnames }" var="surname">
 			<jstl:out value="${surname }" />
 		</jstl:forEach>
 		<br />
@@ -134,23 +134,26 @@
 	</jstl:when>
 </jstl:choose>
 
-		<!-- Social profiles table -->
-		<b><spring:message code="actor.socialProfile" /></b>
-		<display:table name="${socialProfiles}" id="profile">
-			<spring:message code="actor.socialProfiles.name" var="name" />
-			<display:column title="${nick }">
-				<jstl:out value="${ profile.nick}" />
-			</display:column>
-			<spring:message code="actor.socialProfiles.network" var="network" />
-			<display:column title="${nameSocialNetwork }">
-				<jstl:out value="${profile.nameSocialNetwork}" />
-			</display:column>
-			<spring:message code="actor.socialProfiles.link" var="link" />
-			<display:column title="${link }">
-				<jstl:out value="${ profile.link}" />
-			</display:column>
-		</display:table>
-		<br />
+<!-- Social profiles table -->
+<b><spring:message code="actor.socialProfile" /></b>
+<display:table name="${socialProfiles}" id="profile">
+	<display:column titleKey="actor.socialProfiles.name">
+		<jstl:out value="${ profile.nick}" />
+	</display:column>
+	<display:column titleKey="actor.socialProfiles.network">
+		<jstl:out value="${profile.nameSocialNetwork}" />
+	</display:column>
+	<display:column titleKey="actor.socialProfiles.link">
+		<jstl:out value="${ profile.link}" />
+	</display:column>
+	<display:column titleKey="actor.socialProfiles.edit">
+		<acme:button url="/socialProfile/edit.do?socialProfileId=${profile.id}" type="button" code="actor.socialProfiles.edit"/>
+	</display:column>
+	<display:column titleKey="actor.socialProfiles.delete">
+		<acme:button url="/socialProfile/delete.do?socialProfileId=${profile.id}" type="button" code="actor.socialProfiles.delete"/>
+	</display:column>
+</display:table>
+<br />
 
 
 <jstl:if test="${actor.userAccount == userLogged}">

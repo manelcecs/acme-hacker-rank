@@ -16,12 +16,17 @@ import services.ActorService;
 import services.AdministratorService;
 import services.CompanyService;
 import services.HackerService;
+import services.MessageService;
 import services.SocialProfileService;
 import utiles.AuthorityMethods;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import domain.Actor;
 import domain.Administrator;
 import domain.Company;
 import domain.Hacker;
+import domain.Message;
 import domain.SocialProfile;
 
 @Controller
@@ -30,14 +35,20 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private ActorService			actorService;
+
 	@Autowired
 	private HackerService			hackerService;
+
 	@Autowired
 	private CompanyService			companyService;
+
 	@Autowired
 	private AdministratorService	administratorService;
 	@Autowired
 	private SocialProfileService	socialProfileService;
+
+	@Autowired
+	private MessageService			messageService;
 
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -101,41 +112,112 @@ public class ActorController extends AbstractController {
 
 	}
 	protected ModelAndView createModelAndViewEditActor() {
-
-		ModelAndView res;
+		ModelAndView result;
 
 		final Authority authority = AuthorityMethods.getLoggedAuthority();
 
 		switch (authority.getAuthority()) {
 		case "ADMINISTRATOR":
 			final Administrator admin = this.administratorService.findByPrincipal(LoginService.getPrincipal());
-			res = new ModelAndView("administrator/edit");
-			res.addObject("administrator", admin);
-			res.addObject("edit", true);
+			result = new ModelAndView("administrator/edit");
+			result.addObject("administrator", admin);
+			result.addObject("edit", true);
 			break;
 
 		case "HACKER":
 			final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
-			System.out.println(hacker);
-			res = new ModelAndView("hacker/edit");
-			res.addObject("hacker", hacker);
-			res.addObject("edit", true);
+			result = new ModelAndView("hacker/edit");
+			result.addObject("hacker", hacker);
+			result.addObject("edit", true);
 			break;
 
 		case "COMPANY":
 			final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal());
-			System.out.println(company);
-			res = new ModelAndView("company/edit");
-			res.addObject("company", company);
-			res.addObject("edit", true);
+			result = new ModelAndView("company/edit");
+			result.addObject("company", company);
+			result.addObject("edit", true);
 			break;
 		default:
-			res = new ModelAndView("display.do");
+
+			result = new ModelAndView("display.do");
 			break;
 		}
 
-		this.configValues(res);
-		return res;
+		this.configValues(result);
+		return result;
+	}
+
+	@RequestMapping(value = "/displayData", method = RequestMethod.GET)
+	public ModelAndView displayData() {
+		final ModelAndView result = new ModelAndView("actor/displayData");
+		List<Message> messages;
+		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles();
+
+		//TODO: implementar metodo de AuthorityMethod
+		final UserAccount principal = LoginService.getPrincipal();
+		final List<Authority> authorities = (List<Authority>) principal.getAuthorities();
+		final String authority = authorities.get(0).getAuthority();
+		result.addObject("authority", authority);
+
+		switch (authority) {
+		case "ADMINISTRATOR":
+			final Administrator administrator = this.administratorService.findByPrincipal(principal);
+			messages = (List<Message>) this.messageService.findAllByActor(administrator.getId());
+			result.addObject("administrator", administrator);
+			result.addObject("messages", messages);
+			break;
+
+		case "HACKER":
+			final Hacker hacker = this.hackerService.findByPrincipal(principal);
+			messages = (List<Message>) this.messageService.findAllByActor(hacker.getId());
+			result.addObject("hacker", hacker);
+			result.addObject("messages", messages);
+			break;
+
+		case "COMPANY":
+			final Company company = this.companyService.findByPrincipal(principal);
+			messages = (List<Message>) this.messageService.findAllByActor(company.getId());
+			result.addObject("company", company);
+			result.addObject("messages", messages);
+
+			break;
+		}
+		result.addObject("socialProfiles", socialProfiles);
+
+		this.configValues(result);
+		return result;
+
+	}
+	@RequestMapping(value = "/saveData", method = RequestMethod.GET)
+	public ModelAndView fileJSON() throws JsonProcessingException {
+		final ModelAndView result = new ModelAndView("actor/exportData");
+
+		final String json = this.actorService.exportData();
+
+		final UserAccount principal = LoginService.getPrincipal();
+		final List<Authority> authorities = (List<Authority>) principal.getAuthorities();
+		final String authority = authorities.get(0).getAuthority();
+
+		result.addObject("authority", authority);
+		result.addObject("json", json);
+
+		this.configValues(result);
+		return result;
+
+	}
+
+	@RequestMapping(value = "/deleteData", method = RequestMethod.GET)
+	public ModelAndView deleteAllData() {
+		ModelAndView result;
+		try {
+			this.actorService.deleteData();
+			result = new ModelAndView("redirect:../j_spring_security_logout");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/displayData.do");
+		}
+
+		this.configValues(result);
+		return result;
 	}
 
 }

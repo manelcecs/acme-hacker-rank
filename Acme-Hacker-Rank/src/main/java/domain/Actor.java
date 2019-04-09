@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
@@ -54,6 +55,7 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@ElementCollection
+	@NotEmpty
 	public Collection<String> getSurnames() {
 		return this.surnames;
 	}
@@ -72,8 +74,8 @@ public abstract class Actor extends DomainEntity {
 		this.vatNumber = vatNumber;
 	}
 
-	@NotNull
 	@Valid
+	@NotNull
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}

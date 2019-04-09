@@ -13,13 +13,6 @@ import domain.Message;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 
-	/**
-	 * Queries the database to find all the messages sent by an actor
-	 * 
-	 * @param actorId
-	 *            The id of the actor
-	 * @return All of their messages
-	 */
 	@Query("select m from Message m where m.sender.id = ?1")
 	public Collection<Message> findAllByActor(int actorId);
 

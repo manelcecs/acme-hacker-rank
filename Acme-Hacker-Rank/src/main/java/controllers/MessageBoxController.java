@@ -47,7 +47,15 @@ public class MessageBoxController extends AbstractController {
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int idBox) {
 		final ModelAndView result;
-		result = this.listModelAndView(this.messageBoxService.findOne(idBox));
+		final MessageBox boxToGo = this.messageBoxService.findOne(idBox);
+		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
+
+		if (boxToGo == null) {
+			final MessageBox boxDefault = this.messageBoxService.findOriginalBox(actor.getId(), "In Box");
+			result = this.listModelAndView(boxDefault);
+		} else
+			result = this.listModelAndView(boxToGo);
+
 		result.addObject("requestURI", "messageBox/show.do?idBox=" + idBox);
 		return result;
 	}
@@ -109,14 +117,14 @@ public class MessageBoxController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView listModelAndView(final MessageBox boxDefault) {
+	protected ModelAndView listModelAndView(final MessageBox boxSelect) {
 		final ModelAndView result = new ModelAndView("messageBox/list");
 
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		result.addObject("boxes", actor.getMessageBoxes());
-		result.addObject("boxSelect", boxDefault);
-		result.addObject("messages", boxDefault.getMessages());
+		result.addObject("boxSelect", boxSelect);
+		result.addObject("messages", boxSelect.getMessages());
 
 		this.configValues(result);
 		return result;

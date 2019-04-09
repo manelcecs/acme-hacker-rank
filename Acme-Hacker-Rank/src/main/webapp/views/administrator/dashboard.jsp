@@ -8,6 +8,7 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+
 <h3 id="position"><spring:message code="administrator.dashboard.position" /> </h3>
 
 <table>
@@ -25,21 +26,10 @@
 	</tr>
 </table>
 
-<table>
-	<tr>
-		<th> <spring:message code='administrator.dashboard.companiesWithMoreOffersOfPositions'/> </th>
-	</tr>
-	<tr>
-		<td> 
-			<jstl:forEach var="companyWithMoreOffersOfPositions" items="${companiesWithMoreOffersOfPositions}" >
-				- <jstl:out value="${companyWithMoreOffersOfPositions.companyName}"/>
-				<jstl:out value="(${companyWithMoreOffersOfPositions.id})"/>
-				
-				<br/>
-			</jstl:forEach>	
-		</td>
-	</tr>
-</table>
+<display:table pagesize="5" name="companiesWithMoreOffersOfPositions" id="companyWithMoreOffersOfPositions" requestURI="${requestURI}">
+	<display:column titleKey="administrator.dashboard.companiesWithMoreOffersOfPositions">- <jstl:out value="${companyWithMoreOffersOfPositions.companyName}"/>
+		<jstl:out value="(${companyWithMoreOffersOfPositions.id})"/></display:column>
+</display:table>
 
 <hr>
 
@@ -60,24 +50,14 @@
 	</tr>
 </table>
 
-<table>
-	<tr>
-		<th> <spring:message code='administrator.dashboard.hackersWithMoreApplications'/> </th>
-	</tr>
-	<tr>
-		<td> 
-			<jstl:forEach var="hackerWithMoreApplications" items="${hackersWithMoreApplications}" >
-				- <jstl:out value="${hackerWithMoreApplications.name}"/>
+<display:table pagesize="5" name="hackersWithMoreApplications" id="hackerWithMoreApplications" requestURI="${requestURI}">
+	<display:column titleKey="administrator.dashboard.hackersWithMoreApplications">- <jstl:out value="${hackerWithMoreApplications.name}"/>
 				<jstl:forEach var="surname" items="${hackerWithMoreApplications.surnames}" >
 					<jstl:out value=" ${surname}"/>
 				</jstl:forEach>
-				<jstl:out value="(${hackerWithMoreApplications.id})"/>
-				<br/>  
-			</jstl:forEach>	
-		</td>
-	</tr>
-</table>
-
+				<jstl:out value="(${hackerWithMoreApplications.id})"/></display:column>
+</display:table>	
+	
 <hr>
 
 <h3 id="salary"><spring:message code="administrator.dashboard.salary" /> </h3>
@@ -96,27 +76,17 @@
 	</tr>
 </table>
 
+<display:table pagesize="5" name="positionsWithTheBestSalary" id="positionWithTheBestSalary" requestURI="${requestURI}">
+	<display:column titleKey="administrator.dashboard.positionsWithTheBestSalary">
+		- <jstl:out value="${positionWithTheBestSalary.title} (${positionWithTheBestSalary.ticker.identifier}): ${positionWithTheBestSalary.salaryOffered}"/>
+	</display:column>
+</display:table>	
 
-<table>
-	<tr>
-		<th> <spring:message code='administrator.dashboard.positionsWithTheBestSalary'/> </th>
-		<th> <spring:message code='administrator.dashboard.positionsWithTheWorstSalary'/> </th>
-	</tr>
-	<tr>
-		<td> 
-			<jstl:forEach var="positionWithTheBestSalary" items="${positionsWithTheBestSalary}" >
-				- <jstl:out value="${positionWithTheBestSalary.title} (${positionWithTheBestSalary.ticker.identifier})"/>
-				<br/>
-			</jstl:forEach>	
-		</td>
-		<td> 
-			<jstl:forEach var="positionWithTheWorstSalary" items="${positionsWithTheWorstSalary}">
-				- <jstl:out value="${positionWithTheWorstSalary.title} (${positionWithTheWorstSalary.ticker.identifier})"/>
-				<br/>
-			</jstl:forEach> 
-		</td>
-	</tr>
-</table>
+<display:table pagesize="5" name="positionsWithTheWorstSalary" id="positionWithTheWorstSalary" requestURI="${requestURI}">
+	<display:column titleKey="administrator.dashboard.positionsWithTheWorstSalary">
+		- <jstl:out value="${positionWithTheWorstSalary.title} (${positionWithTheWorstSalary.ticker.identifier}): ${positionWithTheWorstSalary.salaryOffered}"/>
+	</display:column>
+</display:table>
 
 <hr>
 

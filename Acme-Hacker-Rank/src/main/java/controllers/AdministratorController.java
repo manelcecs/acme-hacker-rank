@@ -22,47 +22,58 @@ public class AdministratorController extends AbstractController {
 
 	@RequestMapping(value = "/process", method = RequestMethod.GET)
 	public ModelAndView process() {
-		final ModelAndView result = new ModelAndView("administrator/process");
-		result.addObject("spamActors", this.actorService.getSpammerActors());
-		result.addObject("actorLogged", LoginService.getPrincipal());
-		this.configValues(result);
-		return result;
+		return this.processModelAndView();
 	}
 
 	@RequestMapping(value = "/updateSpam", method = RequestMethod.GET)
 	public ModelAndView updateSpam() {
-		final ModelAndView result = new ModelAndView("redirect:process.do");
+		ModelAndView result;
 		try {
 			this.actorService.updateSpam();
+			result = this.processModelAndView();
 		} catch (final Throwable oops) {
-			result.addObject("message", "administrator.commit.error");
+			result = this.processModelAndView("administrator.commit.error");
 		}
-		this.configValues(result);
 		return result;
 	}
 
 	@RequestMapping(value = "/ban", method = RequestMethod.GET)
 	public ModelAndView ban(@RequestParam final Integer idActor) {
-		final ModelAndView result = new ModelAndView("redirect:process.do");
+		ModelAndView result;
 		try {
 			final Actor actor = this.actorService.getActor(idActor);
 			this.actorService.ban(actor);
+			result = this.processModelAndView();
 		} catch (final Throwable oops) {
-			result.addObject("message", "administrator.commit.error");
+			result = this.processModelAndView("administrator.commit.error");
 		}
-		this.configValues(result);
+
 		return result;
 	}
 
 	@RequestMapping(value = "/unban", method = RequestMethod.GET)
 	public ModelAndView unban(@RequestParam final Integer idActor) {
-		final ModelAndView result = new ModelAndView("redirect:process.do");
+		ModelAndView result;
 		try {
 			final Actor actor = this.actorService.getActor(idActor);
 			this.actorService.unban(actor);
+			result = this.processModelAndView();
 		} catch (final Throwable oops) {
-			result.addObject("message", "administrator.commit.error");
+			result = this.processModelAndView("administrator.commit.error");
 		}
+		return result;
+	}
+
+	protected ModelAndView processModelAndView() {
+		return this.processModelAndView(null);
+	}
+
+	protected ModelAndView processModelAndView(final String messageCode) {
+		final ModelAndView result = new ModelAndView("administrator/process");
+		result.addObject("spamActors", this.actorService.getSpammerActors());
+		result.addObject("actorLogged", LoginService.getPrincipal());
+		result.addObject("message", messageCode);
+
 		this.configValues(result);
 		return result;
 	}

@@ -108,8 +108,12 @@ public class FinderService {
 		final Double minimumSalary = 0.0;
 
 		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, deadlineA, deadlineB, maximumDeadline, minimumSalary);
-
-		finder.setPositions(results);
+		List<Position> returnResults = new ArrayList<Position>();
+		returnResults.addAll(results);
+		final Integer maxFinderResults = this.adminConfigService.getAdminConfig().getResultsFinder();
+		if (returnResults.size() > maxFinderResults)
+			returnResults = returnResults.subList(0, maxFinderResults);
+		finder.setPositions(returnResults);
 		finder.setLastUpdate(actual);
 		return this.finderRepository.save(finder);
 	}

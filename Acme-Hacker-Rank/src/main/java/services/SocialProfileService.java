@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.SocialProfileRepository;
 import security.LoginService;
 import utiles.AuthorityMethods;
+import domain.Actor;
 import domain.SocialProfile;
 
 @Service
@@ -39,6 +40,14 @@ public class SocialProfileService {
 		res = this.socialProfileRepository.saveAndFlush(socialProfile);
 		return res;
 
+	}
+
+	public void delete(final SocialProfile sp) {
+		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
+		final Actor logged = this.actorService.findByUserAccount(LoginService.getPrincipal());
+		Assert.isTrue(logged.getId() == sp.getActor().getId());
+
+		this.socialProfileRepository.delete(sp);
 	}
 
 	public SocialProfile findOne(final int socialProfileId) {

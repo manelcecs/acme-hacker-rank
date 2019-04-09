@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
@@ -44,6 +45,7 @@ public class CreditCard {
 
 	@NotBlank
 	@CreditCardNumber
+	//No está validando realmente
 	@SafeHtml
 	public String getNumber() {
 		return this.number;
@@ -62,7 +64,7 @@ public class CreditCard {
 		this.expirationMonth = expirationMonth;
 	}
 
-	@Range(min = 0, max = 99)
+	@Min(0)
 	public int getExpirationYear() {
 		return this.expirationYear;
 	}
