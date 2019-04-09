@@ -158,6 +158,8 @@ public class HackerService {
 		result.setVatNumber(hacker.getVatNumber());
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(hacker.getSurnames()));
 
+		result.setCreditCard(hacker.getCreditCard());
+
 		this.validator.validate(result, binding);
 
 		if (binding.hasErrors()) {
