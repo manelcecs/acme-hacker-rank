@@ -179,5 +179,8 @@ public class HackerService {
 			valid = true;
 		return valid;
 	}
+	public Collection<Hacker> findAll() {
+		return this.hackerRepository.findAll();
+	}
 
 }

@@ -17,6 +17,7 @@ import security.LoginService;
 import services.ActorService;
 import services.MessageBoxService;
 import services.MessageService;
+import utiles.ValidatorCollection;
 import domain.Actor;
 import domain.Message;
 import domain.MessageBox;
@@ -58,6 +59,9 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/send", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("Message") Message message, final BindingResult binding) throws ParseException {
 		ModelAndView result;
+
+		final Collection<String> tags = ValidatorCollection.deleteStringsBlanksInCollection(message.getTags());
+		message.setTags(tags);
 
 		message = this.messageService.reconstruct(message, binding);
 
@@ -141,8 +145,9 @@ public class MessageController extends AbstractController {
 		final Actor sender = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		final Collection<Actor> actors = this.actorService.findAll();
-		//:TODO Excluir eliminados del sistema
+		final Collection<Actor> actorsEliminated = this.actorService.findEliminatedActors();
 		actors.remove(sender);
+		actors.removeAll(actorsEliminated);
 
 		result.addObject("Message", message);
 		result.addObject("actors", actors);

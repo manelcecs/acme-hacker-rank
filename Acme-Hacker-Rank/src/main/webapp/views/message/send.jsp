@@ -26,9 +26,16 @@
    	
    		
    		<form:label class="textboxLabel" path="tags"><spring:message code="message.send.tags" /></form:label>
-    	<div id="tags">
+    	  
+    	<div id="tags"> 
+    	<jstl:if test="${empty Message.tags}">
     		<form:input class="textbox" path="tags" type="text"/>    
-   		 </div>
+    	</jstl:if>
+    	
+    	<jstl:forEach var="tag" items="${Message.tags}">
+    	   	 <form:input class="textbox" path="tags" type="text" value="${tag}"/>       	
+    	</jstl:forEach>
+   		</div>
     	<form:errors path="tags" cssClass="error" />   
    				
    		
@@ -65,6 +72,7 @@
 }
 
 .botones {
+	margin-top: 30px;
 	margin-left: 70px;
 }
 

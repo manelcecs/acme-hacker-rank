@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,12 +72,16 @@ public class AdministratorController extends AbstractController {
 
 	protected ModelAndView processModelAndView(final String messageCode) {
 		final ModelAndView result = new ModelAndView("administrator/process");
-		result.addObject("spamActors", this.actorService.getSpammerActors());
+
+		final Collection<Actor> spammers = this.actorService.getSpammerActors();
+		final Collection<Actor> actorsEliminated = this.actorService.findEliminatedActors();
+		spammers.removeAll(actorsEliminated);
+
+		result.addObject("spamActors", spammers);
 		result.addObject("actorLogged", LoginService.getPrincipal());
 		result.addObject("message", messageCode);
 
 		this.configValues(result);
 		return result;
 	}
-
 }

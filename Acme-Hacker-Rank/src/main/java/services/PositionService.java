@@ -28,19 +28,22 @@ import forms.PositionForm;
 public class PositionService {
 
 	@Autowired
-	TickerService		tickerService;
+	TickerService			tickerService;
 
 	@Autowired
-	CompanyService		companyService;
+	CompanyService			companyService;
 
 	@Autowired
-	PositionRepository	positionRepository;
+	PositionRepository		positionRepository;
 
 	@Autowired
-	Validator			validator;
+	Validator				validator;
 
 	@Autowired
-	ProblemService		problemService;
+	ProblemService			problemService;
+
+	@Autowired
+	private MessageService	messageService;
 
 
 	public Position findOne(final int idPosition) {
@@ -106,6 +109,8 @@ public class PositionService {
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
+		//TODO: añadir la notificacion en el momento que sea final
+
 		return this.positionRepository.save(position);
 	}
 
@@ -126,9 +131,9 @@ public class PositionService {
 		return this.positionRepository.getFilterPositionsByKeyword(keyword);
 	}
 
-	public Collection<Position> getFilterPositionsByFinder(final String keyword, final Date deadlineA, final Date deadlineB, final Date maximumDeadline, final Double minimumSalary) {
-		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
-		return this.positionRepository.getFilterPositionsByFinder(keyword, deadlineA, deadlineB, maximumDeadline, minimumSalary);
+	public Collection<Position> getFilterPositionsByFinder(final String keyword, final Date minimumdeadline, final Date maximumDeadline, final Double minimumSalary) {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER") || AuthorityMethods.chechAuthorityLogged("COMPANY"));
+		return this.positionRepository.getFilterPositionsByFinder(keyword, minimumdeadline, maximumDeadline, minimumSalary);
 	}
 
 	public Collection<Position> getPositionsOfCompany(final int idCompany) {

@@ -44,6 +44,7 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
 	@Autowired
 	private SocialProfileService	socialProfileService;
 
@@ -151,12 +152,14 @@ public class ActorController extends AbstractController {
 	public ModelAndView displayData() {
 		final ModelAndView result = new ModelAndView("actor/displayData");
 		List<Message> messages;
-		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles();
+		final List<SocialProfile> socialProfiles;
 
-		//TODO: implementar metodo de AuthorityMethod
 		final UserAccount principal = LoginService.getPrincipal();
-		final List<Authority> authorities = (List<Authority>) principal.getAuthorities();
-		final String authority = authorities.get(0).getAuthority();
+		String authority = AuthorityMethods.getLoggedAuthority().getAuthority();
+
+		if (authority.equals("BAN"))
+			authority = this.actorService.checkAuthorityIsBanned(principal);
+
 		result.addObject("authority", authority);
 
 		switch (authority) {

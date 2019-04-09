@@ -38,13 +38,6 @@
 			</li>
 		</security:authorize>
 		
-		<security:authorize access="isAuthenticated()">
-			<li>
-				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
-			</li>
-			
-		</security:authorize>
-		
 		<security:authorize access="hasRole('HACKER')">
 			<li>
 				<a class="fNiv" href="finder/hacker/edit.do"><spring:message code="master.page.finder.edit" /></a>
@@ -74,25 +67,27 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li>
-				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
-			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNIv"><spring:message code="master.page.register" /></a>
 				<ul><li class="arrow"></li>
 					<li><a href="company/register.do"><spring:message code="master.page.register.company" /></a></li>
 					<li><a href="hacker/register.do"><spring:message code="master.page.register.hacker" /></a></li></ul>
 			</li>
+			
+			<li>
+				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
+			</li>
 		</security:authorize>
 		
-		<security:authorize access="isAuthenticated()">
+		<security:authorize access="isAuthenticated()and not(hasRole('BAN'))">
+			<li>
+				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
+			</li>
+		
 			<li>
 				<a class="fNiv" href="messageBox/list.do"><spring:message code="master.page.boxes" /></a>
 			</li>
 			
-			<li>
-				<a class="fNiv" href="actor/displayData.do"><spring:message code="master.page.settings" /></a>
-			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message	code="master.page.actor.profile" />
@@ -103,10 +98,34 @@
 					<li><a href="actor/display.do"><spring:message code="master.page.actor.profile" /></a></li>			
 					<li><a href="actor/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 					<li><a href="actor/socialProfile/display.do"><spring:message code="master.page.actor.socialProfile" /></a></li>
-					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
+			
+			<li>
+				<a class="fNiv" href="actor/displayData.do"><spring:message code="master.page.settings" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a>
+			</li>
 		</security:authorize>
+		
+		
+		<security:authorize access="hasRole('BAN')">
+			<li>
+				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="actor/displayData.do"><spring:message code="master.page.settings" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a>
+			</li>
+		</security:authorize>
+		
+		
 	</ul>
 </div>
 
