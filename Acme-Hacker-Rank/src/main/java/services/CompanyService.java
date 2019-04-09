@@ -1,9 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +22,7 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
+import utiles.ValidatorCollection;
 import domain.Company;
 import forms.CompanyForm;
 
@@ -118,19 +117,17 @@ public class CompanyService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), companyForm.getPhoneNumber()));
 		result.setPhoneNumber(companyForm.getPhoneNumber());
 		result.setPhoto(companyForm.getPhoto());
-		//TODO: poner los varios inputs
-		final String surnames[] = companyForm.getSurnames().split(",");
-		final List<String> surNames = new ArrayList<>();
-		for (int i = 0; i < surnames.length; i++)
-			surNames.add(surnames[i]);
-		result.setSurnames(surNames);
+		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(companyForm.getSurnames()));
 
 		result.setCreditCard(companyForm.getCreditCard());
 
 		this.validator.validate(result, binding);
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			System.out.println(binding.getAllErrors());
 			throw new ValidationException();
+		}
+
 		return result;
 	}
 
@@ -162,7 +159,7 @@ public class CompanyService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), company.getPhoneNumber()));
 		result.setPhoto(company.getPhoto());
 		result.setVatNumber(company.getVatNumber());
-		result.setSurnames(company.getSurnames());
+		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(company.getSurnames()));
 
 		this.validator.validate(result, binding);
 

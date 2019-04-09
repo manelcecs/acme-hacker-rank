@@ -12,6 +12,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -71,6 +72,7 @@ public abstract class Actor extends DomainEntity {
 		this.vatNumber = vatNumber;
 	}
 
+	@NotNull
 	@Valid
 	public CreditCard getCreditCard() {
 		return this.creditCard;
@@ -108,6 +110,7 @@ public abstract class Actor extends DomainEntity {
 		this.email = email;
 	}
 
+	@NotBlank
 	@SafeHtml
 	public String getPhoneNumber() {
 		return this.phoneNumber;

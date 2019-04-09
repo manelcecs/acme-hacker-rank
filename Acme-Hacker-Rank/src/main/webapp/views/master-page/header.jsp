@@ -27,7 +27,7 @@
 					<li>
 						<a href="adminConfig/administrator/display.do"><spring:message code="master.page.administrator.configuration" /></a>
 					</li>
-					
+					<li><a href="administrator/administrator/register.do"><spring:message code="master.page.administrator.register" /></a></li>
 					<li>
 						<a href="administrator/process.do"><spring:message code="master.page.process.launch" /></a>
 					</li>					

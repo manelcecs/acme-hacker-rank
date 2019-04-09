@@ -1,9 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +22,7 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
+import utiles.ValidatorCollection;
 import domain.Hacker;
 import forms.HackerForm;
 
@@ -117,12 +116,7 @@ public class HackerService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), hackerForm.getPhoneNumber()));
 		result.setPhoneNumber(hackerForm.getPhoneNumber());
 		result.setPhoto(hackerForm.getPhoto());
-		//TODO:a�adir los inputs de varios surnames
-		final String surnames[] = hackerForm.getSurnames().split(" ");
-		final List<String> surNames = new ArrayList<>();
-		for (int i = 0; i < surnames.length; i++)
-			surNames.add(surnames[i]);
-		result.setSurnames(surNames);
+		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(hackerForm.getSurnames()));
 
 		result.setCreditCard(hackerForm.getCreditCard());
 
@@ -155,12 +149,14 @@ public class HackerService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), hacker.getPhoneNumber()));
 		result.setPhoto(hacker.getPhoto());
 		result.setVatNumber(hacker.getVatNumber());
-		result.setSurnames(hacker.getSurnames());
+		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(hacker.getSurnames()));
 
 		this.validator.validate(result, binding);
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			System.out.println(binding.getAllErrors());
 			throw new ValidationException();
+		}
 		return result;
 	}
 

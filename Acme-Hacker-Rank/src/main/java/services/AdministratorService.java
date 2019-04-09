@@ -1,8 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +21,7 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
+import utiles.ValidatorCollection;
 import domain.Administrator;
 import forms.AdministratorForm;
 
@@ -113,12 +112,8 @@ public class AdministratorService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
 		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
-		//TODO:a�adir los inputs de varios surnames
-		final String surnames[] = adminForm.getSurnames().split(",");
-		final List<String> surNames = new ArrayList<>();
-		for (int i = 0; i < surnames.length; i++)
-			surNames.add(surnames[i].trim());
-		result.setSurnames(surNames);
+
+		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(adminForm.getSurnames()));
 
 		result.setCreditCard(adminForm.getCreditCard());
 
@@ -144,7 +139,7 @@ public class AdministratorService {
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), admin.getPhoneNumber()));
 		result.setPhoto(admin.getPhoto());
 		result.setVatNumber(admin.getVatNumber());
-		result.setSurnames(admin.getSurnames());
+		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(admin.getSurnames()));
 
 		this.validator.validate(result, binding);
 

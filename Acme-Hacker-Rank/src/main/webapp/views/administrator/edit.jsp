@@ -85,6 +85,7 @@
 		<form:errors path="termsAndConditions" cssClass="error" />
 		<br />
 		
+		<spring:message code="administrator.edit.submit" var="submit"/>
 		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" value="${ submit}"/>
 		<acme:cancel url="/" code="administrator.edit.cancel" />
 	</form:form>
