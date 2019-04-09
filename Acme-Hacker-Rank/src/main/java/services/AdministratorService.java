@@ -271,4 +271,8 @@ public class AdministratorService {
 		return valid;
 	}
 
+	public Administrator getOne() {
+		return this.adminRepository.findAll().get(0);
+	}
+
 }

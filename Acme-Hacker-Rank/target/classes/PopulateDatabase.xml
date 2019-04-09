@@ -485,7 +485,7 @@
 
 	<bean class="domain.Finder" id="finder0">
 		<property name="keyWord" value="System" />
-		<property name="deadline" value="06/01/2019" />
+		<property name="minimumDeadLine" value="06/01/2019" />
 		<property name="maximumDeadLine" value="07/30/2019" />
 		<property name="minimumSalary" value="2000.0" />
 	</bean>
@@ -669,7 +669,7 @@
 
 	<bean class="domain.Finder" id="finder1">
 		<property name="keyWord" value="System" />
-		<property name="deadline" value="06/01/2019" />
+		<property name="minimumDeadLine" value="06/01/2019" />
 		<property name="maximumDeadLine" value="07/30/2019" />
 		<property name="minimumSalary" value="2000.0" />
 	</bean>
@@ -786,7 +786,7 @@
 
 	<bean class="domain.Finder" id="finder2">
 		<property name="keyWord" value="System" />
-		<property name="deadline" value="06/01/2019" />
+		<property name="minimumDeadLine" value="06/01/2019" />
 		<property name="maximumDeadLine" value="07/30/2019" />
 		<property name="minimumSalary" value="2000.0" />
 	</bean>

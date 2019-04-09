@@ -20,27 +20,42 @@ import security.Authority;
 import security.LoginService;
 import utiles.AuthorityMethods;
 import domain.Actor;
+import domain.Administrator;
+import domain.Finder;
+import domain.Hacker;
 import domain.Message;
 import domain.MessageBox;
+import domain.Position;
 
 @Service
 @Transactional
 public class MessageService {
 
 	@Autowired
-	private MessageRepository	messageRepository;
+	private MessageRepository		messageRepository;
 
 	@Autowired
-	private MessageBoxService	messageBoxService;
+	private MessageBoxService		messageBoxService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private AdminConfigService	adminConfigService;
+	private HackerService			hackerService;
 
 	@Autowired
-	private Validator			validator;
+	private PositionService			positionService;
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+	@Autowired
+	private AdminConfigService		adminConfigService;
+
+	@Autowired
+	private Validator				validator;
+
+	private final SimpleDateFormat	FORMAT	= new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 
 	public Message create() {
@@ -110,17 +125,15 @@ public class MessageService {
 			message.setSender(this.actorService.findByUserAccount(LoginService.getPrincipal()));
 			message.setMoment(this.getDateNow());
 			result = message;
-
 		} else {
 			result = this.messageRepository.findOne(message.getId());
 
 			final Collection<MessageBox> boxesBD = result.getMessageBoxes();
 			boxesBD.addAll(message.getMessageBoxes());
 			result.setMessageBoxes(boxesBD);
-
-			this.validator.validate(result, binding);
-
 		}
+
+		this.validator.validate(result, binding);
 
 		return result;
 	}
@@ -173,8 +186,73 @@ public class MessageService {
 		return s;
 	}
 
-	//Utilities
+	public void notificationNewPositionMatchFinder(final Position position) {
 
+		final Collection<Hacker> hackers = this.hackerService.findAll();
+		final Collection<Hacker> hackersToNotify = new ArrayList<>();
+
+		for (final Hacker hacker : hackers) {
+			final Finder finder = hacker.getFinder();
+
+			String keyWord = finder.getKeyWord();
+			Date minimumdeadline = finder.getMinimumDeadLine();
+			Date maximumDeadline = finder.getMaximumDeadLine();
+			Double minimumSalary = finder.getMinimumSalary();
+			if (keyWord == null)
+				keyWord = "";
+			if (minimumdeadline == null)
+				try {
+					minimumdeadline = this.FORMAT.parse("0001/01/01 01:00:00");
+				} catch (final ParseException e) {
+				}
+			if (maximumDeadline == null)
+				try {
+					maximumDeadline = this.FORMAT.parse("9999/01/01 01:00:00");
+				} catch (final ParseException e) {
+				}
+			if (minimumSalary == null)
+				minimumSalary = 0.0;
+
+			final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, minimumdeadline, maximumDeadline, minimumSalary);
+			if (results.contains(position))
+				hackersToNotify.add(hacker);
+
+		}
+
+		if (hackersToNotify.size() > 0) {
+			final Message message = this.create();
+
+			try {
+				message.setMoment(this.getDateNow());
+			} catch (final ParseException e) {
+				e.printStackTrace();
+			}
+
+			final Administrator sender = this.administratorService.getOne();
+			message.setSender(sender);
+			message.setSubject("System Notification | Notificacion del sistema");
+			message.setBody("There is a new position that matches the parameters of your finder:" + position.getTitle() + " | " + "Hay una nueva posición que coincide con los parametros de su buscador:" + position.getTitle());
+			message.setPriority("HIGH");
+			final Collection<String> tags = new ArrayList<>();
+			tags.add("SYSTEM");
+			message.setTags(tags);
+
+			final Collection<Actor> recipients = new ArrayList<>();
+			recipients.addAll(hackersToNotify);
+			message.setRecipients(recipients);
+
+			final Collection<MessageBox> messageBoxes = new ArrayList<>();
+			for (final Hacker recipient : hackersToNotify)
+				messageBoxes.add(this.messageBoxService.findOriginalBox(recipient.getId(), "Notification Box"));
+
+			message.setMessageBoxes(messageBoxes);
+
+			this.messageRepository.save(message);
+		}
+
+	}
+
+	//Utilities
 	private String allTextFromAMessage(final Message message) {
 		String text = message.getBody() + " " + message.getSubject();
 		for (final String tag : message.getTags())

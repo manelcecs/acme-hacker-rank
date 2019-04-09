@@ -73,6 +73,10 @@ public class ActorService {
 		return this.actorRepository.getByMessageBox(idBox);
 	}
 
+	public Collection<Actor> findEliminatedActors() {
+		return this.actorRepository.findEliminatedActors();
+	}
+
 	// Workaround for the problem of hibernate with inheritances
 	public Actor getActor(final int idActor) {
 		return this.actorRepository.getActor(idActor);
@@ -95,11 +99,8 @@ public class ActorService {
 					a.setSpammer(spammer);
 					this.actorRepository.save(a);
 				}
-
 			}
-
 		}
-
 	}
 
 	public void ban(final Actor actor) {
@@ -124,6 +125,7 @@ public class ActorService {
 
 		this.save(actor);
 	}
+
 	public void unban(final Actor actor) {
 		final UserAccount principal = LoginService.getPrincipal();
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("ADMINISTRATOR"));
@@ -167,8 +169,10 @@ public class ActorService {
 		String json = "";
 
 		final UserAccount principal = LoginService.getPrincipal();
-		final List<Authority> authorities = (List<Authority>) principal.getAuthorities();
-		final String authority = authorities.get(0).getAuthority();
+		String authority = AuthorityMethods.getLoggedAuthority().getAuthority();
+
+		if (authority.equals("BAN"))
+			authority = this.checkAuthorityIsBanned(principal);
 
 		switch (authority) {
 		case "ADMINISTRATOR":
@@ -199,9 +203,12 @@ public class ActorService {
 
 	//:TODO todos los datos
 	public void deleteData() throws ParseException {
+
 		final UserAccount principal = LoginService.getPrincipal();
-		final List<Authority> authorities = (List<Authority>) principal.getAuthorities();
-		final String authority = authorities.get(0).getAuthority();
+		String authority = AuthorityMethods.getLoggedAuthority().getAuthority();
+
+		if (authority.equals("BAN"))
+			authority = this.checkAuthorityIsBanned(principal);
 
 		switch (authority) {
 		case "ADMINISTRATOR":
@@ -283,9 +290,26 @@ public class ActorService {
 
 		}
 	}
+
+	//Utiles
 	private String generatePassword() {
 		final SecureRandom random = new SecureRandom();
 		final String text = new BigInteger(130, random).toString(32);
 		return text;
 	}
+
+	public String checkAuthorityIsBanned(final UserAccount userAccount) {
+		String res = "";
+		final Actor actor = this.findByUserAccount(userAccount);
+
+		if (this.hackerService.findOne(actor.getId()) != null)
+			res = "HACKER";
+		else if (this.companyService.findOne(actor.getId()) != null)
+			res = "COMPANY";
+		else if (this.administratorService.findOne(actor.getId()) != null)
+			res = "ADMINISTRATOR";
+
+		return res;
+	}
+
 }

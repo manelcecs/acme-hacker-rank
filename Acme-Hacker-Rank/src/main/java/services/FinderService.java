@@ -55,26 +55,19 @@ public class FinderService {
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 
 		String keyWord = finder.getKeyWord();
-		final Date deadline = finder.getDeadline();
+		Date minimumdeadline = finder.getMinimumDeadLine();
 		Date maximumDeadline = finder.getMaximumDeadLine();
 		Double minimumSalary = finder.getMinimumSalary();
-		Date deadlineA;
-		Date deadlineB;
 		if (keyWord == null)
 			keyWord = "";
-		if (deadline == null) {
-			deadlineA = this.FORMAT.parse("0001/01/01 01:00:00");
-			deadlineB = this.FORMAT.parse("9999/01/01 01:00:00");
-		} else {
-			deadlineA = deadline;
-			deadlineB = deadline;
-		}
+		if (minimumdeadline == null)
+			minimumdeadline = this.FORMAT.parse("0001/01/01 01:00:00");
 		if (maximumDeadline == null)
 			maximumDeadline = this.FORMAT.parse("9999/01/01 01:00:00");
 		if (minimumSalary == null)
 			minimumSalary = 0.0;
 
-		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, deadlineA, deadlineB, maximumDeadline, minimumSalary);
+		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, minimumdeadline, maximumDeadline, minimumSalary);
 
 		List<Position> returnResults = new ArrayList<Position>();
 		returnResults.addAll(results);
@@ -85,13 +78,12 @@ public class FinderService {
 		finder.setLastUpdate(actual);
 		return this.finderRepository.save(finder);
 	}
-
 	public Finder clear(final Finder finder) throws ParseException, java.text.ParseException {
 		final LocalDateTime DATETIMENOW = LocalDateTime.now();
 
 		Assert.notNull(finder);
 
-		finder.setDeadline(null);
+		finder.setMinimumDeadLine(null);
 		finder.setKeyWord(null);
 		finder.setMaximumDeadLine(null);
 		finder.setMinimumSalary(null);
@@ -102,12 +94,11 @@ public class FinderService {
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 
 		final String keyWord = "";
-		final Date deadlineA = this.FORMAT.parse("0001/01/01 01:00:00");
-		final Date deadlineB = this.FORMAT.parse("9999/01/01 01:00:00");
+		final Date minimunDeadline = this.FORMAT.parse("0001/01/01 01:00:00");
 		final Date maximumDeadline = this.FORMAT.parse("9999/01/01 01:00:00");
 		final Double minimumSalary = 0.0;
 
-		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, deadlineA, deadlineB, maximumDeadline, minimumSalary);
+		final Collection<Position> results = this.positionService.getFilterPositionsByFinder(keyWord, minimunDeadline, maximumDeadline, minimumSalary);
 		List<Position> returnResults = new ArrayList<Position>();
 		returnResults.addAll(results);
 		final Integer maxFinderResults = this.adminConfigService.getAdminConfig().getResultsFinder();
@@ -117,7 +108,6 @@ public class FinderService {
 		finder.setLastUpdate(actual);
 		return this.finderRepository.save(finder);
 	}
-
 	public Finder findOne(final int finderId) {
 		Assert.notNull(finderId);
 		return this.finderRepository.findOne(finderId);
@@ -141,7 +131,7 @@ public class FinderService {
 		if (finderA.getKeyWord() != null && finderB.getKeyWord() != null)
 			keyWord = finderA.getKeyWord().equals(finderB.getKeyWord());
 
-		result = keyWord && finderA.getDeadline() == finderB.getDeadline() && finderA.getMaximumDeadLine() == finderB.getMaximumDeadLine() && actual.before(expirationDate) && finderA.getMinimumSalary() == finderB.getMinimumSalary();
+		result = keyWord && finderA.getMinimumDeadLine() == finderB.getMinimumDeadLine() && finderA.getMaximumDeadLine() == finderB.getMaximumDeadLine() && actual.before(expirationDate) && finderA.getMinimumSalary() == finderB.getMinimumSalary();
 		return result;
 	}
 	public Finder reconstruct(final Finder finder, final BindingResult binding) {
