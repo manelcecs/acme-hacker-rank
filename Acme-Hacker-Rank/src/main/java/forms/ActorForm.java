@@ -124,6 +124,7 @@ public class ActorForm {
 		this.userAccount = userAccount;
 	}
 
+	@NotBlank
 	@Size(min = 5, max = 32)
 	@SafeHtml
 	public String getConfirmPassword() {

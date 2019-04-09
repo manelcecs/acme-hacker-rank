@@ -44,6 +44,7 @@ public class CreditCard {
 
 	@NotBlank
 	@CreditCardNumber
+	//No está validando realmente
 	@SafeHtml
 	public String getNumber() {
 		return this.number;

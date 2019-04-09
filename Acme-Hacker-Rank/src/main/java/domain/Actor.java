@@ -74,7 +74,6 @@ public abstract class Actor extends DomainEntity {
 		this.vatNumber = vatNumber;
 	}
 
-	@NotNull
 	@Valid
 	@NotNull
 	public CreditCard getCreditCard() {

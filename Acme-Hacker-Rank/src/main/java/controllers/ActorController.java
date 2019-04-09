@@ -16,6 +16,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.CompanyService;
 import services.HackerService;
+import services.MessageService;
 import services.SocialProfileService;
 import utiles.AuthorityMethods;
 
@@ -25,6 +26,7 @@ import domain.Actor;
 import domain.Administrator;
 import domain.Company;
 import domain.Hacker;
+import domain.Message;
 import domain.SocialProfile;
 
 @Controller
