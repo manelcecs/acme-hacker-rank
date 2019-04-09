@@ -18,6 +18,8 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="socialProfile/save.do" modelAttribute="socialProfile">
+	<acme:hidden path="id" />
+	<acme:hidden path="version" />
 	<acme:hidden path="actor"/>
 
 	<acme:textbox code="socialProfile.nick" path="nick" />

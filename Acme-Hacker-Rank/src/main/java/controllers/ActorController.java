@@ -151,8 +151,9 @@ public class ActorController extends AbstractController {
 	public ModelAndView displayData() {
 		final ModelAndView result = new ModelAndView("actor/displayData");
 		List<Message> messages;
-		final List<SocialProfile> socialProfiles;
+		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles();
 
+		//TODO: implementar metodo de AuthorityMethod
 		final UserAccount principal = LoginService.getPrincipal();
 		final List<Authority> authorities = (List<Authority>) principal.getAuthorities();
 		final String authority = authorities.get(0).getAuthority();
@@ -164,7 +165,6 @@ public class ActorController extends AbstractController {
 			messages = (List<Message>) this.messageService.findAllByActor(administrator.getId());
 			result.addObject("administrator", administrator);
 			result.addObject("messages", messages);
-			//:TODO result.addObject("socialProfiles", socialProfiles);
 			break;
 
 		case "HACKER":
@@ -172,7 +172,6 @@ public class ActorController extends AbstractController {
 			messages = (List<Message>) this.messageService.findAllByActor(hacker.getId());
 			result.addObject("hacker", hacker);
 			result.addObject("messages", messages);
-			//:TODO result.addObject("socialProfiles", socialProfiles);
 			break;
 
 		case "COMPANY":
@@ -180,10 +179,10 @@ public class ActorController extends AbstractController {
 			messages = (List<Message>) this.messageService.findAllByActor(company.getId());
 			result.addObject("company", company);
 			result.addObject("messages", messages);
-			//:TODO result.addObject("socialProfiles", socialProfiles);
 
 			break;
 		}
+		result.addObject("socialProfiles", socialProfiles);
 
 		this.configValues(result);
 		return result;

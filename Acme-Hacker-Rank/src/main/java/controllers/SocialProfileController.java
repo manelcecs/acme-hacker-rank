@@ -61,6 +61,20 @@ public class SocialProfileController extends AbstractController {
 			}
 		return res;
 	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView save(final int socialProfileId) {
+		ModelAndView res;
+
+		try {
+			final SocialProfile sp = this.socialProfileService.findOne(socialProfileId);
+			this.socialProfileService.delete(sp);
+		} catch (final Throwable oops) {
+		}
+		res = new ModelAndView("redirect:/actor/display.do");
+		return res;
+	}
+
 	protected ModelAndView createModelAndViewCreate() {
 		ModelAndView res;
 

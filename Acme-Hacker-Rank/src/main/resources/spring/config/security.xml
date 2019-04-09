@@ -86,7 +86,8 @@
 		<security:intercept-url pattern="/actor/display.do" access="isAuthenticated()" /> 
 		
 		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />  
 		<security:intercept-url pattern="/socialProfile/save.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
