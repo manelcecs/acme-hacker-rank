@@ -2,6 +2,7 @@
 package services;
 
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import repositories.TickerRepository;
 import domain.Ticker;
 
 @Service
-@Transactional
+@Transactional(value = TxType.REQUIRES_NEW)
 public class TickerService {
 
 	@Autowired

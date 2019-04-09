@@ -35,13 +35,13 @@
 <p><strong><spring:message code="position.seeMore.skillsRequired" />:</strong>  
 <ul>
 	<jstl:forEach var="skill" items="${position.skillsRequired}">
-	<li><jstl:out value="skill"/></li>
+	<li><jstl:out value="${skill}"/></li>
 	</jstl:forEach>
 </ul>
 
 <p><strong><spring:message code="position.seeMore.technologiesRequired" />:</strong>  
 <ul>
 	<jstl:forEach var="technology" items="${position.technologiesRequired}">
-	<li><jstl:out value="technology"/></li>
+	<li><jstl:out value="${technology}"/></li>
 	</jstl:forEach>
 </ul>

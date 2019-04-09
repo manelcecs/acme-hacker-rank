@@ -55,7 +55,7 @@ public class CompanyService {
 		Assert.isTrue(company != null);
 
 		if (company.getId() == 0) {
-			Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
+			Assert.isTrue(!AuthorityMethods.checkIsSomeoneLogged());
 			final UserAccount userAccount = company.getUserAccount();
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();

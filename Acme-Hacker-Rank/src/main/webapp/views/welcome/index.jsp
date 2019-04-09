@@ -18,7 +18,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <security:authorize access="hasRole('BAN')">
-		<h3><spring:message code="welcomer.banned" /></h3>
+		<h3><spring:message code="welcome.banned" /></h3>
 </security:authorize>
 
 <security:authorize access="not(hasRole('BAN'))">

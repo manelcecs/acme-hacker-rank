@@ -1,6 +1,7 @@
 
 package services;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class HackerTest extends AbstractTest {
 	}
 
 	@Test
-	public void SampleDriver() {
+	public void SampleDriver() throws ParseException {
 		final Object testingData[][] = {
 			{
 				null, true, null
@@ -61,7 +62,7 @@ public class HackerTest extends AbstractTest {
 
 	// Ancillary methods ------------------------------------------------------
 
-	protected void SampleTemplate(final String username, final boolean validData, final Class<?> expected) {
+	protected void SampleTemplate(final String username, final boolean validData, final Class<?> expected) throws ParseException {
 		Class<?> caught;
 
 		caught = null;

@@ -55,7 +55,7 @@ public class AdminConfigService {
 		final Collection<String> spamWords = adminConfig.getSpamWords();
 
 		if (!(adminConfigForm.getSpamWord().trim().isEmpty())) {
-			if (spamWords.contains(adminConfigForm.getSpamWord().toLowerCase()))
+			if (spamWords.contains(adminConfigForm.getSpamWord().trim().toLowerCase()))
 				binding.rejectValue("spamWord", "adminConfig.error.existSpamWord");
 
 			spamWords.add(adminConfigForm.getSpamWord().toLowerCase());
