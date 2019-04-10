@@ -2,6 +2,7 @@
 package forms;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import domain.Curricula;
 import domain.Position;
@@ -13,6 +14,7 @@ public class ApplicationForm {
 
 
 	@Valid
+	@NotNull
 	public Curricula getCurricula() {
 		return this.curricula;
 	}
@@ -22,6 +24,7 @@ public class ApplicationForm {
 	}
 
 	@Valid
+	@NotNull
 	public Position getPosition() {
 		return this.position;
 	}

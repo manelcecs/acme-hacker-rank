@@ -69,6 +69,7 @@ public class ApplicationService {
 
 		return this.applicationRepository.save(application);
 	}
+
 	public Application findOne(final int idApplication) {
 		return this.applicationRepository.findOne(idApplication);
 	}
@@ -83,8 +84,8 @@ public class ApplicationService {
 
 		Assert.notNull(application);
 		Assert.isTrue(application.getProblem().getPosition().getCompany().equals(company));
-		Assert.isTrue(application.getStatus().equals("PENDING"));
-		Assert.isTrue(status.equals("ACCEPTED") && status.equals("REJECTED"));
+		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
+		Assert.isTrue(status.equals("ACCEPTED") || status.equals("REJECTED"));
 
 		application.setStatus(status);
 
@@ -106,5 +107,9 @@ public class ApplicationService {
 
 	public Collection<Application> getApplicationOfHackerByStatus(final int idHacker, final String stauts) {
 		return this.applicationRepository.getApplicationOfHackerByStatus(idHacker, stauts);
+	}
+
+	public Collection<Application> getApplicationsAnswered(final int idHacker) {
+		return this.applicationRepository.getApplicationsAnswered(idHacker);
 	}
 }

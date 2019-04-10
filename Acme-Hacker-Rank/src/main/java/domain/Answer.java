@@ -43,6 +43,7 @@ public class Answer extends DomainEntity {
 
 	@URL
 	@SafeHtml
+	@NotBlank
 	public String getLink() {
 		return this.link;
 	}

@@ -6,12 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Answer;
-import domain.Application;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
 
 	@Query("select a from Answer a where a.application.id = ?1")
-	public Application getAnswerOfApplication(int idApplication);
+	public Answer getAnswerOfApplication(int idApplication);
 
 }

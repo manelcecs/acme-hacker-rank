@@ -42,7 +42,7 @@ public class AnswerService {
 		final Position position = application.getProblem().getPosition();
 
 		Assert.isTrue(!position.getCancelled());
-		Assert.isTrue(position.getDeadline().before(DateTime.now().toDate()));
+		Assert.isTrue(position.getDeadline().after(DateTime.now().toDate()));
 
 		Assert.isNull(this.getAnswerOfApplication(idApplication));
 
@@ -64,7 +64,7 @@ public class AnswerService {
 		final Position position = application.getProblem().getPosition();
 
 		Assert.isTrue(!position.getCancelled());
-		Assert.isTrue(position.getDeadline().before(DateTime.now().toDate()));
+		Assert.isTrue(position.getDeadline().after(DateTime.now().toDate()));
 
 		Assert.isNull(this.getAnswerOfApplication(application.getId()));
 
@@ -77,7 +77,7 @@ public class AnswerService {
 
 	}
 
-	public Application getAnswerOfApplication(final int idApplication) {
+	public Answer getAnswerOfApplication(final int idApplication) {
 		return this.answerRepository.getAnswerOfApplication(idApplication);
 	}
 
