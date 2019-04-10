@@ -32,6 +32,10 @@
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/search/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/finder/hacker/edit.do" access="hasRole('HACKER')" /> 
+		<security:intercept-url pattern="/application/hacker/**" access="hasRole('HACKER')" /> 
+		<security:intercept-url pattern="/answer/hacker/**" access="hasRole('HACKER')" /> 
+		
+		<security:intercept-url pattern="/application/company/**" access="hasRole('COMPANY')" /> 
 		
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 

@@ -42,6 +42,9 @@
 			<li>
 				<a class="fNiv" href="finder/hacker/edit.do"><spring:message code="master.page.finder.edit" /></a>
 			</li>
+			<li>
+				<a class="fNiv" href="application/hacker/list.do"><spring:message code="master.page.list.application" /></a>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
@@ -77,6 +80,8 @@
 			<li>
 				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
 			</li>
+			<li><a class="fNiv" href="position/list.do"><spring:message code="master.page.list.position" /></a></li>
+			<li><a class="fNiv" href="company/list.do"><spring:message code="master.page.list.company" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()and not(hasRole('BAN'))">

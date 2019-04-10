@@ -7,8 +7,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-
-<acme:button code="position.seeMore.back" type="button" url="/position/company/list.do"/>
+<security:authorize access="hasRole('COMPANY')"><acme:button code="position.seeMore.back" type="button" url="/position/company/list.do"/></security:authorize>
+<security:authorize access="not hasRole('COMPANY')"><acme:button code="position.seeMore.back" type="button" url="/position/list.do"/></security:authorize>
 
 <acme:text label="position.seeMore.title" value="${position.title}"/>
 <acme:text label="position.seeMore.description" value="${position.description}"/>

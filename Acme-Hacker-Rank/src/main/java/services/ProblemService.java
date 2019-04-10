@@ -34,8 +34,9 @@ public class ProblemService {
 	private Validator			validator;
 
 
-	public Collection<Problem> getProblemsOfParade(final int idPosition) {
-		return this.problemRepository.getProblemsOfParade(idPosition);
+	public Collection<Problem> getProblemsOfPosition(final int idPosition) {
+		return this.problemRepository.getProblemsOfPosition(idPosition);
+
 	}
 
 	public void deleteCollectionOfProblems(final Collection<Problem> problems) {

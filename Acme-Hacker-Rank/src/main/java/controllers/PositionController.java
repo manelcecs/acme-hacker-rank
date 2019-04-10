@@ -27,9 +27,9 @@ public class PositionController extends AbstractController {
 		Collection<Position> positions;
 
 		if (idCompany == null)
-			positions = this.positionService.getAllParadesFiltered();
+			positions = this.positionService.getAllPositionsFiltered();
 		else
-			positions = this.positionService.getAllParadesFilteredOfCompany(idCompany);
+			positions = this.positionService.getAllPositionsFilteredOfCompany(idCompany);
 
 		result.addObject("positions", positions);
 		result.addObject("viewAll", true);

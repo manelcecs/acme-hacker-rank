@@ -20,16 +20,19 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	Collection<Position> getPositionCanChangedraft();
 
 	@Query("select p from Position p where p.draft = false and p.cancelled = false")
-	Collection<Position> getAllParadesFiltered();
+	Collection<Position> getAllPositionsFiltered();
 
 	@Query("select p from Position p where p.draft = false and p.cancelled = false and p.company.id = ?1")
-	Collection<Position> getAllParadesFilteredOfCompany(Integer idCompany);
+	Collection<Position> getAllPositionsFilteredOfCompany(Integer idCompany);
 
 	@Query("select p from Position p where p.salaryOffered = 1*(select max(p.salaryOffered) from Position p)")
 	Collection<Position> getPositionsWithTheBestSalary();
 
 	@Query("select p from Position p where p.salaryOffered = 1*(select min(p.salaryOffered) from Position p)")
 	Collection<Position> getPositionsWithTheWorstSalary();
+
+	@Query("select p from Position p where p.draft = false and p.cancelled = false and not exists (select a.problem.position from Application a where a.hacker.id = ?1)")
+	Collection<Position> getPositionsCanBeApplied(int idHacker);
 
 	//FINDERS
 
