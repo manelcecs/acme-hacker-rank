@@ -28,16 +28,19 @@ import forms.ApplicationForm;
 public class ApplicationService {
 
 	@Autowired
-	ApplicationRepository	applicationRepository;
+	private ApplicationRepository	applicationRepository;
 
 	@Autowired
-	ProblemService			problemService;
+	private ProblemService			problemService;
 
 	@Autowired
-	HackerService			hackerService;
+	private HackerService			hackerService;
 
 	@Autowired
-	CompanyService			companyService;
+	private CompanyService			companyService;
+
+	@Autowired
+	private MessageService			messageService;
 
 
 	public Application newApplication(final ApplicationForm applicationForm) {
@@ -89,7 +92,11 @@ public class ApplicationService {
 
 		application.setStatus(status);
 
-		return this.save(application);
+		final Application applicationSave = this.save(application);
+
+		this.messageService.notificationChangeStatus(applicationSave, company);
+
+		return applicationSave;
 
 	}
 
