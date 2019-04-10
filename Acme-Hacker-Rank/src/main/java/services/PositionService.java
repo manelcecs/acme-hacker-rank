@@ -28,24 +28,25 @@ import forms.PositionForm;
 public class PositionService {
 
 	@Autowired
-	TickerService					tickerService;
+	private TickerService					tickerService;
 
 	@Autowired
-	CompanyService					companyService;
+	private CompanyService					companyService;
 
 	@Autowired
-	PositionRepository				positionRepository;
+	private PositionRepository				positionRepository;
 
 	@Autowired
-	Validator						validator;
+	private Validator						validator;
 
 	@Autowired
-	ProblemService					problemService;
+	private ProblemService					problemService;
+
+	@Autowired
+	private MessageService					messageService;
 
 	@Autowired(required = false)
-	IntermediaryBetweenTransactions	intermediaryBetweenTransactions;
-	@Autowired
-	private MessageService	messageService;
+	private IntermediaryBetweenTransactions	intermediaryBetweenTransactions;
 
 
 	public Position findOne(final int idPosition) {
@@ -109,8 +110,6 @@ public class PositionService {
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
-		//TODO: a�adir la notificacion en el momento que sea final
-
 		return this.positionRepository.save(position);
 	}
 
@@ -149,13 +148,15 @@ public class PositionService {
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
-		//FIXME: Cuando se puedan meter problemas, descomentar esto
-		//		final Collection<Problem> problems = this.problemService.getProblemsOfPosition(position.getId());
-		//		Assert.isTrue(problems.size() >= 2);
+		final Collection<Problem> problems = this.problemService.getProblemsOfPosition(position.getId());
+		Assert.isTrue(problems.size() >= 2);
 
 		position.setDraft(false);
 
-		return this.positionRepository.save(position);
+		final Position newPosition = this.positionRepository.save(position);
+
+		this.messageService.notificationNewPositionMatchFinder(newPosition);
+		return newPosition;
 
 	}
 

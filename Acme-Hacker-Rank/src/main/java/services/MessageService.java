@@ -21,6 +21,8 @@ import security.LoginService;
 import utiles.AuthorityMethods;
 import domain.Actor;
 import domain.Administrator;
+import domain.Application;
+import domain.Company;
 import domain.Finder;
 import domain.Hacker;
 import domain.Message;
@@ -250,6 +252,31 @@ public class MessageService {
 			this.messageRepository.save(message);
 		}
 
+	}
+
+	public void notificationChangeStatus(final Application applicationSave, final Company company) {
+		final Message message = this.create();
+		message.setSender(company);
+		try {
+			message.setMoment(this.getDateNow());
+		} catch (final ParseException e) {
+		}
+
+		message.setSubject("System Notification | Notificacion del sistema");
+		message.setBody("Your application " + applicationSave.getId() + " has been: " + applicationSave.getStatus() + " | " + "Your application " + applicationSave.getId() + " has been: " + applicationSave.getStatus());
+		message.setPriority("HIGH");
+		final Collection<String> tags = new ArrayList<>();
+		tags.add("SYSTEM");
+		message.setTags(tags);
+
+		final Collection<Actor> recipients = new ArrayList<>();
+		recipients.add(applicationSave.getHacker());
+		message.setRecipients(recipients);
+		final Collection<MessageBox> messageBoxes = new ArrayList<>();
+		messageBoxes.add(this.messageBoxService.findOriginalBox(applicationSave.getHacker().getId(), "Notification Box"));
+
+		message.setMessageBoxes(messageBoxes);
+		this.messageRepository.save(message);
 	}
 
 	//Utilities

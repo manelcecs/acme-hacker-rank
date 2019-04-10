@@ -152,7 +152,7 @@ public class ActorController extends AbstractController {
 	public ModelAndView displayData() {
 		final ModelAndView result = new ModelAndView("actor/displayData");
 		List<Message> messages;
-		final List<SocialProfile> socialProfiles;
+		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles();
 
 		final UserAccount principal = LoginService.getPrincipal();
 		String authority = AuthorityMethods.getLoggedAuthority().getAuthority();
