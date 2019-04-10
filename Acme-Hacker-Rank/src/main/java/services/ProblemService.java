@@ -30,12 +30,13 @@ public class ProblemService {
 	@Autowired
 	private CompanyService		companyService;
 
+	@Autowired
+	private Validator			validator;
+
+
 	public Collection<Problem> getProblemsOfPosition(final int idPosition) {
 		return this.problemRepository.getProblemsOfPosition(idPosition);
 
-
-	public Collection<Problem> getProblemsOfParade(final int idPosition) {
-		return this.problemRepository.getProblemsOfParade(idPosition);
 	}
 
 	public void deleteCollectionOfProblems(final Collection<Problem> problems) {
