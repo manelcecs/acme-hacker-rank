@@ -63,6 +63,22 @@ public class ApplicationHackerController extends AbstractController {
 
 	}
 
+	@RequestMapping(value = "/listByStatus", method = RequestMethod.GET)
+	public ModelAndView listByStatus(@RequestParam(required = true) final String status) {
+		final ModelAndView result = new ModelAndView("application/list");
+		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
+
+		final Collection<Application> applications = this.applicationService.getApplicationOfHackerByStatus(hacker.getId(), status);
+		final Collection<Application> applicationsAnswered = this.applicationService.getApplicationsAnswered(hacker.getId());
+
+		result.addObject("applications", applications);
+		result.addObject("applicationsAnswered", applicationsAnswered);
+		result.addObject("requestURI", "application/hacker/list.do");
+
+		return result;
+
+	}
+
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam(required = true) final int idApplication) {
 		ModelAndView result = new ModelAndView("application/display");

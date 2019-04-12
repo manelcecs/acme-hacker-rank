@@ -104,4 +104,18 @@ public class ApplicationCompanyController {
 		return result;
 	}
 
+	@RequestMapping(value = "/listByStatus", method = RequestMethod.GET)
+	public ModelAndView listByStatus(@RequestParam(required = true) final String status) {
+		final ModelAndView result = new ModelAndView("application/list");
+		final Company company = this.companyService.findByPrincipal(LoginService.getPrincipal());
+
+		final Collection<Application> applications = this.applicationService.getApplicationsOfCompanyByStatus(company.getId(), status);
+
+		result.addObject("applications", applications);
+		result.addObject("requestURI", "application/hacker/listByStatus.do?status=" + status);
+
+		return result;
+
+	}
+
 }

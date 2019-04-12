@@ -31,7 +31,7 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.salaryOffered = 1*(select min(p.salaryOffered) from Position p)")
 	Collection<Position> getPositionsWithTheWorstSalary();
 
-	@Query("select p from Position p where p.draft = false and p.cancelled = false and not exists (select a.problem.position from Application a where a.hacker.id = ?1)")
+	@Query("select p from Position p where p.draft = false and p.cancelled = false and p.deadline > CURRENT_DATE and (select count(pt) from Application a join a.problem.position pt where a.hacker.id = ?1 and pt.id = p.id) * 1 = 0")
 	Collection<Position> getPositionsCanBeApplied(int idHacker);
 
 	//FINDERS
