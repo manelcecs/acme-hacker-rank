@@ -104,16 +104,18 @@ public class ApplicationService {
 		return this.applicationRepository.getApplicationsOfCompany(idCompany);
 	}
 
-	public Collection<Application> getApplicationsOfCompanyByStatus(final int idCompany, final String stauts) {
-		return this.applicationRepository.getApplicationsOfCompanyByStatus(idCompany, stauts);
+	public Collection<Application> getApplicationsOfCompanyByStatus(final int idCompany, final String status) {
+		Assert.isTrue(status.equals("SUBMITTED") || status.equals("REJECTED") || status.equals("ACCEPTED"));
+		return this.applicationRepository.getApplicationsOfCompanyByStatus(idCompany, status);
 	}
 
 	public Collection<Application> getApplicationOfHacker(final int idHacker) {
 		return this.applicationRepository.getApplicationOfHacker(idHacker);
 	}
 
-	public Collection<Application> getApplicationOfHackerByStatus(final int idHacker, final String stauts) {
-		return this.applicationRepository.getApplicationOfHackerByStatus(idHacker, stauts);
+	public Collection<Application> getApplicationOfHackerByStatus(final int idHacker, final String status) {
+		Assert.isTrue(status.equals("SUBMITTED") || status.equals("REJECTED") || status.equals("ACCEPTED") || status.equals("PENDING"));
+		return this.applicationRepository.getApplicationOfHackerByStatus(idHacker, status);
 	}
 
 	public Collection<Application> getApplicationsAnswered(final int idHacker) {
