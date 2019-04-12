@@ -3,11 +3,14 @@ package controllers;
 
 import java.util.Collection;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,27 +28,25 @@ public class SearchController extends AbstractController {
 
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView search() {
+	public ModelAndView search(@CookieValue(value = "keyword", required = false) final String keyword) {
 		final ModelAndView result;
 
 		final SearchForm searchForm = new SearchForm();
+		searchForm.setKeyword(keyword);
 
 		result = this.createEditModelAndView(searchForm);
-		result.addObject("requestURI", "search/display.do");
 		return result;
 	}
 	@RequestMapping(value = "/display", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final SearchForm searchForm, final BindingResult binding) {
+	public ModelAndView save(final HttpServletResponse response, @Valid final SearchForm searchForm, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(searchForm);
 		else
 			try {
-				result = new ModelAndView("search/display");
-				final Collection<Position> positions = this.positionService.getFilterPositionsByKeyword(searchForm.getKeyword());
-				result.addObject("positions", positions);
-				result.addObject("requestURI", "search/display.do");
+				result = new ModelAndView("redirect:display.do");
+				response.addCookie(new Cookie("keyword", searchForm.getKeyword()));
 
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(searchForm, "search.commit.error");
@@ -69,6 +70,9 @@ public class SearchController extends AbstractController {
 
 		result.addObject("searchForm", searchForm);
 
+		final Collection<Position> positions = this.positionService.getFilterPositionsByKeyword(searchForm.getKeyword());
+		result.addObject("positions", positions);
+		result.addObject("requestURI", "search/display.do");
 		result.addObject("message", messageCode);
 
 		this.configValues(result);
