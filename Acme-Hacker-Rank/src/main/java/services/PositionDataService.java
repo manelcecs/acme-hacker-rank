@@ -20,11 +20,14 @@ public class PositionDataService {
 
 	@Autowired
 	private PositionDataRepository	positionDataRepository;
+	@Autowired
+	private CurriculaService		curriculaService;
 
 
-	public PositionData create() {
+	public PositionData create(final int curriculaId) {
 		final PositionData res = new PositionData();
-
+		final Curricula c = this.curriculaService.findOne(curriculaId);
+		res.setCurricula(c);
 		return res;
 	}
 
@@ -53,6 +56,10 @@ public class PositionDataService {
 		res.setTitle(positionData.getTitle());
 
 		this.save(res);
+	}
+
+	public void delete(final PositionData positionData) {
+		this.positionDataRepository.delete(positionData);
 	}
 
 }

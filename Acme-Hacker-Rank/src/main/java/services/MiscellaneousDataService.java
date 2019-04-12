@@ -21,10 +21,14 @@ public class MiscellaneousDataService {
 	@Autowired
 	private MiscellaneousDataRepository	miscellaneousRepository;
 
+	@Autowired
+	private CurriculaService			curriculaService;
 
-	public MiscellaneousData create() {
+
+	public MiscellaneousData create(final int curriculaId) {
 		final MiscellaneousData misc = new MiscellaneousData();
-
+		final Curricula c = this.curriculaService.findOne(curriculaId);
+		misc.setCurricula(c);
 		return misc;
 	}
 
@@ -51,6 +55,10 @@ public class MiscellaneousDataService {
 		res.setText(misc.getText());
 
 		this.save(res);
+	}
+
+	public void delete(final MiscellaneousData miscData) {
+		this.miscellaneousRepository.delete(miscData);
 	}
 
 }

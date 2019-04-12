@@ -15,19 +15,23 @@ import domain.PersonalData;
 
 @Service
 @Transactional
-public class PersonaDataService {
+public class PersonalDataService {
 
 	@Autowired
 	private PersonalDataRepository	personalDataRepository;
 
 	@Autowired
 	private HackerService			hackerService;
+	@Autowired
+	private CurriculaService		curriculaService;
 
 
-	public PersonalData create() {
+	public PersonalData create(final int curriculaId) {
 		final PersonalData res = new PersonalData();
 
 		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
+		final Curricula c = this.curriculaService.findOne(curriculaId);
+		res.setCurricula(c);
 		final StringBuilder fullName = new StringBuilder();
 		fullName.append(hacker.getName() + " ");
 		for (final String s : hacker.getSurnames())

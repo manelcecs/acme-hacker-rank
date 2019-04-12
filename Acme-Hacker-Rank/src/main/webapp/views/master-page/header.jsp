@@ -49,11 +49,9 @@
 			<li>
 				<a class="fNiv" href="finder/hacker/edit.do"><spring:message code="master.page.finder.edit" /></a>
 			</li>
-		</security:authorize>
-		
-		<security:authorize access="hasRole('CUSTOMER')">
-		
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
+			<li>
+				<a class="fNiv" href="curricula/hacker/list.do"><spring:message code="master.page.curricula.list" /></a>
+			</li>
 		</security:authorize>
 		<security:authorize access="hasRole('COMPANY')">
 			<li><a class="fNiv"><spring:message	code="master.page.positions" /></a>

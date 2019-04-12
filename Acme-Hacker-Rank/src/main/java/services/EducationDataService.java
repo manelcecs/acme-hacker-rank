@@ -18,12 +18,15 @@ import domain.EducationData;
 public class EducationDataService {
 
 	@Autowired
-	private EducationDataRepository	educationDatarepository;
+	private EducationDataRepository	educationDataRepository;
+	@Autowired
+	private CurriculaService		curriculaService;
 
 
-	public EducationData create() {
+	public EducationData create(final int curriculaId) {
 		final EducationData res = new EducationData();
-
+		final Curricula c = this.curriculaService.findOne(curriculaId);
+		res.setCurricula(c);
 		return res;
 	}
 
@@ -34,7 +37,7 @@ public class EducationDataService {
 		Assert.isTrue(educationData.getStartDate().before(educationData.getEndDate()));
 		Assert.isTrue(educationData.getEndDate().after(educationData.getStartDate()));
 
-		return this.educationDatarepository.save(educationData);
+		return this.educationDataRepository.save(educationData);
 	}
 
 	public void createCopy(final Curricula curricula, final EducationData educationData) {
@@ -53,11 +56,15 @@ public class EducationDataService {
 	}
 
 	public EducationData findOne(final int educationDataId) {
-		return this.educationDatarepository.findOne(educationDataId);
+		return this.educationDataRepository.findOne(educationDataId);
 	}
 
 	public Collection<EducationData> findAllCurricula(final Curricula curricula) {
-		return this.educationDatarepository.findAllCurricula(curricula.getId());
+		return this.educationDataRepository.findAllCurricula(curricula.getId());
+	}
+
+	public void delete(final EducationData educationData) {
+		this.educationDataRepository.delete(educationData);
 	}
 
 }

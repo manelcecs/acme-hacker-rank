@@ -27,7 +27,7 @@ public class CurriculaService {
 	@Autowired
 	private HackerService				hackerService;
 	@Autowired
-	private PersonaDataService			personalDataService;
+	private PersonalDataService			personalDataService;
 	@Autowired
 	private EducationDataService		educationDataService;
 	@Autowired
@@ -82,7 +82,12 @@ public class CurriculaService {
 
 		Assert.isTrue(curricula.getHacker().getId() == hacker.getId());
 
-		return this.curriculaRepository.save(curricula);
+		final Curricula res = this.curriculaRepository.save(curricula);
+
+		//Así siempre está creado con los valores por defecto del usuario
+		this.personalDataService.save(this.personalDataService.create(res.getId()));
+
+		return res;
 
 	}
 
@@ -92,6 +97,10 @@ public class CurriculaService {
 
 	public Collection<Curricula> findAllNoCopy(final Hacker hacker) {
 		return this.curriculaRepository.findAllNoCopy(hacker.getId());
+	}
+
+	public Collection<Curricula> findAllApplication(final int applicationId) {
+		return this.curriculaRepository.findAllApplication(applicationId);
 	}
 
 }
