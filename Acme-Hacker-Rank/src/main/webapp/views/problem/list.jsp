@@ -7,6 +7,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<acme:button code="problem.list.create" type="button"  url="problem/company/create.do"/>
 
 <display:table pagesize="5" name="problems" id="problem" requestURI="${requestURI}">
 			<display:column titleKey="problem.list.title"><jstl:out value="${problem.title}"/></display:column>

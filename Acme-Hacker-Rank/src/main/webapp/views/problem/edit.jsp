@@ -43,6 +43,7 @@
 		<acme:checkbox code="problem.edit.draft" path="draft"/>	
 		
 		<acme:submit name="save" code="problem.edit.save"/>
+		<acme:cancel url="problem/company/list.do" code="problem.edit.back"/>
 	</form:form>
 	
 	<button class="addTag" onclick="addComment('attachments','attachments', 'textbox')"><spring:message code="problem.edit.addAttachments" /></button>
