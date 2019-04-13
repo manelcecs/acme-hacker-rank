@@ -20,7 +20,7 @@
 	
 	<section>
 	
-		<display:table pagesize="5" name="positions" id="position" requestURI="${requestURI}">
+		<display:table pagesize="10" name="positions" id="position" requestURI="${requestURI}">
 			<display:column titleKey="search.position.ticker"> <jstl:out value="${position.ticker.identifier}"/>
 			</display:column>
 			<display:column titleKey="search.position.company.companyName"><jstl:out value="${position.company.companyName}"/></display:column>

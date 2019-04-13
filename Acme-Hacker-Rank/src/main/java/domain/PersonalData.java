@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -23,6 +24,7 @@ public class PersonalData extends DomainEntity {
 	private Curricula	curricula;
 
 
+	@Valid
 	@OneToOne(optional = false)
 	public Curricula getCurricula() {
 		return this.curricula;

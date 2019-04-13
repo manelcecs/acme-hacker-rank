@@ -37,14 +37,14 @@
 		<br />
 		<acme:textbox code="hacker.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="hacker.edit.creditcard.make" path="creditCard.make"/>
-		<acme:textbox code="hacker.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="hacker.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="hacker.edit.creditcard.expirationMonth.placeholder"/>
-		<acme:textbox code="hacker.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="hacker.edit.creditcard.expirationYear.placeholder"/>
-		<acme:textbox code="hacker.edit.creditcard.CVV" path="creditCard.cvv"/>
+		<acme:inputNumber code="hacker.edit.creditcard.number" path="creditCard.number"/>
+		<acme:inputNumber code="hacker.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" />
+		<acme:inputNumber code="hacker.edit.creditcard.expirationYear" path="creditCard.expirationYear" />
+		<acme:inputNumber code="hacker.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
 		<spring:message code="hacker.edit.submit" var="submit"/>
 		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" value="${ submit}" />
-		<acme:cancel url="/" code="hacker.edit.cancel" />
+		<acme:cancel url="/actor/display.do" code="hacker.edit.cancel" />
 	</form:form>
 	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="hacker.edit.surnames.add" /></button>
 </jstl:if>
@@ -73,10 +73,10 @@
 		<br />
 		<acme:textbox code="hacker.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="hacker.edit.creditcard.make" path="creditCard.make"/>
-		<acme:textbox code="hacker.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="hacker.edit.creditcard.expirationMonth" path="creditCard.expirationMonth"/>
-		<acme:textbox code="hacker.edit.creditcard.expirationYear" path="creditCard.expirationYear"/>
-		<acme:textbox code="hacker.edit.creditcard.CVV" path="creditCard.cvv"/>
+		<acme:inputNumber code="hacker.edit.creditcard.number" path="creditCard.number"/>
+		<acme:inputNumber code="hacker.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" />
+		<acme:inputNumber code="hacker.edit.creditcard.expirationYear" path="creditCard.expirationYear" />
+		<acme:inputNumber code="hacker.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
 		<form:checkbox path="termsAndConditions" />
 		<b><spring:message code="hacker.edit.termsAndConditions" /></b>

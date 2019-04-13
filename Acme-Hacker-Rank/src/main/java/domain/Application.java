@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -31,6 +33,7 @@ public class Application extends DomainEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@NotNull
 	public Date getMoment() {
 		return this.moment;
 	}
@@ -51,6 +54,7 @@ public class Application extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
+	@Pattern(regexp = "^(ACCEPTED|REJECTED|SUBMITTED|PENDING)$")
 	public String getStatus() {
 		return this.status;
 	}
@@ -61,6 +65,7 @@ public class Application extends DomainEntity {
 
 	@Valid
 	@OneToOne(optional = false)
+	@NotNull
 	public Curricula getCurricula() {
 		return this.curricula;
 	}

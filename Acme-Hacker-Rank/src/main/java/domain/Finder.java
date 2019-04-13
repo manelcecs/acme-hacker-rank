@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,7 +62,7 @@ public class Finder extends DomainEntity {
 		this.maximumDeadLine = maximumDeadLine;
 	}
 
-	@Valid
+	@Min(0)
 	public Double getMinimumSalary() {
 		return this.minimumSalary;
 	}
@@ -81,6 +83,7 @@ public class Finder extends DomainEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@NotNull
 	public Date getLastUpdate() {
 		return this.lastUpdate;
 	}

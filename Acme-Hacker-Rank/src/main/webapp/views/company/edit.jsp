@@ -38,14 +38,14 @@
 		<br />
 		<acme:textbox code="company.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="company.edit.creditcard.make" path="creditCard.make"/>
-		<acme:textbox code="company.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="company.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="company.edit.creditcard.expirationMonth.placeholder"/>
-		<acme:textbox code="company.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="company.edit.creditcard.expirationYear.placeholder"/>
-		<acme:textbox code="company.edit.creditcard.CVV" path="creditCard.cvv"/>
+		<acme:inputNumber code="company.edit.creditcard.number" path="creditCard.number"/>
+		<acme:inputNumber code="company.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" />
+		<acme:inputNumber code="company.edit.creditcard.expirationYear" path="creditCard.expirationYear" />
+		<acme:inputNumber code="company.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
 		<spring:message code="company.edit.submit" var="submit"/>
 		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" value="${ submit}" />
-		<acme:cancel url="/" code="company.edit.cancel" />
+		<acme:cancel url="/actor/display.do" code="company.edit.cancel" />
 	</form:form>
 	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="company.edit.surnames.add" /></button>
 </jstl:if>
@@ -75,10 +75,10 @@
 		<br />
 		<acme:textbox code="company.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="company.edit.creditcard.make" path="creditCard.make"/>
-		<acme:textbox code="company.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="company.edit.creditcard.expirationMonth" path="creditCard.expirationMonth"/>
-		<acme:textbox code="company.edit.creditcard.expirationYear" path="creditCard.expirationYear"/>
-		<acme:textbox code="company.edit.creditcard.CVV" path="creditCard.cvv"/>
+		<acme:inputNumber code="company.edit.creditcard.number" path="creditCard.number"/>
+		<acme:inputNumber code="company.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" />
+		<acme:inputNumber code="company.edit.creditcard.expirationYear" path="creditCard.expirationYear" />
+		<acme:inputNumber code="company.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
 		<form:checkbox path="termsAndConditions" />
 		<b><spring:message code="company.edit.termsAndConditions" /></b>

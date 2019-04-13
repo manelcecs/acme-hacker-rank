@@ -488,6 +488,7 @@
 		<property name="minimumDeadLine" value="06/01/2019" />
 		<property name="maximumDeadLine" value="07/30/2019" />
 		<property name="minimumSalary" value="2000.0" />
+		<property name="lastUpdate" value="06/01/2018" />
 	</bean>
 	
 	<!-- original curricula -->
@@ -672,6 +673,7 @@
 		<property name="minimumDeadLine" value="06/01/2019" />
 		<property name="maximumDeadLine" value="07/30/2019" />
 		<property name="minimumSalary" value="2000.0" />
+		<property name="lastUpdate" value="06/01/2018" />
 	</bean>
 
 	<bean class="domain.Hacker" id="hacker1">
@@ -789,6 +791,7 @@
 		<property name="minimumDeadLine" value="06/01/2019" />
 		<property name="maximumDeadLine" value="07/30/2019" />
 		<property name="minimumSalary" value="2000.0" />
+		<property name="lastUpdate" value="06/01/2018" />
 	</bean>
 
 	<bean class="domain.Hacker" id="hacker2">
@@ -898,7 +901,7 @@
 		</property>
 
 		<property value="4500" name="salaryOffered" />
-		<property value="true" name="draft" />
+		<property value="false" name="draft" />
 		<property value="false" name="cancelled" />
 
 		<property name="company" ref="company0" />
@@ -934,7 +937,7 @@
 		</property>
 
 		<property value="1500" name="salaryOffered" />
-		<property value="false" name="draft" />
+		<property value="true" name="draft" />
 		<property value="false" name="cancelled" />
 
 		<property name="company" ref="company0" />
@@ -967,7 +970,7 @@
 		</property>
 
 		<property value="3200" name="salaryOffered" />
-		<property value="true" name="draft" />
+		<property value="false" name="draft" />
 		<property value="false" name="cancelled" />
 
 		<property name="company" ref="company1" />
@@ -1001,7 +1004,7 @@
 		</property>
 
 		<property value="7999" name="salaryOffered" />
-		<property value="true" name="draft" />
+		<property value="false" name="draft" />
 		<property value="false" name="cancelled" />
 
 		<property name="company" ref="company2" />
@@ -1034,8 +1037,8 @@
 		</property>
 
 		<property value="2908.99" name="salaryOffered" />
-		<property value="false" name="draft" />
-		<property value="false" name="cancelled" />
+		<property value="true" name="draft" />
+		<property value="true" name="cancelled" />
 
 		<property name="company" ref="company2" />
 		<property name="ticker" ref="ticker21" />
@@ -1054,6 +1057,8 @@
 		
 		<property name="attachments">
 			<list>
+				<value>http://tinder.com</value>
+				<value>http://ungaunga.com</value>
 			</list>
 		</property>
 		
@@ -1068,6 +1073,7 @@
 		
 		<property name="attachments">
 			<list>
+				<value>http://hbo3.com</value>
 			</list>
 		</property>
 		

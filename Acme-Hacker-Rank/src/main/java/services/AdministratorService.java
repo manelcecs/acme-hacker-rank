@@ -110,7 +110,6 @@ public class AdministratorService {
 		result.setName(adminForm.getName());
 		result.setVatNumber(adminForm.getVatNumber());
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
-		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
 
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(adminForm.getSurnames()));

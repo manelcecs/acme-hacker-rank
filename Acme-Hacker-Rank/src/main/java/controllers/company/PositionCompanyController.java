@@ -66,11 +66,11 @@ public class PositionCompanyController extends AbstractController {
 		result.addObject("positionForm", positionForm);
 		result.addObject("message", message);
 
+		this.configValues(result);
 		return result;
 	}
 
 	//TODO: Las colecciones de position controlar que no est�n vacias. Ask toni y deivid
-	//TODO: Meter en el reconstruct si es 0 la id, que la fecha sea futuro. Comprobar que en modo draft sea una fecha futura
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final PositionForm positionForm, final BindingResult binding) {
 		ModelAndView result;
@@ -148,6 +148,7 @@ public class PositionCompanyController extends AbstractController {
 		result.addObject("owner", true);
 		result.addObject("requestURI", "position/company/list.do");
 		result.addObject("message", message);
+		this.configValues(result);
 		return result;
 	}
 
@@ -165,6 +166,7 @@ public class PositionCompanyController extends AbstractController {
 			result.addObject("position", position);
 		}
 
+		this.configValues(result);
 		return result;
 
 	}

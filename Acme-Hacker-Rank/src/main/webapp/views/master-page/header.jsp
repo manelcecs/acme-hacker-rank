@@ -53,7 +53,6 @@
 			<li><a class="fNiv"><spring:message	code="master.page.positions" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="position/company/create.do"><spring:message code="master.page.company.create" /></a></li>
 					<li><a href="position/company/list.do"><spring:message code="master.page.company.list" /></a></li>			
 				</ul>
 			</li>
@@ -77,13 +76,27 @@
 			<li>
 				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
 			</li>
-			<li><a class="fNiv" href="position/list.do"><spring:message code="master.page.list.position" /></a></li>
-			<li><a class="fNiv" href="company/list.do"><spring:message code="master.page.list.company" /></a></li>
+			
+			<li>
+				<a class="fNiv" href="position/list.do"><spring:message code="master.page.list.position" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="company/list.do"><spring:message code="master.page.list.company" /></a>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()and not(hasRole('BAN'))">
 			<li>
 				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="position/list.do"><spring:message code="master.page.list.position" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="company/list.do"><spring:message code="master.page.list.company" /></a>
 			</li>
 		
 			<li>
@@ -98,7 +111,6 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="actor/display.do"><spring:message code="master.page.actor.profile" /></a></li>			
-					<li><a href="actor/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 					<li><a href="actor/socialProfile/display.do"><spring:message code="master.page.actor.socialProfile" /></a></li>
 				</ul>
 			</li>

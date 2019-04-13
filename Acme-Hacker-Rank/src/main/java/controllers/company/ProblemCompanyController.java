@@ -3,7 +3,7 @@ package controllers.company;
 
 import java.util.Collection;
 
-import javax.validation.ValidationException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,22 +57,25 @@ public class ProblemCompanyController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Problem problem, final BindingResult binding) {
+	public ModelAndView save(@Valid final Problem problem, final BindingResult binding) {
 		ModelAndView result;
 		if (problem.getAttachments() != null) {
 			final Collection<String> urls = ValidateCollectionURL.deleteURLBlanksInCollection(problem.getAttachments());
 			problem.setAttachments(urls);
+			if (ValidateCollectionURL.validateURLCollection(problem.getAttachments()) != true)
+				binding.rejectValue("attachments", "problem.edit.attachments.error.url");
 		}
-		try {
-			final Problem problemRec = this.problemService.reconstruct(problem, binding);
-			this.problemService.save(problemRec);
-			result = new ModelAndView("redirect:list.do");
-		} catch (final ValidationException oops) {
+
+		if (binding.hasErrors())
 			result = this.createEditModelAndView(problem);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			result = this.createEditModelAndView(problem, "cannot.save.problem");
-		}
+		else
+			try {
+				this.problemService.save(problem);
+				result = new ModelAndView("redirect:list.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(problem, "cannot.save.problem");
+				oops.printStackTrace();
+			}
 
 		return result;
 	}
@@ -120,6 +123,7 @@ public class ProblemCompanyController extends AbstractController {
 		result.addObject("company", true);
 		result.addObject("requestURI", "problem/company/list.do");
 		result.addObject("message", message);
+		this.configValues(result);
 		return result;
 	}
 
@@ -153,6 +157,7 @@ public class ProblemCompanyController extends AbstractController {
 		result.addObject("positions", positions);
 
 		result.addObject("message", message);
+		this.configValues(result);
 
 		return result;
 	}

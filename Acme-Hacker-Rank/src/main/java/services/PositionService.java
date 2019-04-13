@@ -197,6 +197,10 @@ public class PositionService {
 
 	}
 
+	public Collection<Position> getPositions(final int idFinder) {
+		return this.positionRepository.getPositionsByFinder(idFinder);
+	}
+
 	public Collection<Position> getPositionCanChangedraft() {
 		return this.positionRepository.getPositionCanChangedraft();
 	}

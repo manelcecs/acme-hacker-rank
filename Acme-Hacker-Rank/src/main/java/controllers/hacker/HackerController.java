@@ -64,7 +64,7 @@ public class HackerController extends AbstractController {
 		try {
 			final Hacker hackerRect = this.hackerService.reconstruct(hacker, binding);
 			this.hackerService.save(hackerRect);
-			res = new ModelAndView("redirect:/welcome/index.do");
+			res = new ModelAndView("redirect:/actor/display.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(hacker);
 		} catch (final Throwable oops) {

@@ -37,6 +37,7 @@ public class Message extends DomainEntity {
 	private Collection<MessageBox>	messageBoxes;
 
 
+	@Valid
 	@ManyToOne(optional = false)
 	public Actor getSender() {
 		return this.sender;
@@ -108,7 +109,7 @@ public class Message extends DomainEntity {
 		this.messageBoxes = messageBoxes;
 	}
 
-	@Pattern(regexp = "^HIGH|MEDIUM|LOW$")
+	@Pattern(regexp = "^(HIGH|MEDIUM|LOW)$")
 	@NotBlank
 	@SafeHtml
 	public String getPriority() {

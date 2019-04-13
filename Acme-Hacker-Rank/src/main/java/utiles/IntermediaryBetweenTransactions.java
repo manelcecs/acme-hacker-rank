@@ -17,15 +17,12 @@ public class IntermediaryBetweenTransactions {
 	public Ticker generateTicker(final String companyName) {
 		boolean exito = false;
 		Ticker result = null;
-		int attempt = 1;
 
 		while (!exito)
 			try {
-				result = this.tickerService.generateTicker(companyName, attempt);
+				result = this.tickerService.generateTicker(companyName);
 				exito = true;
 			} catch (final Throwable oops) {
-				oops.printStackTrace();
-				attempt--;
 			}
 		return result;
 	}

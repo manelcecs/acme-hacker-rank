@@ -121,7 +121,6 @@ public class HackerService {
 		result.setName(hackerForm.getName());
 		result.setVatNumber(hackerForm.getVatNumber());
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), hackerForm.getPhoneNumber()));
-		result.setPhoneNumber(hackerForm.getPhoneNumber());
 		result.setPhoto(hackerForm.getPhoto());
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(hackerForm.getSurnames()));
 
@@ -173,14 +172,14 @@ public class HackerService {
 
 		Boolean valid = false;
 
-		final Pattern emailPattern = Pattern
-			.compile("^([A-Za-z0-9_.]{1,}[@]{1}[a-z]{1,}[.]{1}[a-z]{1,})|([A-Za-z0-9_.]{1,}[<]{1}[A-Za-z0-9]{1,}[@]{1}[a-z]{2,}[.]{1}[a-z]{2,}[>]{1})|([A-Za-z0-9._]{1,}[<]{1}[A-Za-z0-9]{1,}[@]{1}[>]{1})|([A-Za-z0-9._]{1,}[@]{1})$");
+		final Pattern emailPattern = Pattern.compile("^([0-9a-zA-Z ]{1,}[ ]{1}[<]{1}[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,}[>]{1}|[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,})$");
 
 		final Matcher mEmail = emailPattern.matcher(email.toLowerCase());
 		if (mEmail.matches())
 			valid = true;
 		return valid;
 	}
+
 	public Collection<Hacker> findAll() {
 		return this.hackerRepository.findAll();
 	}

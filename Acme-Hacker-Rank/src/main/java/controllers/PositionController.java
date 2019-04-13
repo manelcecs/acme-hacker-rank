@@ -35,6 +35,7 @@ public class PositionController extends AbstractController {
 		result.addObject("viewAll", true);
 		result.addObject("requestURI", "position/list.do");
 
+		this.configValues(result);
 		return result;
 	}
 
@@ -51,7 +52,7 @@ public class PositionController extends AbstractController {
 			result.addObject("position", position);
 		}
 
+		this.configValues(result);
 		return result;
-
 	}
 }

@@ -13,6 +13,10 @@ import domain.Position;
 @Repository
 public interface PositionRepository extends JpaRepository<Position, Integer> {
 
+	// Bug EAGER
+	@Query("select p from Position p where p.id = ?1")
+	Position findOne(int idPosition);
+
 	@Query("select p from Position p where p.company.id = ?1")
 	Collection<Position> getPositionsOfCompany(int idCompany);
 
@@ -41,5 +45,8 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select distinct(p) from Position p LEFT JOIN p.skillsRequired s LEFT JOIN p.technologiesRequired t where (p.draft = false AND p.cancelled = false) AND (p.ticker.identifier LIKE %?1% OR p.title LIKE %?1% OR p.description LIKE %?1% OR p.profileRequired LIKE %?1% OR s LIKE %?1% OR t LIKE %?1%) AND (p.deadline BETWEEN ?2 and ?3) AND (p.salaryOffered > ?4)")
 	Collection<Position> getFilterPositionsByFinder(String keyword, Date minimumdeadline, Date maximumDeadline, Double minimumSalary);
+
+	@Query("select f.positions from Finder f where f.id = ?1")
+	Collection<Position> getPositionsByFinder(int idFinder);
 
 }
