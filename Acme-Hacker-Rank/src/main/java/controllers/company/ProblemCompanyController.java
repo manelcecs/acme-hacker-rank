@@ -47,10 +47,14 @@ public class ProblemCompanyController extends AbstractController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int idProblem) {
-		final ModelAndView result;
+		ModelAndView result;
 
 		final Problem problem = this.problemService.findOne(idProblem);
-		result = this.createEditModelAndView(problem);
+
+		if (!problem.getDraft())
+			result = new ModelAndView("redirect:list.do");
+		else
+			result = this.createEditModelAndView(problem);
 
 		this.configValues(result);
 		return result;
@@ -74,7 +78,6 @@ public class ProblemCompanyController extends AbstractController {
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(problem, "cannot.save.problem");
-				oops.printStackTrace();
 			}
 
 		return result;

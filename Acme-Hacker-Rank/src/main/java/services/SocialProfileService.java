@@ -59,4 +59,8 @@ public class SocialProfileService {
 		return this.socialProfileRepository.findAllSocialProfile(this.actorService.findByUserAccount(LoginService.getPrincipal()).getId());
 	}
 
+	public Collection<SocialProfile> findAllSocialProfiles(final int idActor) {
+		return this.socialProfileRepository.findAllSocialProfile(idActor);
+	}
+
 }

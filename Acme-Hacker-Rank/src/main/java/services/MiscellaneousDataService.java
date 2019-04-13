@@ -38,6 +38,9 @@ public class MiscellaneousDataService {
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 
+		if (miscData.getId() != 0)
+			Assert.isTrue(!miscData.getCurricula().getCopy());
+
 		miscData.setAttachments(ValidatorCollection.deleteStringsBlanksInCollection(miscData.getAttachments()));
 
 		return this.miscellaneousRepository.save(miscData);

@@ -1142,7 +1142,7 @@
 	</bean>
 
 	<bean id="adminConfig" class="domain.AdminConfig">
-		<property name="systemName" value="Acme-Hacker-Rank" />
+		<property name="systemName" value="Acme Hacker Rank" />
 		<property name="bannerURL" value="https://i.imgur.com/7b8lu4b.png" />
 		<property name="countryCode" value="+34" />
 		<property name="resultsFinder" value="10" />

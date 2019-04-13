@@ -46,7 +46,10 @@ public class EducationDataController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int educationDataId) {
 		final ModelAndView res;
 		final EducationData educationData = this.educationDataService.findOne(educationDataId);
-		res = this.createModelAndViewEdit(educationData);
+		if (educationData.getCurricula().getCopy())
+			res = this.createModelAndViewCurricula(educationData.getCurricula().getId());
+		else
+			res = this.createModelAndViewEdit(educationData);
 
 		return res;
 	}

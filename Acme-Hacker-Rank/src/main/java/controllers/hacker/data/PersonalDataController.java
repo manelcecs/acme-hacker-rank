@@ -44,17 +44,12 @@ public class PersonalDataController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int personalDataId) {
 		ModelAndView res;
+		final PersonalData personalData = this.personalDataService.findOne(personalDataId);
 
-		try {
-
-			final PersonalData pd = this.personalDataService.findOne(personalDataId);
-
-			res = this.createModelAndViewEdit(pd);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			res = new ModelAndView("redirect:/welcome/index.do");
-		}
-
+		if (personalData.getCurricula().getCopy())
+			res = this.createModelAndViewCurricula(personalData.getCurricula().getId());
+		else
+			res = this.createModelAndViewEdit(personalData);
 		return res;
 	}
 

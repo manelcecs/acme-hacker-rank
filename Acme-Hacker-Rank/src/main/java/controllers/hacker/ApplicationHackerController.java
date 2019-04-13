@@ -58,7 +58,7 @@ public class ApplicationHackerController extends AbstractController {
 		result.addObject("applications", applications);
 		result.addObject("applicationsAnswered", applicationsAnswered);
 		result.addObject("requestURI", "application/hacker/list.do");
-
+		this.configValues(result);
 		return result;
 
 	}
@@ -74,7 +74,7 @@ public class ApplicationHackerController extends AbstractController {
 		result.addObject("applications", applications);
 		result.addObject("applicationsAnswered", applicationsAnswered);
 		result.addObject("requestURI", "application/hacker/list.do");
-
+		this.configValues(result);
 		return result;
 
 	}
@@ -98,6 +98,7 @@ public class ApplicationHackerController extends AbstractController {
 			result.addObject("application", application);
 			result.addObject("answer", answer);
 			result.addObject("existsAnswer", existsAnswer);
+			this.configValues(result);
 		}
 
 		return result;
@@ -122,7 +123,6 @@ public class ApplicationHackerController extends AbstractController {
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				result = this.createModelAndView(applicationForm, "cannot.commit.create");
-				oops.printStackTrace();
 			}
 		return result;
 
@@ -138,12 +138,13 @@ public class ApplicationHackerController extends AbstractController {
 
 		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
 		final Collection<Position> positions = this.positionService.getPositionsCanBeApplied(hacker.getId());
-		final Collection<Curricula> curriculas = this.curriculaService.getCurriculasOfHacker(hacker.getId());
+		final Collection<Curricula> curriculas = this.curriculaService.findAllNoCopy(hacker);
 
 		result.addObject("positions", positions);
 		result.addObject("applicationForm", applicationForm);
 		result.addObject("curriculas", curriculas);
 		result.addObject("message", message);
+		this.configValues(result);
 
 		return result;
 	}

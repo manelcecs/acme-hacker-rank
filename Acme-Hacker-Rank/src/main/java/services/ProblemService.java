@@ -47,8 +47,8 @@ public class ProblemService {
 		if (problem.getId() != 0) {
 			final Problem problemBD = this.problemRepository.findOne(problem.getId());
 			Assert.isTrue(problemBD.getDraft());
-			Assert.isTrue(problem.getPosition().getCompany().getId() == company.getId());
 		}
+		Assert.isTrue(problem.getPosition().getCompany().getId() == company.getId());
 
 		return this.problemRepository.save(problem);
 	}

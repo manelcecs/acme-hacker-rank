@@ -22,6 +22,7 @@ public class PersonalDataService {
 
 	@Autowired
 	private HackerService			hackerService;
+
 	@Autowired
 	private CurriculaService		curriculaService;
 
@@ -46,6 +47,9 @@ public class PersonalDataService {
 		Assert.isTrue(personalData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+
+		if (personalData.getId() != 0)
+			Assert.isTrue(!personalData.getCurricula().getCopy());
 
 		return this.personalDataRepository.save(personalData);
 	}

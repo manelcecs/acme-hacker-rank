@@ -20,6 +20,7 @@ public class PositionDataService {
 
 	@Autowired
 	private PositionDataRepository	positionDataRepository;
+
 	@Autowired
 	private CurriculaService		curriculaService;
 
@@ -35,6 +36,9 @@ public class PositionDataService {
 		Assert.isTrue(positionData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+
+		if (positionData.getId() != 0)
+			Assert.isTrue(!positionData.getCurricula().getCopy());
 
 		if (positionData.getEndDate() != null) {
 			Assert.isTrue(positionData.getStartDate().before(positionData.getEndDate()));

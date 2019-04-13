@@ -32,21 +32,29 @@ public class PositionDataController extends AbstractController {
 
 	@Autowired
 	private EducationDataService		educationDataService;
+
 	@Autowired
 	private CurriculaService			curriculaService;
+
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
 	@Autowired
 	private PersonalDataService			personalDataService;
+
 	@Autowired
 	private PositionDataService			positionDataService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final Integer personalDataId) {
+	public ModelAndView edit(@RequestParam final Integer positionDataId) {
 		final ModelAndView res;
-		final PositionData positionData = this.positionDataService.findOne(personalDataId);
-		res = this.createModelAndViewEdit(positionData);
+		final PositionData positionData = this.positionDataService.findOne(positionDataId);
+
+		if (positionData.getCurricula().getCopy())
+			res = this.createModelAndViewCurricula(positionData.getCurricula().getId());
+		else
+			res = this.createModelAndViewEdit(positionData);
 
 		return res;
 	}

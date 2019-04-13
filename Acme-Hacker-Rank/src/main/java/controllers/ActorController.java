@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Authority;
@@ -58,6 +59,25 @@ public class ActorController extends AbstractController {
 
 		result = this.createModelAndViewDisplay();
 
+		return result;
+	}
+
+	@RequestMapping(value = "/displayCompany", method = RequestMethod.GET)
+	public ModelAndView displayCompany(@RequestParam(required = true) final int idCompany) {
+		final ModelAndView result = new ModelAndView("actor/display");
+
+		final Company company = this.companyService.findOne(idCompany);
+
+		result.addObject("authority", "COMPANY");
+
+		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles(company.getId());
+
+		result.addObject("company", company);
+		result.addObject("userLogged", null);
+		result.addObject("actor", company);
+
+		result.addObject("socialProfiles", socialProfiles);
+		this.configValues(result);
 		return result;
 	}
 

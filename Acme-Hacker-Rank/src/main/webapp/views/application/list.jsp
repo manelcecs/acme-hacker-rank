@@ -22,7 +22,7 @@
 	<acme:button code="application.list.status.rejected" type="button" url="application/hacker/listByStatus.do?status=REJECTED"/>
 	<acme:button code="application.list.status.submitted" type="button" url="application/hacker/listByStatus.do?status=SUBMITTED"/>
 	<acme:button code="application.list.status.pending" type="button" url="application/hacker/listByStatus.do?status=PENDING"/>
-	<acme:button code="application.list.status.all" type="button" url="application/company/list.do"/>
+	<acme:button code="application.list.status.all" type="button" url="application/hacker/list.do"/>
 </security:authorize>
 
 
@@ -57,5 +57,6 @@
 
 	</security:authorize>
 
+	<display:column titleKey="application.list.status"><jstl:out value="${oneApplication.status}"/></display:column>
 
 </display:table>

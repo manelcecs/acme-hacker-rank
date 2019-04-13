@@ -64,7 +64,7 @@
 								
 				<!-- Columna de ver la company -->
 				<display:column titleKey="position.list.viewCompany">
-						<acme:button url="/" type="button" code="position.list.viewCompany"/>
+						<acme:button url="/actor/displayCompany.do?idCompany=${position.company.id}" type="button" code="position.list.viewCompany"/>
 				</display:column>
 
 			

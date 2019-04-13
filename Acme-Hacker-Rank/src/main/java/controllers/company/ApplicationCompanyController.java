@@ -16,13 +16,14 @@ import services.ApplicationService;
 import services.CompanyService;
 import services.CurriculaService;
 import services.PositionService;
+import controllers.AbstractController;
 import domain.Answer;
 import domain.Application;
 import domain.Company;
 
 @Controller
 @RequestMapping("/application/company")
-public class ApplicationCompanyController {
+public class ApplicationCompanyController extends AbstractController {
 
 	@Autowired
 	ApplicationService	applicationService;
@@ -49,6 +50,7 @@ public class ApplicationCompanyController {
 
 		result.addObject("applications", applications);
 		result.addObject("requestURI", "application/hacker/list.do");
+		this.configValues(result);
 
 		return result;
 
@@ -72,6 +74,7 @@ public class ApplicationCompanyController {
 
 		}
 
+		this.configValues(result);
 		return result;
 
 	}
@@ -113,7 +116,7 @@ public class ApplicationCompanyController {
 
 		result.addObject("applications", applications);
 		result.addObject("requestURI", "application/hacker/listByStatus.do?status=" + status);
-
+		this.configValues(result);
 		return result;
 
 	}

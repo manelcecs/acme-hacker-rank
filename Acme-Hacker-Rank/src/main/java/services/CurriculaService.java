@@ -63,15 +63,13 @@ public class CurriculaService {
 		this.personalDataService.createCopy(this.personalDataService.findByCurricula(curricula), res);
 
 		for (final EducationData edu : this.educationDataService.findAllCurricula(curricula))
-			this.educationDataService.createCopy(curricula, edu);
+			this.educationDataService.createCopy(res, edu);
 
 		for (final MiscellaneousData misc : this.miscellaneousDataService.findAllCurricula(curricula))
-			this.miscellaneousDataService.createCopy(curricula, misc);
+			this.miscellaneousDataService.createCopy(res, misc);
 
 		for (final PositionData pos : this.positionDataService.findAllCurricula(curricula))
-			this.positionDataService.createCopy(curricula, pos);
-
-		//TODO: asegurar unicidad
+			this.positionDataService.createCopy(res, pos);
 
 		return res;
 	}

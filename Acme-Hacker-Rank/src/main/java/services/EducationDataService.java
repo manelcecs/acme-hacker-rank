@@ -19,6 +19,7 @@ public class EducationDataService {
 
 	@Autowired
 	private EducationDataRepository	educationDataRepository;
+
 	@Autowired
 	private CurriculaService		curriculaService;
 
@@ -34,6 +35,9 @@ public class EducationDataService {
 		Assert.isTrue(educationData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+
+		if (educationData.getId() != 0)
+			Assert.isTrue(!educationData.getCurricula().getCopy());
 
 		if (educationData.getEndDate() != null) {
 			Assert.isTrue(educationData.getStartDate().before(educationData.getEndDate()));

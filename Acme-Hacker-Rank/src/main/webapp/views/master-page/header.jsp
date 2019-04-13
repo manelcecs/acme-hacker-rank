@@ -49,12 +49,17 @@
 				<a class="fNiv" href="application/hacker/list.do"><spring:message code="master.page.list.application" /></a>
 			</li>
 		</security:authorize>
+		
 		<security:authorize access="hasRole('COMPANY')">
 			<li><a class="fNiv"><spring:message	code="master.page.positions" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="position/company/list.do"><spring:message code="master.page.company.list" /></a></li>			
 				</ul>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="application/company/list.do"><spring:message code="master.page.list.application" /></a>
 			</li>
 			
 			<li><a class="fNiv"><spring:message	code="master.page.problems" /></a>

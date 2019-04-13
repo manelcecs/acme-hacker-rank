@@ -42,6 +42,9 @@ public class ApplicationService {
 	@Autowired
 	private MessageService			messageService;
 
+	@Autowired
+	private CurriculaService		curriculaService;
+
 
 	public Application newApplication(final ApplicationForm applicationForm) {
 
@@ -60,9 +63,9 @@ public class ApplicationService {
 		final Application application = new Application();
 		application.setHacker(hacker);
 
-		//FIXME: Hacer una copia de curricula
+		final Curricula copy = this.curriculaService.createCopy(curricula);
+		application.setCurricula(copy);
 
-		application.setCurricula(curricula);
 		application.setMoment(DateTime.now().toDate());
 		application.setStatus("PENDING");
 
@@ -72,7 +75,6 @@ public class ApplicationService {
 
 		return this.applicationRepository.save(application);
 	}
-
 	public Application findOne(final int idApplication) {
 		return this.applicationRepository.findOne(idApplication);
 	}

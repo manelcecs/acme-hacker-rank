@@ -38,10 +38,9 @@ public class AnswerHackerController extends AbstractController {
 		else
 			try {
 				this.answerService.save(answer);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:/application/hacker/list.do");
 			} catch (final Throwable oops) {
 				result = this.createModelAndView(answer, "cannot.save.answer");
-				oops.printStackTrace();
 			}
 		return result;
 	}

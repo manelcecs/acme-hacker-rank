@@ -19,6 +19,7 @@ import services.EducationDataService;
 import services.MiscellaneousDataService;
 import services.PersonalDataService;
 import services.PositionDataService;
+import utiles.ValidateCollectionURL;
 import controllers.AbstractController;
 import domain.Curricula;
 import domain.EducationData;
@@ -46,7 +47,10 @@ public class MiscellaneousDataController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int miscellaneousDataId) {
 		final ModelAndView res;
 		final MiscellaneousData miscellaneousData = this.miscellaneousDataService.findOne(miscellaneousDataId);
-		res = this.createModelAndViewEdit(miscellaneousData);
+		if (miscellaneousData.getCurricula().getCopy())
+			res = this.createModelAndViewCurricula(miscellaneousData.getCurricula().getId());
+		else
+			res = this.createModelAndViewEdit(miscellaneousData);
 
 		return res;
 	}
@@ -78,8 +82,12 @@ public class MiscellaneousDataController extends AbstractController {
 	}
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final MiscellaneousData miscellaneousData, final BindingResult binding) {
-
 		ModelAndView res;
+
+		if (miscellaneousData.getAttachments() != null || !miscellaneousData.getAttachments().isEmpty())
+			if (ValidateCollectionURL.validateURLCollection(miscellaneousData.getAttachments()))
+				binding.rejectValue("attachments", "miscellaneousData.edit.attachments.error");
+
 		if (binding.hasErrors()) {
 			res = this.createModelAndViewEdit(miscellaneousData);
 			System.out.println(binding.getAllErrors());
