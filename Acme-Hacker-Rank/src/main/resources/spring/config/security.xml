@@ -94,6 +94,14 @@
 		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />  
 		<security:intercept-url pattern="/socialProfile/save.do" access="isAuthenticated()" /> 
 	
+		<security:intercept-url pattern="/curricula/hacker/**" access="hasRole('HACKER')"/>
+		<security:intercept-url pattern="/curricula/company/**" access="hasRole('COMPANY')"/>
+		
+		<security:intercept-url pattern="/educationData/hacker/**" access="hasRole('HACKER')"/>
+		<security:intercept-url pattern="/personalData/hacker/**" access="hasRole('HACKER')"/>
+		<security:intercept-url pattern="/miscellaneousData/hacker/**" access="hasRole('HACKER')"/>
+		<security:intercept-url pattern="/positionData/hacker/**" access="hasRole('HACKER')"/>
+	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 

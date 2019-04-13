@@ -35,4 +35,5 @@ public class StringToCurriculaConverter implements Converter<String, Curricula> 
 		}
 		return result;
 	}
+
 }

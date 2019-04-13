@@ -140,6 +140,7 @@ public class AdministratorService {
 		result.setPhoto(admin.getPhoto());
 		result.setVatNumber(admin.getVatNumber());
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(admin.getSurnames()));
+		result.setCreditCard(admin.getCreditCard());
 
 		this.validator.validate(result, binding);
 

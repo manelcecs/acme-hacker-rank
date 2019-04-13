@@ -43,6 +43,12 @@
 		<value>/views/answer/messages</value>
 		<value>/views/actor/messages</value>
 		<value>/views/socialProfile/messages</value>
+		
+		<value>/views/curricula/messages</value>
+		<value>/views/educationData/messages</value>
+		<value>/views/miscellaneousData/messages</value>
+		<value>/views/personalData/messages</value>
+		<value>/views/positionData/messages</value>
 	</util:list>
 
 </beans>

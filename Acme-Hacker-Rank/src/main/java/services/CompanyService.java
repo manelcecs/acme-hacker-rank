@@ -161,6 +161,8 @@ public class CompanyService {
 		result.setVatNumber(company.getVatNumber());
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(company.getSurnames()));
 
+		result.setCreditCard(company.getCreditCard());
+
 		this.validator.validate(result, binding);
 
 		if (binding.hasErrors()) {
