@@ -36,6 +36,11 @@ public class PositionDataService {
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 
+		if (positionData.getEndDate() != null) {
+			Assert.isTrue(positionData.getStartDate().before(positionData.getEndDate()));
+			Assert.isTrue(positionData.getEndDate().after(positionData.getStartDate()));
+		}
+
 		return this.positionDataRepository.save(positionData);
 	}
 

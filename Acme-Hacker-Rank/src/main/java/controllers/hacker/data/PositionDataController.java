@@ -1,6 +1,8 @@
 
 package controllers.hacker.data;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
@@ -13,9 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CurriculaService;
+import services.EducationDataService;
+import services.MiscellaneousDataService;
+import services.PersonalDataService;
 import services.PositionDataService;
 import controllers.AbstractController;
 import domain.Curricula;
+import domain.EducationData;
+import domain.MiscellaneousData;
+import domain.PersonalData;
 import domain.PositionData;
 
 @Controller
@@ -23,9 +31,15 @@ import domain.PositionData;
 public class PositionDataController extends AbstractController {
 
 	@Autowired
-	private CurriculaService	curriculaService;
+	private EducationDataService		educationDataService;
 	@Autowired
-	private PositionDataService	positionDataService;
+	private CurriculaService			curriculaService;
+	@Autowired
+	private MiscellaneousDataService	miscellaneousDataService;
+	@Autowired
+	private PersonalDataService			personalDataService;
+	@Autowired
+	private PositionDataService			positionDataService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -68,9 +82,10 @@ public class PositionDataController extends AbstractController {
 
 		ModelAndView res;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			res = this.createModelAndViewEdit(positionData);
-		else
+			System.out.println(binding.getAllErrors());
+		} else
 			try {
 				this.positionDataService.save(positionData);
 				res = this.createModelAndViewCurricula(positionData.getCurricula().getId());
@@ -93,6 +108,17 @@ public class PositionDataController extends AbstractController {
 		res = new ModelAndView("curricula/display");
 		final Curricula curricula = this.curriculaService.findOne(curriculaId);
 		res.addObject("curricula", curricula);
+
+		final List<MiscellaneousData> miscellaneousData = (List<MiscellaneousData>) this.miscellaneousDataService.findAllCurricula(curricula);
+		final List<PositionData> positionData = (List<PositionData>) this.positionDataService.findAllCurricula(curricula);
+		final List<EducationData> educationsData = (List<EducationData>) this.educationDataService.findAllCurricula(curricula);
+		final PersonalData personalData = this.personalDataService.findByCurricula(curricula);
+
+		res.addObject("positionsData", positionData);
+		res.addObject("educationsData", educationsData);
+		res.addObject("personalData", personalData);
+		res.addObject("miscellaneousData", miscellaneousData);
+
 		res.addObject("show", true);
 		this.configValues(res);
 		return res;

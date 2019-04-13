@@ -90,7 +90,7 @@ public class CurriculaHackerController extends AbstractController {
 			final List<EducationData> educationsData = (List<EducationData>) this.educationDataService.findAllCurricula(curricula);
 			final PersonalData personalData = this.personalDataService.findByCurricula(curricula);
 
-			res.addObject("positionData", positionData);
+			res.addObject("positionsData", positionData);
 			res.addObject("educationsData", educationsData);
 			res.addObject("personalData", personalData);
 			res.addObject("miscellaneousData", miscellaneousData);

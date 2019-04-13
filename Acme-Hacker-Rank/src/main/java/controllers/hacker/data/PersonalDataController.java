@@ -13,25 +13,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
 import services.CurriculaService;
-import services.HackerService;
+import services.EducationDataService;
+import services.MiscellaneousDataService;
 import services.PersonalDataService;
+import services.PositionDataService;
 import controllers.AbstractController;
 import domain.Curricula;
-import domain.Hacker;
+import domain.EducationData;
+import domain.MiscellaneousData;
 import domain.PersonalData;
+import domain.PositionData;
 
 @Controller
 @RequestMapping("/personalData/hacker")
 public class PersonalDataController extends AbstractController {
 
 	@Autowired
-	private PersonalDataService	personalDataService;
+	private EducationDataService		educationDataService;
 	@Autowired
-	private CurriculaService	curriculaService;
+	private CurriculaService			curriculaService;
 	@Autowired
-	private HackerService		hackerService;
+	private MiscellaneousDataService	miscellaneousDataService;
+	@Autowired
+	private PersonalDataService			personalDataService;
+	@Autowired
+	private PositionDataService			positionDataService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -45,10 +52,9 @@ public class PersonalDataController extends AbstractController {
 			res = this.createModelAndViewEdit(pd);
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			res = this.createModelAndViewListCurricula();
+			res = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		this.configValues(res);
 		return res;
 	}
 
@@ -75,7 +81,7 @@ public class PersonalDataController extends AbstractController {
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
 			}
-			res = this.createModelAndViewListCurricula();
+			res = this.createModelAndViewCurricula(personalData.getCurricula().getId());
 		}
 
 		this.configValues(res);
@@ -90,18 +96,23 @@ public class PersonalDataController extends AbstractController {
 		return res;
 	}
 
-	protected ModelAndView createModelAndViewListCurricula() {
-		ModelAndView res = new ModelAndView("curricula/list");
-		try {
-			final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
-			final List<Curricula> curriculas = (List<Curricula>) this.curriculaService.findAllNoCopy(hacker);
-			res.addObject("curriculas", curriculas);
-			res.addObject("show", true);
+	protected ModelAndView createModelAndViewCurricula(final int curriculaId) {
+		ModelAndView res;
+		res = new ModelAndView("curricula/display");
+		final Curricula curricula = this.curriculaService.findOne(curriculaId);
+		res.addObject("curricula", curricula);
 
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			res = new ModelAndView("redirect:/welcome/index.do");
-		}
+		final List<MiscellaneousData> miscellaneousData = (List<MiscellaneousData>) this.miscellaneousDataService.findAllCurricula(curricula);
+		final List<PositionData> positionData = (List<PositionData>) this.positionDataService.findAllCurricula(curricula);
+		final List<EducationData> educationsData = (List<EducationData>) this.educationDataService.findAllCurricula(curricula);
+		final PersonalData personalData = this.personalDataService.findByCurricula(curricula);
+
+		res.addObject("positionsData", positionData);
+		res.addObject("educationsData", educationsData);
+		res.addObject("personalData", personalData);
+		res.addObject("miscellaneousData", miscellaneousData);
+
+		res.addObject("show", true);
 		this.configValues(res);
 		return res;
 	}

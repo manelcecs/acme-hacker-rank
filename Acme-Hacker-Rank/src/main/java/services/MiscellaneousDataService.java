@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.MiscellaneousDataRepository;
 import utiles.AuthorityMethods;
+import utiles.ValidatorCollection;
 import domain.Curricula;
 import domain.MiscellaneousData;
 
@@ -36,6 +37,8 @@ public class MiscellaneousDataService {
 		Assert.isTrue(miscData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+
+		miscData.setAttachments(ValidatorCollection.deleteStringsBlanksInCollection(miscData.getAttachments()));
 
 		return this.miscellaneousRepository.save(miscData);
 	}

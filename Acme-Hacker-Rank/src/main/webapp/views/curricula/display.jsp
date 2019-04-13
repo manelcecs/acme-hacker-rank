@@ -35,10 +35,20 @@
 <br />
 
 <jstl:if test="${show }">
-	<button
+	<jstl:if test="${personalData eq null }">
+		<button
+		onClick="window.location.href='personalData/hacker/create.do?curriculaId=${curricula.id }'">
+		<spring:message code="curricula.create" />
+	</button>
+	</jstl:if>
+	
+	<jstl:if test="${personalData.id gt 0 }">
+		<button
 		onClick="window.location.href='personalData/hacker/edit.do?personalDataId=${personalData.id }'">
 		<spring:message code="curricula.edit" />
 	</button>
+	</jstl:if>
+	
 </jstl:if>
 <br />
 <br />
@@ -80,8 +90,8 @@
 <hr>
 <b><spring:message code="curricula.miscellaneousData" /></b>
 <display:table name="${miscellaneousData}" id="miscData">
-	<display:column property="text" ><jstl:out value="${miscData.text }" /></display:column>
-	<display:column property="attachments" >
+	<display:column titleKey="curricula.miscellaneousData.text" ><jstl:out value="${miscData.text }" /></display:column>
+	<display:column titleKey="curricula.miscellaneousData.attachments" >
 		<jstl:forEach items="${miscData.attachments }" var="attachment">
 			<jstl:out value="attachment" />
 		</jstl:forEach>
@@ -111,11 +121,11 @@
 </jstl:if>
 <hr>
 <b><spring:message code="curricula.positionData" /></b>
-<display:table name="${positionsData}" id="postionData">
-	<display:column property="title" ><jstl:out value="${postionData.title }" /></display:column>
-	<display:column property="description" ><jstl:out value="${postionData.description }" /></display:column>
-	<display:column property="startDate" > <jstl:out value="${postionData.startDate }" /></display:column>
-	<display:column property="endDate" > <jstl:out value="${postionData.endDate }" /></display:column>
+<display:table name="${positionsData}" id="positionData">
+	<display:column titleKey="curricula.positionData.title" ><jstl:out value="${positionData.title }" /></display:column>
+	<display:column titleKey="curricula.positionData.description" ><jstl:out value="${positionData.description }" /></display:column>
+	<display:column titleKey="curricula.positionData.startDate" > <jstl:out value="${positionData.startDate }" /></display:column>
+	<display:column titleKey="curricula.positionData.endDate" > <jstl:out value="${positionData.endDate }" /></display:column>
 	<display:column>
 		<jstl:if test="${show }">
 			<button

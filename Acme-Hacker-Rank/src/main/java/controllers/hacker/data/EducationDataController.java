@@ -1,6 +1,8 @@
 
 package controllers.hacker.data;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
@@ -14,18 +16,30 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CurriculaService;
 import services.EducationDataService;
+import services.MiscellaneousDataService;
+import services.PersonalDataService;
+import services.PositionDataService;
 import controllers.AbstractController;
 import domain.Curricula;
 import domain.EducationData;
+import domain.MiscellaneousData;
+import domain.PersonalData;
+import domain.PositionData;
 
 @Controller
 @RequestMapping("/educationData/hacker")
 public class EducationDataController extends AbstractController {
 
 	@Autowired
-	private EducationDataService	educationDataService;
+	private EducationDataService		educationDataService;
 	@Autowired
-	private CurriculaService		curriculaService;
+	private CurriculaService			curriculaService;
+	@Autowired
+	private MiscellaneousDataService	miscellaneousDataService;
+	@Autowired
+	private PersonalDataService			personalDataService;
+	@Autowired
+	private PositionDataService			positionDataService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -63,9 +77,10 @@ public class EducationDataController extends AbstractController {
 	public ModelAndView save(@Valid final EducationData educationData, final BindingResult binding) {
 
 		ModelAndView res;
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			res = this.createModelAndViewEdit(educationData);
-		else
+			System.out.println(binding.getAllErrors());
+		} else
 			try {
 				this.educationDataService.save(educationData);
 				res = this.createModelAndViewCurricula(educationData.getCurricula().getId());
@@ -80,7 +95,6 @@ public class EducationDataController extends AbstractController {
 				res = this.createModelAndViewEdit(educationData);
 			}
 
-		this.configValues(res);
 		return res;
 	}
 
@@ -97,6 +111,17 @@ public class EducationDataController extends AbstractController {
 		res = new ModelAndView("curricula/display");
 		final Curricula curricula = this.curriculaService.findOne(curriculaId);
 		res.addObject("curricula", curricula);
+
+		final List<MiscellaneousData> miscellaneousData = (List<MiscellaneousData>) this.miscellaneousDataService.findAllCurricula(curricula);
+		final List<PositionData> positionData = (List<PositionData>) this.positionDataService.findAllCurricula(curricula);
+		final List<EducationData> educationsData = (List<EducationData>) this.educationDataService.findAllCurricula(curricula);
+		final PersonalData personalData = this.personalDataService.findByCurricula(curricula);
+
+		res.addObject("positionsData", positionData);
+		res.addObject("educationsData", educationsData);
+		res.addObject("personalData", personalData);
+		res.addObject("miscellaneousData", miscellaneousData);
+
 		res.addObject("show", true);
 		this.configValues(res);
 		return res;
