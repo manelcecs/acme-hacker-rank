@@ -43,6 +43,7 @@ public class PersonalDataService {
 	}
 
 	public PersonalData save(final PersonalData personalData) {
+		Assert.isTrue(personalData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 

@@ -84,9 +84,6 @@ public class CurriculaService {
 
 		final Curricula res = this.curriculaRepository.save(curricula);
 
-		//Así siempre está creado con los valores por defecto del usuario
-		this.personalDataService.save(this.personalDataService.create(res.getId()));
-
 		return res;
 
 	}

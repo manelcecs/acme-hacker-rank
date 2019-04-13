@@ -33,6 +33,7 @@ public class MiscellaneousDataService {
 	}
 
 	public MiscellaneousData save(final MiscellaneousData miscData) {
+		Assert.isTrue(miscData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 

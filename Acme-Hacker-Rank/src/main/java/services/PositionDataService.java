@@ -32,6 +32,7 @@ public class PositionDataService {
 	}
 
 	public PositionData save(final PositionData positionData) {
+		Assert.isTrue(positionData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 

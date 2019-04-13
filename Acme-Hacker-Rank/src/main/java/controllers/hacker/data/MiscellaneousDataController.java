@@ -66,19 +66,21 @@ public class MiscellaneousDataController extends AbstractController {
 	public ModelAndView save(@Valid final MiscellaneousData miscellaneousData, final BindingResult binding) {
 
 		ModelAndView res;
-
-		try {
-			this.miscService.save(miscellaneousData);
-			res = this.createModelAndViewCurricula(miscellaneousData.getCurricula().getId());
-		} catch (final ValidationException oops) {
-			System.out.println("Validation Exception");
-			System.out.println(binding.getAllErrors());
+		if (binding.hasErrors())
 			res = this.createModelAndViewEdit(miscellaneousData);
-		} catch (final Throwable oops) {
-			System.out.println("Generic Exception");
-			oops.printStackTrace();
-			res = this.createModelAndViewEdit(miscellaneousData);
-		}
+		else
+			try {
+				this.miscService.save(miscellaneousData);
+				res = this.createModelAndViewCurricula(miscellaneousData.getCurricula().getId());
+			} catch (final ValidationException oops) {
+				System.out.println("Validation Exception");
+				System.out.println(binding.getAllErrors());
+				res = this.createModelAndViewEdit(miscellaneousData);
+			} catch (final Throwable oops) {
+				System.out.println("Generic Exception");
+				oops.printStackTrace();
+				res = this.createModelAndViewEdit(miscellaneousData);
+			}
 
 		this.configValues(res);
 		return res;

@@ -31,12 +31,14 @@ public class EducationDataService {
 	}
 
 	public EducationData save(final EducationData educationData) {
+		Assert.isTrue(educationData != null);
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 
-		Assert.isTrue(educationData.getStartDate().before(educationData.getEndDate()));
-		Assert.isTrue(educationData.getEndDate().after(educationData.getStartDate()));
-
+		if (educationData.getEndDate() != null) {
+			Assert.isTrue(educationData.getStartDate().before(educationData.getEndDate()));
+			Assert.isTrue(educationData.getEndDate().after(educationData.getStartDate()));
+		}
 		return this.educationDataRepository.save(educationData);
 	}
 

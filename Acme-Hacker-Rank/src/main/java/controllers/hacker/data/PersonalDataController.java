@@ -23,7 +23,7 @@ import domain.Hacker;
 import domain.PersonalData;
 
 @Controller
-@RequestMapping("/inceptionRecord/hacker")
+@RequestMapping("/personalData/hacker")
 public class PersonalDataController extends AbstractController {
 
 	@Autowired

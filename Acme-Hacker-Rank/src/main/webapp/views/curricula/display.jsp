@@ -36,7 +36,7 @@
 
 <jstl:if test="${show }">
 	<button
-		onClick="window.location.href='personalData/hacker/edit.do?id=${personalData.id }'">
+		onClick="window.location.href='personalData/hacker/edit.do?personalDataId=${personalData.id }'">
 		<spring:message code="curricula.edit" />
 	</button>
 </jstl:if>
@@ -51,17 +51,11 @@
 	<display:column titleKey="curricula.educationData.mark" ><jstl:out value="${educationData.mark}" /></display:column>
 	<display:column titleKey="curricula.educationData.startDate" ><jstl:out value="${educationData.startDate}" /></display:column>
 	<display:column titleKey="curricula.educationData.endDate" ><jstl:out value="${educationData.endDate}" /></display:column>
-	<display:column>
-		<button
-			onClick="window.location.href='educationData/hacker/display.do?id=${educationData.id }'">
-			<spring:message code="curricula.seeMore" />
-		</button>
-	</display:column>
 
 	<display:column>
 		<jstl:if test="${show }">
 			<button
-				onClick="window.location.href='educationData/hacker/edit.do?id=${educationData.id }'">
+				onClick="window.location.href='educationData/hacker/edit.do?educationDataId=${educationData.id }'">
 				<spring:message code="curricula.edit" />
 			</button>
 		</jstl:if>
@@ -70,7 +64,7 @@
 	<display:column>
 		<jstl:if test="${show }">
 			<button
-				onClick="window.location.href='educationData/hacker/delete.do?id=${educationData.id }'">
+				onClick="window.location.href='educationData/hacker/delete.do?educationDataId=${educationData.id }'">
 				<spring:message code="curricula.delete" />
 			</button>
 		</jstl:if>
@@ -79,7 +73,7 @@
 </display:table>
 <jstl:if test="${show }">
 	<button
-		onClick="window.location.href='educationData/hacker/create.do?curriculaId='${curricula.id}">
+		onClick="window.location.href='educationData/hacker/create.do?curriculaId=${curricula.id}'">
 		<spring:message code="curricula.create" />
 	</button>
 </jstl:if>
@@ -93,15 +87,9 @@
 		</jstl:forEach>
 	</display:column>
 	<display:column>
-		<button
-			onClick="window.location.href='miscellaneousData/hacker/display.do?id=${miscData.id }'">
-			<spring:message code="curricula.seeMore" />
-		</button>
-	</display:column>
-	<display:column>
 		<jstl:if test="${show }">
 			<button
-				onClick="window.location.href='miscellaneousData/hacker/edit.do?id=${miscData.id }'">
+				onClick="window.location.href='miscellaneousData/hacker/edit.do?miscellaneousDataId=${miscData.id }'">
 				<spring:message code="curricula.edit" />
 			</button>
 		</jstl:if>
@@ -109,7 +97,7 @@
 	<display:column>
 		<jstl:if test="${show }">
 			<button
-				onClick="window.location.href='miscellaneousData/hacker/delete.do?id=${miscData.id }'">
+				onClick="window.location.href='miscellaneousData/hacker/delete.do?miscellaneousDataId=${miscData.id }'">
 				<spring:message code="curricula.delete" />
 			</button>
 		</jstl:if>
@@ -117,7 +105,7 @@
 </display:table>
 <jstl:if test="${show }">
 	<button
-		onClick="window.location.href='miscellaneousData/hacker/create.do?curriculaId='${curricula.id}">
+		onClick="window.location.href='miscellaneousData/hacker/create.do?curriculaId=${curricula.id}'">
 		<spring:message code="curricula.create" />
 	</button>
 </jstl:if>
@@ -129,15 +117,9 @@
 	<display:column property="startDate" > <jstl:out value="${postionData.startDate }" /></display:column>
 	<display:column property="endDate" > <jstl:out value="${postionData.endDate }" /></display:column>
 	<display:column>
-		<button
-			onClick="window.location.href='postionData/hacker/display.do?id=${postionData.id }'">
-			<spring:message code="curricula.seeMore" />
-		</button>
-	</display:column>
-	<display:column>
 		<jstl:if test="${show }">
 			<button
-				onClick="window.location.href='postionData/hacker/edit.do?id=${postionData.id }'">
+				onClick="window.location.href='positionData/hacker/edit.do?postionDataId=${postionData.id }'">
 				<spring:message code="curricula.edit" />
 			</button>
 		</jstl:if>
@@ -145,7 +127,7 @@
 	<display:column>
 		<jstl:if test="${show }">
 			<button
-				onClick="window.location.href='postionData/hacker/delete.do?id=${postionData.id }'">
+				onClick="window.location.href='positionData/hacker/delete.do?postionDataId=${postionData.id }'">
 				<spring:message code="curricula.delete" />
 			</button>
 		</jstl:if>
@@ -153,7 +135,7 @@
 </display:table>
 <jstl:if test="${show }">
 	<button
-		onClick="window.location.href='postionData/hacker/create.do?curriculaId='${curricula.id}">
+		onClick="window.location.href='positionData/hacker/create.do?curriculaId=${curricula.id}'">
 		<spring:message code="curricula.create" />
 	</button>
 </jstl:if>

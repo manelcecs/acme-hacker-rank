@@ -29,16 +29,16 @@ public class PositionDataController extends AbstractController {
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final Integer id) {
+	public ModelAndView edit(@RequestParam final Integer personalDataId) {
 		final ModelAndView res;
-		final PositionData positionData = this.positionDataService.findOne(id);
+		final PositionData positionData = this.positionDataService.findOne(personalDataId);
 		res = this.createModelAndViewEdit(positionData);
 
 		return res;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam final int curriculaId) {
+	public ModelAndView create(@RequestParam final Integer curriculaId) {
 		final ModelAndView res;
 		final PositionData positionData = this.positionDataService.create(curriculaId);
 		res = this.createModelAndViewEdit(positionData);
@@ -46,11 +46,11 @@ public class PositionDataController extends AbstractController {
 		return res;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final Integer id) {
+	public ModelAndView delete(@RequestParam final Integer personalDataId) {
 
 		final int curriculaId;
 		ModelAndView res;
-		final PositionData record = this.positionDataService.findOne(id);
+		final PositionData record = this.positionDataService.findOne(personalDataId);
 		curriculaId = record.getCurricula().getId();
 		try {
 			this.positionDataService.delete(record);
@@ -68,18 +68,21 @@ public class PositionDataController extends AbstractController {
 
 		ModelAndView res;
 
-		try {
-			this.positionDataService.save(positionData);
-			res = this.createModelAndViewCurricula(positionData.getCurricula().getId());
-		} catch (final ValidationException oops) {
-			System.out.println("Validation Exception");
-			System.out.println(binding.getAllErrors());
+		if (binding.hasErrors())
 			res = this.createModelAndViewEdit(positionData);
-		} catch (final Throwable oops) {
-			System.out.println("Generic Exception");
-			oops.printStackTrace();
-			res = this.createModelAndViewEdit(positionData);
-		}
+		else
+			try {
+				this.positionDataService.save(positionData);
+				res = this.createModelAndViewCurricula(positionData.getCurricula().getId());
+			} catch (final ValidationException oops) {
+				System.out.println("Validation Exception");
+				System.out.println(binding.getAllErrors());
+				res = this.createModelAndViewEdit(positionData);
+			} catch (final Throwable oops) {
+				System.out.println("Generic Exception");
+				oops.printStackTrace();
+				res = this.createModelAndViewEdit(positionData);
+			}
 
 		this.configValues(res);
 		return res;

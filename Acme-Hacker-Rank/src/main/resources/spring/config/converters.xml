@@ -34,6 +34,9 @@
 		<bean class="converters.PositionToStringConverter"/>
 		<bean class="converters.StringToPositionConverter"/>
 		
+		<bean class="converters.CurriculaToStringConverter"/>
+		<bean class="converters.StringToCurriculaConverter"/>
+		
 	</util:list>
 	
 </beans>

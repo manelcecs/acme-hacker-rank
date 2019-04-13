@@ -60,7 +60,7 @@ public class CurriculaHackerController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView res;
 		final Curricula curricula = this.curriculaService.save(this.curriculaService.create());
-		res = this.createModelAndViewDisplay(curricula.getId());
+		res = this.createModelAndViewEditPersonal(curricula.getId());
 		return res;
 	}
 
@@ -68,6 +68,14 @@ public class CurriculaHackerController extends AbstractController {
 	public ModelAndView delete(final Integer curriculaId) {
 		ModelAndView res;
 		res = this.createModelAndViewList();
+		return res;
+	}
+
+	protected ModelAndView createModelAndViewEditPersonal(final Integer curriculaId) {
+		final ModelAndView res = new ModelAndView("personalData/edit");
+		final PersonalData personalData = this.personalDataService.create(curriculaId);
+		res.addObject("personalData", personalData);
+		this.configValues(res);
 		return res;
 	}
 

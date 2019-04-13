@@ -63,22 +63,22 @@ public class EducationDataController extends AbstractController {
 	public ModelAndView save(@Valid final EducationData educationData, final BindingResult binding) {
 
 		ModelAndView res;
-
-		try {
-			this.educationDataService.save(educationData);
-			res = this.createModelAndViewCurricula(educationData.getCurricula().getId());
-
-		} catch (final ValidationException oops) {
-			System.out.println("Validation Exception");
-			System.out.println(binding.getAllErrors());
+		if (binding.hasErrors())
 			res = this.createModelAndViewEdit(educationData);
-			new ModelAndView("educationData/edit");
-			res.addObject("educationData", educationData);
-		} catch (final Throwable oops) {
-			System.out.println("Generic Exception");
-			oops.printStackTrace();
-			res = this.createModelAndViewEdit(educationData);
-		}
+		else
+			try {
+				this.educationDataService.save(educationData);
+				res = this.createModelAndViewCurricula(educationData.getCurricula().getId());
+
+			} catch (final ValidationException oops) {
+				System.out.println("Validation Exception");
+				System.out.println(binding.getAllErrors());
+				res = this.createModelAndViewEdit(educationData);
+			} catch (final Throwable oops) {
+				System.out.println("Generic Exception");
+				oops.printStackTrace();
+				res = this.createModelAndViewEdit(educationData);
+			}
 
 		this.configValues(res);
 		return res;
