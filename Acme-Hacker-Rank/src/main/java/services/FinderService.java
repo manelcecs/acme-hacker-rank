@@ -131,7 +131,23 @@ public class FinderService {
 		if (finderA.getKeyWord() != null && finderB.getKeyWord() != null)
 			keyWord = finderA.getKeyWord().equals(finderB.getKeyWord());
 
-		result = keyWord && finderA.getMinimumDeadLine() == finderB.getMinimumDeadLine() && finderA.getMaximumDeadLine() == finderB.getMaximumDeadLine() && actual.before(expirationDate) && finderA.getMinimumSalary() == finderB.getMinimumSalary();
+		Boolean minimumDeadline = true;
+		if (finderA.getMinimumDeadLine() != null && finderB.getMinimumDeadLine() == null)
+			minimumDeadline = false;
+		if (finderA.getMinimumDeadLine() == null && finderB.getMinimumDeadLine() != null)
+			minimumDeadline = false;
+		if (finderA.getMinimumDeadLine() != null && finderB.getMinimumDeadLine() != null)
+			minimumDeadline = finderA.getMinimumDeadLine().compareTo(finderB.getMinimumDeadLine()) == 0;
+
+		Boolean maximumDeadline = true;
+		if (finderA.getMaximumDeadLine() != null && finderB.getMaximumDeadLine() == null)
+			maximumDeadline = false;
+		if (finderA.getMaximumDeadLine() == null && finderB.getMaximumDeadLine() != null)
+			maximumDeadline = false;
+		if (finderA.getMaximumDeadLine() != null && finderB.getMaximumDeadLine() != null)
+			maximumDeadline = finderA.getMaximumDeadLine().compareTo(finderB.getMaximumDeadLine()) == 0;
+
+		result = keyWord && minimumDeadline && maximumDeadline && actual.before(expirationDate) && finderA.getMinimumSalary() - finderB.getMinimumSalary() == 0;
 		return result;
 	}
 	public Finder reconstruct(final Finder finder, final BindingResult binding) {

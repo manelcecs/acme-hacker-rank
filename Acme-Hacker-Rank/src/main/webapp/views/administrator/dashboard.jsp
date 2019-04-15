@@ -28,7 +28,7 @@
 
 <display:table pagesize="5" name="companiesWithMoreOffersOfPositions" id="companyWithMoreOffersOfPositions" requestURI="${requestURI}">
 	<display:column titleKey="administrator.dashboard.companiesWithMoreOffersOfPositions">- <jstl:out value="${companyWithMoreOffersOfPositions.companyName}"/>
-		<jstl:out value="(${companyWithMoreOffersOfPositions.id})"/></display:column>
+		<jstl:out value="(${companyWithMoreOffersOfPositions.id}) : ${maximumOfPositionsPerCompany}"/></display:column>
 </display:table>
 
 <hr>
@@ -55,7 +55,7 @@
 				<jstl:forEach var="surname" items="${hackerWithMoreApplications.surnames}" >
 					<jstl:out value=" ${surname}"/>
 				</jstl:forEach>
-				<jstl:out value="(${hackerWithMoreApplications.id})"/></display:column>
+				<jstl:out value="(${hackerWithMoreApplications.id}): ${maximumOfApplicationsPerHacker}"/></display:column>
 </display:table>	
 	
 <hr>
