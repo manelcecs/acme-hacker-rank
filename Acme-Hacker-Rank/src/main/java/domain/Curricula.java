@@ -7,12 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Curricula extends DomainEntity {
 
 	private boolean	copy;
-
+	private String	title;
 	private Hacker	hacker;
 
 
@@ -32,6 +34,15 @@ public class Curricula extends DomainEntity {
 
 	public void setCopy(final boolean copy) {
 		this.copy = copy;
+	}
+
+	@NotBlank
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
 	}
 
 }

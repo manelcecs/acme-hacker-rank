@@ -100,6 +100,8 @@ public class MessageService {
 	}
 
 	public void delete(final Message message) throws ParseException {
+		Assert.isTrue(this.checkMessagePermissions(message));
+
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		final MessageBox trashBox = this.messageBoxService.findOriginalBox(actor.getId(), "Trash Box");
@@ -141,6 +143,7 @@ public class MessageService {
 	}
 
 	public Message removeFrom(Message message, final MessageBox messageBox) {
+		Assert.isTrue(this.checkMessagePermissions(message));
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
 		final MessageBox trashBox = this.messageBoxService.findOriginalBox(actor.getId(), "Trash Box");
@@ -298,6 +301,7 @@ public class MessageService {
 
 		return res;
 	}
+
 	private Date getDateNow() throws ParseException {
 		final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		final LocalDateTime datetimenow = LocalDateTime.now();
@@ -310,6 +314,11 @@ public class MessageService {
 		final Date actual = format.parse(datetimenow.getYear() + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second);
 
 		return actual;
+	}
+
+	public boolean checkMessagePermissions(final Message message) {
+		final Actor actorPrincipal = this.actorService.findByUserAccount(LoginService.getPrincipal());
+		return message.getSender().equals(actorPrincipal) || message.getRecipients().contains(actorPrincipal);
 	}
 
 }

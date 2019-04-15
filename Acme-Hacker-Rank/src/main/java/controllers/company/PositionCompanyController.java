@@ -16,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.CompanyService;
 import services.PositionService;
+import services.ProblemService;
 import controllers.AbstractController;
 import domain.Company;
 import domain.Position;
+import domain.Problem;
 import forms.PositionForm;
 
 @Controller
@@ -30,6 +32,9 @@ public class PositionCompanyController extends AbstractController {
 
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private ProblemService	problemService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -70,10 +75,12 @@ public class PositionCompanyController extends AbstractController {
 		return result;
 	}
 
-	//TODO: Las colecciones de position controlar que no est�n vacias. Ask toni y deivid
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final PositionForm positionForm, final BindingResult binding) {
 		ModelAndView result;
+
+		positionForm.setSkillsRequired(utiles.ValidatorCollection.deleteStringsBlanksInCollection(positionForm.getSkillsRequired()));
+		positionForm.setTechnologiesRequired(utiles.ValidatorCollection.deleteStringsBlanksInCollection(positionForm.getTechnologiesRequired()));
 
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(positionForm);
@@ -164,6 +171,9 @@ public class PositionCompanyController extends AbstractController {
 		else {
 			result = new ModelAndView("position/display");
 			result.addObject("position", position);
+			final Collection<Problem> problems = this.problemService.getProblemsOfPosition(position.getId());
+			result.addObject("problems", problems);
+			result.addObject("requestURI", "position/company/display.do?idPosition=" + idPosition);
 		}
 
 		this.configValues(result);

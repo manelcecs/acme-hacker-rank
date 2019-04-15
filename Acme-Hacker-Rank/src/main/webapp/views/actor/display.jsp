@@ -139,7 +139,7 @@
 
 <!-- Social profiles table -->
 <b><spring:message code="actor.socialProfile" /></b>
-<display:table name="${socialProfiles}" id="profile">
+<display:table pagesize="5" name="${socialProfiles}" id="profile" requestURI="${requestURI}">
 	<display:column titleKey="actor.socialProfiles.name">
 		<jstl:out value="${ profile.nick}" />
 	</display:column>

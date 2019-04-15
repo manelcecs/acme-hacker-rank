@@ -15,6 +15,21 @@
    		 type="button" />
     </jstl:if>
 </jstl:if>
+
+
+<h4><jstl:out value="${curricula.title}" /></h4>
+<hr>
+
+<jstl:if test="${personalData eq null }">
+    <jstl:if test="${!show}">
+   	 <acme:button url="/personalData/hacker/create.do" code="curricula.create"
+   		 type="button" />
+    </jstl:if>
+    <jstl:if test="${show}">
+   	 <b><spring:message code="curricula.display.nothing" /></b>
+    </jstl:if>
+</jstl:if>
+<jstl:if test="${personalData ne null }">
 <br />
 <b><spring:message code="curricula.personalData" /></b>
 <br />
@@ -35,6 +50,8 @@
 </b>
 <jstl:out value="${personalData.linkedinProfile }" />
 <br />
+</jstl:if>
+
 <jstl:if test="${!curricula.copy }">
 
 
@@ -196,5 +213,14 @@
    	 </button>
     </jstl:if>
 </jstl:if>
+
+
+
+
+
+
+
+
+
 
 

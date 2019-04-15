@@ -24,7 +24,7 @@
 	
 	<acme:select items="${positions}" itemLabel="title" code="application.create.position" path="position"/>
 	
-	<acme:select items="${curriculas}" itemLabel="id" code="application.create.curricula" path="curricula"/>
+	<acme:select items="${curriculas}" itemLabel="title" code="application.create.curricula" path="curricula"/>
 
 	<acme:submit name="save" code="application.create.save"/>
 </form:form>

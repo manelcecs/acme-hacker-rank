@@ -88,4 +88,8 @@ public class ProblemService {
 		return this.problemRepository.getProblemsOfCompany(idCompany);
 	}
 
+	public Collection<Problem> getProblemsOfPositionFinal(final int idPosition) {
+		return this.problemRepository.getProblemsOfPositionFinal(idPosition);
+	}
+
 }

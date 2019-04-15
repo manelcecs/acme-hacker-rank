@@ -128,6 +128,8 @@ public class ActorController extends AbstractController {
 		}
 
 		result.addObject("socialProfiles", socialProfiles);
+		result.addObject("requestURI", "actor/display.do");
+
 		this.configValues(result);
 		return result;
 

@@ -14,16 +14,16 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	Administrator findByPrincipal(int principalId);
 
 	//DASHBOARD--------------------------------------------------------------
-	@Query("select avg(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	@Query("select avg(1*(select count(p) from Position p where p.draft = false and p.company.id = c.id)) from Company c")
 	Double getAvgOfPositionsPerCompany();
 
-	@Query("select min(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	@Query("select min(1*(select count(p) from Position p where p.draft = false and p.company.id = c.id)) from Company c")
 	Integer getMinimumOfPositionsPerCompany();
 
-	@Query("select max(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	@Query("select max(1*(select count(p) from Position p where p.draft = false and p.company.id = c.id)) from Company c")
 	Integer getMaximumOfPositionsPerCompany();
 
-	@Query("select stddev(1*(select count(p) from Position p where p.company.id = c.id)) from Company c")
+	@Query("select stddev(1*(select count(p) from Position p where p.draft = false and p.company.id = c.id)) from Company c")
 	Double getSDOfPositionsPerCompany();
 
 	//---------------------------------------------------------------------------------
@@ -42,16 +42,16 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 
 	//----------------------------------------------------------------------------
 
-	@Query("select avg(p.salaryOffered) from Position p")
+	@Query("select avg(p.salaryOffered) from Position p where p.draft = false")
 	Double getAvgOfSalariesOffered();
 
-	@Query("select min(p.salaryOffered) from Position p")
+	@Query("select min(p.salaryOffered) from Position p where p.draft = false")
 	Integer getMinimumOfSalariesOffered();
 
-	@Query("select max(p.salaryOffered) from Position p")
+	@Query("select max(p.salaryOffered) from Position p where p.draft = false")
 	Integer getMaximumOfSalariesOffered();
 
-	@Query("select stddev(p.salaryOffered) from Position p")
+	@Query("select stddev(p.salaryOffered) from Position p where p.draft = false")
 	Double getSDOfSalariesOffered();
 
 	//-------------------------------------------------------------------

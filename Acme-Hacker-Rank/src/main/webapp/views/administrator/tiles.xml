@@ -30,4 +30,9 @@
 		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
 	</definition>
 	
+	<definition name="administrator/listActors" extends="master.page">
+		<put-attribute name="title" value="List of the actors system" />
+		<put-attribute name="body" value="/views/administrator/listActors.jsp" />
+	</definition>
+	
 </tiles-definitions>

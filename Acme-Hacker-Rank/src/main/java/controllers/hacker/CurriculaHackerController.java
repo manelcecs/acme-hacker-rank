@@ -3,8 +3,11 @@ package controllers.hacker;
 
 import java.util.List;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,14 +33,19 @@ public class CurriculaHackerController extends AbstractController {
 
 	@Autowired
 	private CurriculaService			curriculaService;
+
 	@Autowired
 	private HackerService				hackerService;
+
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
 	@Autowired
 	private PersonalDataService			personalDataService;
+
 	@Autowired
 	private PositionDataService			positionDataService;
+
 	@Autowired
 	private EducationDataService		educationDataService;
 
@@ -59,11 +67,27 @@ public class CurriculaHackerController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView res;
-		final Curricula curricula = this.curriculaService.save(this.curriculaService.create());
-		res = this.createModelAndViewEditPersonal(curricula.getId());
+		final Curricula curricula = this.curriculaService.create();
+		res = this.createModelAndViewEdit(curricula);
 		return res;
 	}
 
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public ModelAndView save(Curricula curricula, final BindingResult binding) {
+		ModelAndView res;
+
+		try {
+			curricula = this.curriculaService.reconstruct(curricula, binding);
+			final Curricula saved = this.curriculaService.save(curricula);
+			res = this.createModelAndViewDisplay(saved.getId());
+		} catch (final ValidationException oops) {
+			res = this.createModelAndViewEdit(curricula);
+		} catch (final Throwable oops) {
+			res = this.createModelAndViewEdit(curricula, "curricula.submit.error");
+		}
+
+		return res;
+	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(final Integer curriculaId) {
 		ModelAndView res;
@@ -71,10 +95,11 @@ public class CurriculaHackerController extends AbstractController {
 		return res;
 	}
 
-	protected ModelAndView createModelAndViewEditPersonal(final Integer curriculaId) {
-		final ModelAndView res = new ModelAndView("personalData/edit");
-		final PersonalData personalData = this.personalDataService.create(curriculaId);
-		res.addObject("personalData", personalData);
+	protected ModelAndView createModelAndViewEdit(final Curricula curricula, final String... msg) {
+		final ModelAndView res = new ModelAndView("curricula/edit");
+		res.addObject("curricula", curricula);
+		for (final String s : msg)
+			res.addObject("message", s);
 		this.configValues(res);
 		return res;
 	}

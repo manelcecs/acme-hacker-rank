@@ -125,7 +125,7 @@ public abstract class Actor extends DomainEntity {
 		return this.spammer;
 	}
 
-	public void setSpammer(final boolean spammer) {
+	public void setSpammer(final Boolean spammer) {
 		this.spammer = spammer;
 	}
 

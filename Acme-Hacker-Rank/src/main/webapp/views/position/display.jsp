@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="jstl"    uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
@@ -20,28 +20,48 @@
 <p><strong><spring:message code="position.seeMore.status" />:</strong>  
 
 <jstl:choose>
-	<jstl:when test="${position.cancelled}">
-		<spring:message code="position.seeMore.cancelled"/>
-	</jstl:when>
-	<jstl:when test="${!position.cancelled && position.draft}">
-		<spring:message code="position.seeMore.draft"/>
-	</jstl:when>
-	<jstl:when test="${!position.cancelled && !position.draft}">
-		<spring:message code="position.seeMore.final"/>
-	</jstl:when>
+    <jstl:when test="${position.cancelled}">
+   	 <spring:message code="position.seeMore.cancelled"/>
+    </jstl:when>
+    <jstl:when test="${!position.cancelled && position.draft}">
+   	 <spring:message code="position.seeMore.draft"/>
+    </jstl:when>
+    <jstl:when test="${!position.cancelled && !position.draft}">
+   	 <spring:message code="position.seeMore.final"/>
+    </jstl:when>
 </jstl:choose>
 </p>
 
 <p><strong><spring:message code="position.seeMore.skillsRequired" />:</strong>  
 <ul>
-	<jstl:forEach var="skill" items="${position.skillsRequired}">
-	<li><jstl:out value="${skill}"/></li>
-	</jstl:forEach>
+    <jstl:forEach var="skill" items="${position.skillsRequired}">
+    <li><jstl:out value="${skill}"/></li>
+    </jstl:forEach>
 </ul>
 
 <p><strong><spring:message code="position.seeMore.technologiesRequired" />:</strong>  
 <ul>
-	<jstl:forEach var="technology" items="${position.technologiesRequired}">
-	<li><jstl:out value="${technology}"/></li>
-	</jstl:forEach>
+    <jstl:forEach var="technology" items="${position.technologiesRequired}">
+    <li><jstl:out value="${technology}"/></li>
+    </jstl:forEach>
 </ul>
+
+<display:table pagesize="5" name="problems" id="problem" requestURI="${requestURI}">
+
+   		 <display:column titleKey="position.display.position.title"><jstl:out value="${problem.title}"/></display:column>
+   		 <display:column titleKey="position.display.position.statement"><jstl:out value="${problem.statement}"/></display:column>
+   		 <display:column titleKey="position.display.position.hint"><jstl:out value="${problem.hint}"/></display:column>
+   		 <display:column titleKey="position.display.position.attachments">
+   			 <jstl:forEach var="attachment" items="${problem.attachments}">
+   			 	<a href="<jstl:out value="${attachment}"/>"><jstl:out value="${attachment}"/></a>
+   			 	<br>
+   			 </jstl:forEach>
+   		 </display:column>
+
+</display:table>
+
+
+
+
+
+
