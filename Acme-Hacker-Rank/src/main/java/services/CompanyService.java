@@ -115,7 +115,6 @@ public class CompanyService {
 		result.setName(companyForm.getName());
 		result.setVatNumber(companyForm.getVatNumber());
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), companyForm.getPhoneNumber()));
-		result.setPhoneNumber(companyForm.getPhoneNumber());
 		result.setPhoto(companyForm.getPhoto());
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(companyForm.getSurnames()));
 
@@ -161,6 +160,8 @@ public class CompanyService {
 		result.setVatNumber(company.getVatNumber());
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(company.getSurnames()));
 
+		result.setCreditCard(company.getCreditCard());
+
 		this.validator.validate(result, binding);
 
 		if (binding.hasErrors()) {
@@ -175,8 +176,7 @@ public class CompanyService {
 
 		Boolean valid = false;
 
-		final Pattern emailPattern = Pattern
-			.compile("^([A-Za-z0-9_.]{1,}[@]{1}[a-z]{1,}[.]{1}[a-z]{1,})|([A-Za-z0-9_.]{1,}[<]{1}[A-Za-z0-9]{1,}[@]{1}[a-z]{2,}[.]{1}[a-z]{2,}[>]{1})|([A-Za-z0-9._]{1,}[<]{1}[A-Za-z0-9]{1,}[@]{1}[>]{1})|([A-Za-z0-9._]{1,}[@]{1})$");
+		final Pattern emailPattern = Pattern.compile("^([0-9a-zA-Z ]{1,}[ ]{1}[<]{1}[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,}[>]{1}|[0-9a-zA-Z ]{1,}[@]{1}[0-9a-zA-Z.]{1,})$");
 
 		final Matcher mEmail = emailPattern.matcher(email.toLowerCase());
 		if (mEmail.matches())

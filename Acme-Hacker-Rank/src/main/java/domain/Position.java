@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -81,7 +83,8 @@ public class Position extends DomainEntity {
 		this.profileRequired = profileRequired;
 	}
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
+	@NotEmpty
 	public Collection<String> getSkillsRequired() {
 		return this.skillsRequired;
 	}
@@ -90,7 +93,8 @@ public class Position extends DomainEntity {
 		this.skillsRequired = skillsRequired;
 	}
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
+	@NotEmpty
 	public Collection<String> getTechnologiesRequired() {
 		return this.technologiesRequired;
 	}
@@ -100,6 +104,7 @@ public class Position extends DomainEntity {
 	}
 
 	@Min(0)
+	@NotNull
 	public Double getSalaryOffered() {
 		return this.salaryOffered;
 	}

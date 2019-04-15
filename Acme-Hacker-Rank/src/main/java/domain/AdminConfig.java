@@ -92,7 +92,7 @@ public class AdminConfig extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
-	@Pattern(regexp = "^(\\+[1-9]|\\+[1-9][1-9]|\\+[1-9][1-9][1-9])$")
+	@Pattern(regexp = "^(\\+[1-9]|\\+[1-9][0-9]|\\+[1-9][0-9][0-9])$")
 	public String getCountryCode() {
 		return this.countryCode;
 	}

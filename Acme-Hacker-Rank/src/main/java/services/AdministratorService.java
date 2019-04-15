@@ -110,7 +110,6 @@ public class AdministratorService {
 		result.setName(adminForm.getName());
 		result.setVatNumber(adminForm.getVatNumber());
 		result.setPhoneNumber(AddPhoneCC.addPhoneCC(this.adminConfigService.getAdminConfig().getCountryCode(), adminForm.getPhoneNumber()));
-		result.setPhoneNumber(adminForm.getPhoneNumber());
 		result.setPhoto(adminForm.getPhoto());
 
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(adminForm.getSurnames()));
@@ -140,6 +139,7 @@ public class AdministratorService {
 		result.setPhoto(admin.getPhoto());
 		result.setVatNumber(admin.getVatNumber());
 		result.setSurnames(ValidatorCollection.deleteStringsBlanksInCollection(admin.getSurnames()));
+		result.setCreditCard(admin.getCreditCard());
 
 		this.validator.validate(result, binding);
 

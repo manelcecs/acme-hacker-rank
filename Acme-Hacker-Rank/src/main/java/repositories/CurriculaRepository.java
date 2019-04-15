@@ -12,6 +12,12 @@ import domain.Curricula;
 @Repository
 public interface CurriculaRepository extends JpaRepository<Curricula, Integer> {
 
+	@Query("select distinct(c) from Curricula c where c.hacker.id = ?1 AND c.copy = false")
+	Collection<Curricula> findAllNoCopy(final int hackerId);
+
+	@Query("select distinct(c) from Application a join a.curricula c where a.id = ?1")
+	Collection<Curricula> findAllApplication(final int applicationId);
+
 	@Query("select c from Curricula c where c.hacker.id = ?1")
 	Collection<Curricula> getCurriculasOfHacker(int idHacker);
 

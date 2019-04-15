@@ -8,22 +8,29 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<acme:button url="application/hacker/list.do" type="button" code="application.seeMore.back"/>
-
+<security:authorize access="hasRole('HACKER')">
+	<acme:button url="application/hacker/list.do" type="button" code="application.seeMore.back"/>
+</security:authorize>
 
 <security:authorize access="hasRole('COMPANY')">
+		<acme:button url="application/company/list.do" type="button" code="application.seeMore.back"/>
 	<jstl:if test="${application.status == 'SUBMITTED'}">
-	
 		<acme:button code="application.seeMore.changeAccepted" type="button" url="application/company/changeAccepted.do?idApplication=${application.id}"/>
 		<acme:button code="application.seeMore.changeRejected" type="button" url="application/company/changeRejected.do?idApplication=${application.id}"/>
 	</jstl:if>
 
 
-
 </security:authorize>
 
+
 <acme:text label="application.seeMore.moment" value="${application.moment}"/>
-<acme:button code="application.seeMore.curricula" type="button" url="curricula/hacker/seeMore?idCurricula=${application.curricula.id}"/>
+<security:authorize access="hasRole('HACKER')">
+	<acme:button code="application.seeMore.curricula" type="button" url="curricula/hacker/display.do?curriculaId=${application.curricula.id}"/>
+</security:authorize>
+<security:authorize access="hasRole('COMPANY')">
+	<acme:button code="application.seeMore.curricula" type="button" url="curricula/company/display.do?curriculaId=${application.curricula.id}"/>
+</security:authorize>
+
 <acme:text label="application.seeMore.status" value="${application.status}"/>
 
 

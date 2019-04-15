@@ -40,6 +40,9 @@
 		<bean class="converters.ApplicationToStringConverter"/>
 		<bean class="converters.StringToApplicationConverter"/>
 		
+		<bean class="converters.CurriculaToStringConverter"/>
+		<bean class="converters.StringToCurriculaConverter"/>
+		
 	</util:list>
 	
 </beans>

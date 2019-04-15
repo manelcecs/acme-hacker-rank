@@ -79,7 +79,7 @@ public class AdministratorAdministratorController extends AbstractController {
 		try {
 			final Administrator adminRect = this.adminService.reconstruct(administrator, binding);
 			this.adminService.save(adminRect);
-			res = new ModelAndView("redirect:/welcome/index.do");
+			res = new ModelAndView("redirect:/actor/display.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(administrator);
 		} catch (final Throwable oops) {

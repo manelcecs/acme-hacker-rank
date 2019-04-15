@@ -7,8 +7,23 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<acme:button code="application.list.create" type="button"  url="application/hacker/create.do"/>
 
+<security:authorize access="hasRole('COMPANY')">
+	<acme:button code="application.list.status.accepted" type="button" url="application/company/listByStatus.do?status=ACCEPTED"/>
+	<acme:button code="application.list.status.rejected" type="button" url="application/company/listByStatus.do?status=REJECTED"/>
+	<acme:button code="application.list.status.submitted" type="button" url="application/company/listByStatus.do?status=SUBMITTED"/>
+	<acme:button code="application.list.status.all" type="button" url="application/company/list.do"/>
+	
+</security:authorize>
+
+<security:authorize access="hasRole('HACKER')">
+	<acme:button code="application.list.create" type="button"  url="application/hacker/create.do"/><br/>
+	<acme:button code="application.list.status.accepted" type="button" url="application/hacker/listByStatus.do?status=ACCEPTED"/>
+	<acme:button code="application.list.status.rejected" type="button" url="application/hacker/listByStatus.do?status=REJECTED"/>
+	<acme:button code="application.list.status.submitted" type="button" url="application/hacker/listByStatus.do?status=SUBMITTED"/>
+	<acme:button code="application.list.status.pending" type="button" url="application/hacker/listByStatus.do?status=PENDING"/>
+	<acme:button code="application.list.status.all" type="button" url="application/hacker/list.do"/>
+</security:authorize>
 
 
 <display:table pagesize="5" requestURI="${requestURI}" name="applications" id="oneApplication">
@@ -42,5 +57,6 @@
 
 	</security:authorize>
 
+	<display:column titleKey="application.list.status"><jstl:out value="${oneApplication.status}"/></display:column>
 
 </display:table>

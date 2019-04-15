@@ -9,11 +9,14 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<jstl:if test="${actor.userAccount == userLogged}">
+
+<jstl:if test="${actor.userAccount.id == userLogged.id}">
 
 	<acme:button url="actor/edit.do" type="button" code="actor.edit" />
 	<br />
+	
 </jstl:if>
+
 
 
 <jstl:choose>
@@ -156,7 +159,9 @@
 <br />
 
 
-<jstl:if test="${actor.userAccount == userLogged}">
+<jstl:if test="${actor.userAccount.id == userLogged.id}">
 	<acme:button url="socialProfile/create.do" type="button"
 		code="actor.socialProfile.create" />
 </jstl:if>
+
+

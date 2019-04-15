@@ -20,4 +20,5 @@ public class CurriculaToStringConverter implements Converter<Curricula, String> 
 			result = String.valueOf(curricula.getId());
 		return result;
 	}
+
 }

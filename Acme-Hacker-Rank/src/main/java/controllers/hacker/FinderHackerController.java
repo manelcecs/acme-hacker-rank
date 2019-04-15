@@ -15,6 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.FinderService;
 import services.HackerService;
+import services.PositionService;
 import controllers.AbstractController;
 import domain.Finder;
 import domain.Hacker;
@@ -29,6 +30,9 @@ public class FinderHackerController extends AbstractController {
 
 	@Autowired
 	private FinderService	finderService;
+
+	@Autowired
+	private PositionService	positionService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -95,7 +99,7 @@ public class FinderHackerController extends AbstractController {
 
 		result = new ModelAndView("finder/edit");
 
-		final Collection<Position> positions = finder.getPositions();
+		final Collection<Position> positions = this.positionService.getPositions(finder.getId());
 		result.addObject("finder", finder);
 		result.addObject("positions", positions);
 

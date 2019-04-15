@@ -18,7 +18,7 @@
 			modelAttribute="finder" method="post">
 
 			<acme:textbox code="finder.edit.keyword" path="keyWord" />
-			<acme:inputDate code="finder.edit.deadline" path="minimumDeadLine" />
+			<acme:inputDate code="finder.edit.minimumDeadline" path="minimumDeadLine" />
 			<acme:inputDate code="finder.edit.maximumDeadline" path="maximumDeadLine" />
 			<acme:textbox code="finder.edit.minimumSalary" path="minimumSalary" />
 			

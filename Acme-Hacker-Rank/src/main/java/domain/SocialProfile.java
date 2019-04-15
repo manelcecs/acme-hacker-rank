@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -21,6 +22,7 @@ public class SocialProfile extends DomainEntity {
 	private Actor	actor;
 
 
+	@Valid
 	@ManyToOne(optional = false)
 	public Actor getActor() {
 		return this.actor;

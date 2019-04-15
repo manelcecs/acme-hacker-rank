@@ -65,7 +65,7 @@ public class CompanyController extends AbstractController {
 		try {
 			final Company companyRect = this.companyService.reconstruct(company, binding);
 			this.companyService.save(companyRect);
-			res = new ModelAndView("redirect:/welcome/index.do");
+			res = new ModelAndView("redirect:/actor/display.do");
 		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(company);
 		} catch (final Throwable oops) {
@@ -84,6 +84,7 @@ public class CompanyController extends AbstractController {
 		result.addObject("companies", companies);
 		result.addObject("requestURI", "company/list.do");
 
+		this.configValues(result);
 		return result;
 	}
 

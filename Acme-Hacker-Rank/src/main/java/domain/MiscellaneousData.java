@@ -8,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -22,6 +23,7 @@ public class MiscellaneousData extends DomainEntity {
 	private Curricula			curricula;
 
 
+	@Valid
 	@ManyToOne(optional = true)
 	public Curricula getCurricula() {
 		return this.curricula;

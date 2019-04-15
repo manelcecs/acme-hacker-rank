@@ -20,6 +20,7 @@
 
 <form:form modelAttribute="problem" action="problem/company/edit.do">
 		<acme:hidden path="id"/>
+		<acme:hidden path="version"/>
 		
 		<p>
 			<acme:textbox code="problem.edit.title" path="title"/>

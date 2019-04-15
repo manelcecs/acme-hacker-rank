@@ -42,6 +42,9 @@ public class ApplicationService {
 	@Autowired
 	private MessageService			messageService;
 
+	@Autowired
+	private CurriculaService		curriculaService;
+
 
 	public Application newApplication(final ApplicationForm applicationForm) {
 
@@ -60,9 +63,9 @@ public class ApplicationService {
 		final Application application = new Application();
 		application.setHacker(hacker);
 
-		//FIXME: Hacer una copia de curricula
+		final Curricula copy = this.curriculaService.createCopy(curricula);
+		application.setCurricula(copy);
 
-		application.setCurricula(curricula);
 		application.setMoment(DateTime.now().toDate());
 		application.setStatus("PENDING");
 
@@ -72,7 +75,6 @@ public class ApplicationService {
 
 		return this.applicationRepository.save(application);
 	}
-
 	public Application findOne(final int idApplication) {
 		return this.applicationRepository.findOne(idApplication);
 	}
@@ -104,16 +106,18 @@ public class ApplicationService {
 		return this.applicationRepository.getApplicationsOfCompany(idCompany);
 	}
 
-	public Collection<Application> getApplicationsOfCompanyByStatus(final int idCompany, final String stauts) {
-		return this.applicationRepository.getApplicationsOfCompanyByStatus(idCompany, stauts);
+	public Collection<Application> getApplicationsOfCompanyByStatus(final int idCompany, final String status) {
+		Assert.isTrue(status.equals("SUBMITTED") || status.equals("REJECTED") || status.equals("ACCEPTED"));
+		return this.applicationRepository.getApplicationsOfCompanyByStatus(idCompany, status);
 	}
 
 	public Collection<Application> getApplicationOfHacker(final int idHacker) {
 		return this.applicationRepository.getApplicationOfHacker(idHacker);
 	}
 
-	public Collection<Application> getApplicationOfHackerByStatus(final int idHacker, final String stauts) {
-		return this.applicationRepository.getApplicationOfHackerByStatus(idHacker, stauts);
+	public Collection<Application> getApplicationOfHackerByStatus(final int idHacker, final String status) {
+		Assert.isTrue(status.equals("SUBMITTED") || status.equals("REJECTED") || status.equals("ACCEPTED") || status.equals("PENDING"));
+		return this.applicationRepository.getApplicationOfHackerByStatus(idHacker, status);
 	}
 
 	public Collection<Application> getApplicationsAnswered(final int idHacker) {

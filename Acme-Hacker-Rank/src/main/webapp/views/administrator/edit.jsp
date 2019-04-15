@@ -38,14 +38,14 @@
 		<br />
 		<acme:textbox code="administrator.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="administrator.edit.creditcard.make" path="creditCard.make"/>
-		<acme:textbox code="administrator.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="administrator.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" placeholder="administrator.edit.creditcard.expirationMonth.placeholder"/>
-		<acme:textbox code="administrator.edit.creditcard.expirationYear" path="creditCard.expirationYear" placeholder="administrator.edit.creditcard.expirationYear.placeholder"/>
-		<acme:textbox code="administrator.edit.creditcard.CVV" path="creditCard.cvv"/>
+		<acme:inputNumber code="administrator.edit.creditcard.number" path="creditCard.number"/>
+		<acme:inputNumber code="administrator.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" />
+		<acme:inputNumber code="administrator.edit.creditcard.expirationYear" path="creditCard.expirationYear" />
+		<acme:inputNumber code="administrator.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
 		<spring:message code="administrator.edit.submit" var="submit"/>
 		<input type="submit" name="submit" onclick="return checkPhone(this.form.phone.value)" value="${ submit}"/>
-		<acme:cancel url="/" code="administrator.edit.cancel" />
+		<acme:cancel url="/actor/display.do" code="administrator.edit.cancel" />
 	</form:form>
 	<button class="addTag" onclick="addComment('surnames','surnames', 'textbox')"><spring:message code="administrator.edit.surnames.add" /></button>
 </jstl:if>
@@ -75,10 +75,10 @@
 		<br />
 		<acme:textbox code="administrator.edit.creditcard.holder" path="creditCard.holder"/>
 		<acme:textbox code="administrator.edit.creditcard.make" path="creditCard.make"/>
-		<acme:textbox code="administrator.edit.creditcard.number" path="creditCard.number"/>
-		<acme:textbox code="administrator.edit.creditcard.expirationMonth" path="creditCard.expirationMonth"/>
-		<acme:textbox code="administrator.edit.creditcard.expirationYear" path="creditCard.expirationYear"/>
-		<acme:textbox code="administrator.edit.creditcard.CVV" path="creditCard.cvv"/>
+		<acme:inputNumber code="administrator.edit.creditcard.number" path="creditCard.number"/>
+		<acme:inputNumber code="administrator.edit.creditcard.expirationMonth" path="creditCard.expirationMonth" />
+		<acme:inputNumber code="administrator.edit.creditcard.expirationYear" path="creditCard.expirationYear" />
+		<acme:inputNumber code="administrator.edit.creditcard.CVV" path="creditCard.cvv"/>
 		<br/>
 		<form:checkbox path="termsAndConditions" />
 		<b><spring:message code="administrator.edit.termsAndConditions" /></b>

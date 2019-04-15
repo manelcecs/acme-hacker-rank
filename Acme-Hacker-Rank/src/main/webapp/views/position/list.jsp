@@ -8,8 +8,12 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
+<jstl:if test="${owner}">
+	<acme:button url="position/company/create.do" type="button" code="position.list.create"/>
+</jstl:if>
+
 <display:table pagesize="5" name="positions" id="position" requestURI="${requestURI}">
-			<display:column titleKey="position.edit.title"><jstl:out value="${position.title}"/></display:column>
+		<display:column titleKey="position.edit.title"><jstl:out value="${position.title}"/></display:column>
 			<display:column titleKey="position.edit.deadline"><jstl:out value="${position.deadline}"/></display:column>
 			<display:column titleKey="position.edit.salaryOffered"><jstl:out value="${position.salaryOffered}"/></display:column>
 			<jstl:if test="${owner}">
@@ -60,7 +64,7 @@
 								
 				<!-- Columna de ver la company -->
 				<display:column titleKey="position.list.viewCompany">
-						<acme:button url="" type="button" code="position.list.viewCompany"/>
+						<acme:button url="/actor/displayCompany.do?idCompany=${position.company.id}" type="button" code="position.list.viewCompany"/>
 				</display:column>
 
 			
