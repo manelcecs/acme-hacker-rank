@@ -11,14 +11,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.PositionService;
+import services.ProblemService;
 import domain.Position;
+import domain.Problem;
 
 @Controller
 @RequestMapping("/position")
 public class PositionController extends AbstractController {
 
 	@Autowired
-	PositionService	positionService;
+	private PositionService	positionService;
+
+	@Autowired
+	private ProblemService	problemService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -50,6 +55,9 @@ public class PositionController extends AbstractController {
 		else {
 			result = new ModelAndView("position/display");
 			result.addObject("position", position);
+			final Collection<Problem> problems = this.problemService.getProblemsOfPositionFinal(position.getId());
+			result.addObject("problems", problems);
+			result.addObject("requestURI", "position/display.do?idPosition=" + idPosition);
 		}
 
 		this.configValues(result);

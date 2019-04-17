@@ -493,6 +493,7 @@
 	
 	<!-- original curricula -->
 	<bean class="domain.Curricula" id="curricula00">
+		<property name="title" value="curricula0" />
 		<property name="copy" value="false" />
 		<property name="hacker" ref="hacker0" />
 	</bean>
@@ -528,6 +529,7 @@
 	
 	<!-- copy curricula -->
 	<bean class="domain.Curricula" id="curricula01">
+		<property name="title" value="curricula0" />
 		<property name="copy" value="true" />
 		<property name="hacker" ref="hacker0" />
 	</bean>

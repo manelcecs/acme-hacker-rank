@@ -29,10 +29,10 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.draft = false and p.cancelled = false and p.company.id = ?1")
 	Collection<Position> getAllPositionsFilteredOfCompany(Integer idCompany);
 
-	@Query("select p from Position p where p.salaryOffered = 1*(select max(p.salaryOffered) from Position p)")
+	@Query("select p from Position p where p.draft = false and p.salaryOffered = 1*(select max(p.salaryOffered) from Position p where p.draft = false)")
 	Collection<Position> getPositionsWithTheBestSalary();
 
-	@Query("select p from Position p where p.salaryOffered = 1*(select min(p.salaryOffered) from Position p)")
+	@Query("select p from Position p where p.draft = false and p.salaryOffered = 1*(select min(p.salaryOffered) from Position p where p.draft = false)")
 	Collection<Position> getPositionsWithTheWorstSalary();
 
 	@Query("select p from Position p where p.draft = false and p.cancelled = false and p.deadline > CURRENT_DATE and (select count(pt) from Application a join a.problem.position pt where a.hacker.id = ?1 and pt.id = p.id) * 1 = 0")

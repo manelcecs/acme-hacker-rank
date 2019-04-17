@@ -41,7 +41,11 @@ public class MessageController extends AbstractController {
 		final ModelAndView result;
 
 		final Message message = this.messageService.findOne(idMessage);
-		result = this.displayModelAndView(message);
+
+		if (this.messageService.checkMessagePermissions(message))
+			result = this.displayModelAndView(message);
+		else
+			result = new ModelAndView("redirect:../messageBox/list.do");
 
 		return result;
 	}
@@ -92,7 +96,7 @@ public class MessageController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = this.displayModelAndView(message, "message.commit.error");
 			}
-		this.configValues(result);
+
 		return result;
 	}
 

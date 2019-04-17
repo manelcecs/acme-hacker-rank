@@ -4,10 +4,13 @@ package services;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CurriculaRepository;
 import security.LoginService;
@@ -24,16 +27,24 @@ public class CurriculaService {
 
 	@Autowired
 	private CurriculaRepository			curriculaRepository;
+
 	@Autowired
 	private HackerService				hackerService;
+
 	@Autowired
 	private PersonalDataService			personalDataService;
+
 	@Autowired
 	private EducationDataService		educationDataService;
+
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
 	@Autowired
 	private PositionDataService			positionDataService;
+
+	@Autowired
+	private Validator					validator;
 
 
 	public Curricula create() {
@@ -100,5 +111,22 @@ public class CurriculaService {
 
 	public Collection<Curricula> getCurriculasOfHacker(final int idHacker) {
 		return this.curriculaRepository.getCurriculasOfHacker(idHacker);
+	}
+
+	public Curricula reconstruct(final Curricula curricula, final BindingResult binding) {
+		final Curricula result;
+
+		if (curricula.getId() == 0)
+			result = this.create();
+		else
+			result = this.curriculaRepository.findOne(curricula.getId());
+
+		result.setTitle(curricula.getTitle());
+
+		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
+		return result;
 	}
 }

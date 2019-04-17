@@ -31,12 +31,16 @@ public class PersonalDataController extends AbstractController {
 
 	@Autowired
 	private EducationDataService		educationDataService;
+
 	@Autowired
 	private CurriculaService			curriculaService;
+
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
 	@Autowired
 	private PersonalDataService			personalDataService;
+
 	@Autowired
 	private PositionDataService			positionDataService;
 

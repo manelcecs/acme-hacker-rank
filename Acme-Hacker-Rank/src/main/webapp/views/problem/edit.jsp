@@ -33,13 +33,18 @@
 		</p>
 		
 		<acme:select items="${positions}" itemLabel="title" code="problem.edit.positions" path="position"/>
-
 		
 		<form:label class="textboxLabel" path="attachments"><spring:message code="problem.edit.attachments" /></form:label>
-    	<div id="attachments">
-    		<form:input class="textbox" path="attachments" type="text"/>    
-   		 </div>
-    	<form:errors path="attachments" cssClass="error" />   
+   	 <div id="attachments">
+   		 <jstl:if test="${empty problem.attachments}">
+   			 <form:input class="textbox" path="attachments" type="text"/> 			 
+   		 </jstl:if>
+   	 
+   		 <jstl:forEach items="${problem.attachments}" var="attachment">
+   			 <form:input class="textbox" path="attachments" type="text" value="${attachment}"/>  
+   		 </jstl:forEach>  
+  		  </div>
+   	 <form:errors path="attachments" cssClass="error" />    
     	    	
 		<acme:checkbox code="problem.edit.draft" path="draft"/>	
 		

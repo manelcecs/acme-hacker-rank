@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.Authority;
 import security.LoginService;
+import security.UserAccount;
 import services.ActorService;
+import services.AdministratorService;
+import services.CompanyService;
+import services.HackerService;
 import services.SocialProfileService;
+import utiles.AuthorityMethods;
+import domain.Actor;
+import domain.Administrator;
+import domain.Company;
+import domain.Hacker;
 import domain.SocialProfile;
 
 @Controller
@@ -22,15 +34,25 @@ public class SocialProfileController extends AbstractController {
 
 	@Autowired
 	private SocialProfileService	socialProfileService;
+
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private HackerService			hackerService;
+
+	@Autowired
+	private CompanyService			companyService;
+
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(final int socialProfileId) {
 		ModelAndView res;
 
-		res = this.createModelAndViewEdit(socialProfileId);
+		res = this.createModelAndViewEdit(this.socialProfileService.findOne(socialProfileId));
 
 		return res;
 	}
@@ -39,7 +61,9 @@ public class SocialProfileController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView res;
 
-		res = this.createModelAndViewCreate();
+		final SocialProfile socialProfile = this.socialProfileService.create();
+
+		res = this.createModelAndViewEdit(socialProfile);
 
 		return res;
 	}
@@ -48,68 +72,91 @@ public class SocialProfileController extends AbstractController {
 	public ModelAndView save(@Valid final SocialProfile socialProfile, final BindingResult binding) {
 		ModelAndView res;
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			res = this.createModelAndViewEdit(socialProfile);
-			System.out.println(binding.getAllErrors());
-		} else
+		else
 			try {
 				this.socialProfileService.save(socialProfile);
 				res = new ModelAndView("redirect:/actor/display.do");
 			} catch (final Throwable oops) {
-				oops.printStackTrace();
-				res = this.createModelAndViewEdit(socialProfile);
+				res = this.createModelAndViewEdit(socialProfile, "cannot.save.socialProfile");
 			}
 		return res;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView save(final int socialProfileId) {
+	public ModelAndView delete(final int socialProfileId) {
 		ModelAndView res;
 
 		try {
 			final SocialProfile sp = this.socialProfileService.findOne(socialProfileId);
 			this.socialProfileService.delete(sp);
+			res = new ModelAndView("redirect:/actor/display.do");
 		} catch (final Throwable oops) {
+			res = this.createModelAndViewDisplay("cannot.delete.socialProfile");
 		}
-		res = new ModelAndView("redirect:/actor/display.do");
-		return res;
-	}
-
-	protected ModelAndView createModelAndViewCreate() {
-		ModelAndView res;
-
-		final SocialProfile socialProfile = this.socialProfileService.create();
-
-		res = new ModelAndView("socialProfile/edit");
-		res.addObject("socialProfile", socialProfile);
-
-		this.configValues(res);
-		return res;
-	}
-
-	protected ModelAndView createModelAndViewEdit(final int socialProfileId) {
-		ModelAndView res;
-
-		final SocialProfile socialProfile = this.socialProfileService.findOne(socialProfileId);
-
-		Assert.isTrue(socialProfile.getActor().getId() == this.actorService.findByUserAccount(LoginService.getPrincipal()).getId());
-
-		res = new ModelAndView("socialProfile/edit");
-		res.addObject("socialProfile", socialProfile);
-		this.configValues(res);
-
 		return res;
 	}
 	protected ModelAndView createModelAndViewEdit(final SocialProfile socialProfile) {
+		return this.createModelAndViewEdit(socialProfile, null);
+	}
+
+	protected ModelAndView createModelAndViewEdit(final SocialProfile socialProfile, final String message) {
 		ModelAndView res;
 
 		Assert.isTrue(socialProfile.getActor().getId() == this.actorService.findByUserAccount(LoginService.getPrincipal()).getId());
 
 		res = new ModelAndView("socialProfile/edit");
 		res.addObject("socialProfile", socialProfile);
+		res.addObject("message", message);
+
 		this.configValues(res);
 
 		return res;
+	}
+
+	protected ModelAndView createModelAndViewDisplay(final String message) {
+		final ModelAndView result = new ModelAndView("actor/display");
+
+		final UserAccount principal = LoginService.getPrincipal();
+
+		final Actor actor = this.actorService.findByUserAccount(principal);
+
+		result.addObject("actor", actor);
+		result.addObject("userLogged", principal);
+
+		final Authority authority = AuthorityMethods.getLoggedAuthority();
+
+		result.addObject("authority", authority.getAuthority());
+
+		final List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles();
+		switch (authority.getAuthority()) {
+		case "ADMINISTRATOR":
+			final Administrator administrator = this.administratorService.findOne(actor.getId());
+			result.addObject("administrator", administrator);
+			System.out.println(administrator);
+			break;
+
+		case "HACKER":
+			final Hacker hacker = this.hackerService.findOne(actor.getId());
+			System.out.println(hacker);
+			result.addObject("hacker", hacker);
+			break;
+
+		case "COMPANY":
+			final Company company = this.companyService.findOne(actor.getId());
+			System.out.println(company);
+			result.addObject("company", company);
+			break;
+		}
+
+		result.addObject("socialProfiles", socialProfiles);
+		result.addObject("message", message);
+		result.addObject("requestURI", "actor/display.do");
+
+		this.configValues(result);
+		return result;
+
 	}
 
 }

@@ -28,5 +28,5 @@
 	
 	<spring:message code="socialProfile.submit" var="submit"/>
 	<input type="submit" name="submit" value="${ submit}" />
-		<acme:cancel url="/" code="socialProfile.cancel" />
+		<acme:cancel url="/actor/display.do" code="socialProfile.cancel" />
 </form:form>

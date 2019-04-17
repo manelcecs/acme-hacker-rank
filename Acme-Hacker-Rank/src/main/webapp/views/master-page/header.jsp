@@ -34,6 +34,9 @@
 					<li>
 					    <a href="dashboard/administrator/display.do"><spring:message code="master.page.header.dashboard" /></a>
 					</li>
+					<li>
+						<a href="actor/administrator/listActors.do"><spring:message code="master.page.administrator.listActors" /></a>
+					</li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -116,7 +119,6 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="actor/display.do"><spring:message code="master.page.actor.profile" /></a></li>			
-					<li><a href="actor/socialProfile/display.do"><spring:message code="master.page.actor.socialProfile" /></a></li>
 				</ul>
 			</li>
 			
@@ -133,6 +135,14 @@
 		<security:authorize access="hasRole('BAN')">
 			<li>
 				<a class="fNiv" href="search/display.do"><spring:message code="master.page.search.display" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="position/list.do"><spring:message code="master.page.list.position" /></a>
+			</li>
+			
+			<li>
+				<a class="fNiv" href="company/list.do"><spring:message code="master.page.list.company" /></a>
 			</li>
 			
 			<li>

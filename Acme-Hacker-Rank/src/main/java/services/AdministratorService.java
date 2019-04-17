@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -273,6 +274,10 @@ public class AdministratorService {
 
 	public Administrator getOne() {
 		return this.adminRepository.findAll().get(0);
+	}
+
+	public Collection<Administrator> findAll() {
+		return this.adminRepository.findAll();
 	}
 
 }

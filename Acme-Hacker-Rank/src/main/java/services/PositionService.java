@@ -110,6 +110,8 @@ public class PositionService {
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
+		
+
 		return this.positionRepository.save(position);
 	}
 

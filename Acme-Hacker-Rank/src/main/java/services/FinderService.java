@@ -1,6 +1,7 @@
 
 package services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +11,6 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -45,7 +45,7 @@ public class FinderService {
 	private final SimpleDateFormat	FORMAT	= new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 
-	public Finder save(final Finder finder) throws ParseException, java.text.ParseException {
+	public Finder save(final Finder finder) throws ParseException {
 		final LocalDateTime DATETIMENOW = LocalDateTime.now();
 
 		Assert.notNull(finder);
@@ -78,7 +78,8 @@ public class FinderService {
 		finder.setLastUpdate(actual);
 		return this.finderRepository.save(finder);
 	}
-	public Finder clear(final Finder finder) throws ParseException, java.text.ParseException {
+
+	public Finder clear(final Finder finder) throws ParseException {
 		final LocalDateTime DATETIMENOW = LocalDateTime.now();
 
 		Assert.notNull(finder);
@@ -113,7 +114,7 @@ public class FinderService {
 		return this.finderRepository.findOne(finderId);
 	}
 
-	public Boolean cacheFinder(final Finder finderA, final Finder finderB) throws ParseException, java.text.ParseException {
+	public Boolean cacheFinder(final Finder finderA, final Finder finderB) throws ParseException {
 		Boolean result;
 		final LocalDateTime DATETIMENOW = LocalDateTime.now();
 
@@ -131,23 +132,25 @@ public class FinderService {
 		if (finderA.getKeyWord() != null && finderB.getKeyWord() != null)
 			keyWord = finderA.getKeyWord().equals(finderB.getKeyWord());
 
-		Boolean minimumDeadline = true;
-		if (finderA.getMinimumDeadLine() != null && finderB.getMinimumDeadLine() == null)
-			minimumDeadline = false;
-		if (finderA.getMinimumDeadLine() == null && finderB.getMinimumDeadLine() != null)
-			minimumDeadline = false;
+		Boolean minimumDeadline = false;
+		if (finderA.getMinimumDeadLine() == null && finderB.getMinimumDeadLine() == null)
+			minimumDeadline = true;
 		if (finderA.getMinimumDeadLine() != null && finderB.getMinimumDeadLine() != null)
 			minimumDeadline = finderA.getMinimumDeadLine().compareTo(finderB.getMinimumDeadLine()) == 0;
 
-		Boolean maximumDeadline = true;
-		if (finderA.getMaximumDeadLine() != null && finderB.getMaximumDeadLine() == null)
-			maximumDeadline = false;
-		if (finderA.getMaximumDeadLine() == null && finderB.getMaximumDeadLine() != null)
-			maximumDeadline = false;
+		Boolean maximumDeadline = false;
+		if (finderA.getMaximumDeadLine() == null && finderB.getMaximumDeadLine() == null)
+			maximumDeadline = true;
 		if (finderA.getMaximumDeadLine() != null && finderB.getMaximumDeadLine() != null)
 			maximumDeadline = finderA.getMaximumDeadLine().compareTo(finderB.getMaximumDeadLine()) == 0;
 
-		result = keyWord && minimumDeadline && maximumDeadline && actual.before(expirationDate) && finderA.getMinimumSalary() - finderB.getMinimumSalary() == 0;
+		Boolean minimumSalary = false;
+		if (finderA.getMinimumSalary() == null && finderB.getMinimumSalary() == null)
+			minimumSalary = true;
+		if (finderA.getMinimumSalary() != null && finderB.getMinimumSalary() != null)
+			minimumSalary = finderA.getMinimumSalary() - finderB.getMinimumSalary() == 0;
+
+		result = keyWord && minimumDeadline && maximumDeadline && actual.before(expirationDate) && minimumSalary;
 		return result;
 	}
 	public Finder reconstruct(final Finder finder, final BindingResult binding) {
@@ -163,14 +166,14 @@ public class FinderService {
 		return finder;
 	}
 
-	public Finder create() throws java.text.ParseException {
+	public Finder create() throws ParseException {
 		final Finder finder = new Finder();
 
 		final Date actual = this.FORMAT.parse("0001/01/01 01:00:00");
 		finder.setLastUpdate(actual);
 		return finder;
 	}
-	public Finder generateNewFinder() throws java.text.ParseException {
+	public Finder generateNewFinder() throws ParseException {
 
 		final Finder finder = this.create();
 		Finder res;
