@@ -116,6 +116,216 @@
 			<list></list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount57" class="security.UserAccount">
+		<property name="username" value="admin1" />
+		<property name="password" value="e00cf25ad42683b3df678c61f42c6bda" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard57">
+
+		<property value="admin" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Administrator" id="admin1">
+
+		<!-- Valores de Actor -->
+
+		<property value="admin1" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Boss1</value>
+			</list>
+		</property>
+
+		<property value="00000000001-A" name="vatNumber" />
+
+		<property value="admin1@" name="email" />
+
+		<property value="+00 000-1234567" name="phoneNumber" />
+
+		<property value="Av. Main Principal" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard0" />
+
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox080" />
+				<ref bean="messageBox081" />
+				<ref bean="messageBox082" />
+				<ref bean="messageBox083" />
+				<ref bean="messageBox084" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount57" />
+
+	</bean>
+	
+	<bean id="messageBox080" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox081" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox082" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox083" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="messageBox084" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount58" class="security.UserAccount">
+		<property name="username" value="admin2" />
+		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard58">
+
+		<property value="admin2" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Administrator" id="admin2">
+
+		<!-- Valores de Actor -->
+
+		<property value="admin2" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Boss2</value>
+			</list>
+		</property>
+
+		<property value="00000000001-A" name="vatNumber" />
+
+		<property value="admin2@" name="email" />
+
+		<property value="+00 000-1234567" name="phoneNumber" />
+
+		<property value="Av. Main Principal" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard58" />
+
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox085" />
+				<ref bean="messageBox086" />
+				<ref bean="messageBox087" />
+				<ref bean="messageBox088" />
+				<ref bean="messageBox089" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount58" />
+
+	</bean>
+	
+	<bean id="messageBox085" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox086" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox087" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox088" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="messageBox089" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
 
 	<!-- Companies -->
 	<!-- Company0 -->
