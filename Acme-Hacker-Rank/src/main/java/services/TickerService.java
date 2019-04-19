@@ -18,7 +18,7 @@ import domain.Ticker;
 public class TickerService {
 
 	@Autowired
-	TickerRepository	tickerRepository;
+	private TickerRepository	tickerRepository;
 
 
 	public Ticker generateTicker(String companyName) throws NoSuchAlgorithmException {

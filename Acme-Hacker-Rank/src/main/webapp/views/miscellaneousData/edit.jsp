@@ -31,16 +31,21 @@
 		<spring:message code="miscellaneousData.edit.attachments" />
 	</form:label>
 	<div id="attachments">
+		
+		<jstl:if test="${empty miscellaneousData.attachments }">
+   		 	<form:input class="textbox" path="attachments" type="text"  value="${attachment}" />
+   		</jstl:if>
+	
 		<jstl:forEach items="${miscellaneousData.attachments }" var="attachment">
 			<form:input class="textbox" path="attachments" type="text"
-				value="${ attachment}" />
+				value="${attachment}" />
 		</jstl:forEach>
 	</div>
 	<form:errors path="attachments" cssClass="error" />
 
 	<spring:message code="miscellaneousData.edit.submit" var="submit" />
 	<input type="submit" name="submit" value="${ submit}" />
-	<acme:cancel url="/" code="miscellaneousData.edit.cancel" />
+	<acme:cancel url="/curricula/hacker/display.do?curriculaId=${miscellaneousData.curricula.id}" code="miscellaneousData.edit.cancel" />
 </form:form>
 <button class="addTag"
 	onclick="addComment('attachments','attachments', 'textbox')">

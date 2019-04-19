@@ -7,6 +7,7 @@ import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +27,7 @@ import domain.Hacker;
 import domain.MiscellaneousData;
 import domain.PersonalData;
 import domain.PositionData;
+import forms.CurriculaAndPersonalDataForm;
 
 @Controller
 @RequestMapping("/curricula/hacker")
@@ -67,23 +69,34 @@ public class CurriculaHackerController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView res;
-		final Curricula curricula = this.curriculaService.create();
-		res = this.createModelAndViewEdit(curricula);
+		final CurriculaAndPersonalDataForm curriculaPersonalForm = new CurriculaAndPersonalDataForm();
+		res = this.createModelAndViewEdit(curriculaPersonalForm);
 		return res;
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView save(Curricula curricula, final BindingResult binding) {
+	public ModelAndView save(final CurriculaAndPersonalDataForm curriculaPersonalForm, final BindingResult binding) {
 		ModelAndView res;
-
+		Curricula curricula = null;
+		Curricula saved = null;
+		PersonalData personalData;
 		try {
-			curricula = this.curriculaService.reconstruct(curricula, binding);
-			final Curricula saved = this.curriculaService.save(curricula);
+			curricula = this.curriculaService.reconstruct(curriculaPersonalForm, binding);
+			saved = this.curriculaService.save(curricula);
+
+			personalData = this.personalDataService.reconstruct(curriculaPersonalForm, saved.getId(), binding);
+			this.personalDataService.save(personalData);
+
 			res = this.createModelAndViewDisplay(saved.getId());
 		} catch (final ValidationException oops) {
-			res = this.createModelAndViewEdit(curricula);
+			if (saved != null && saved.getId() != 0)
+				this.curriculaService.delete(saved);//Por si falla el save/reconstruct de PersonalData
+
+			res = this.createModelAndViewEdit(curriculaPersonalForm);
 		} catch (final Throwable oops) {
-			res = this.createModelAndViewEdit(curricula, "curricula.submit.error");
+			if (saved != null && saved.getId() != 0)
+				this.curriculaService.delete(saved);//Por si falla el save/reconstruct de PersonalData
+			res = this.createModelAndViewEdit(curriculaPersonalForm, "curricula.submit.error");
 		}
 
 		return res;
@@ -91,15 +104,18 @@ public class CurriculaHackerController extends AbstractController {
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(final Integer curriculaId) {
 		ModelAndView res;
+		this.curriculaService.delete(this.curriculaService.findOne(curriculaId));
 		res = this.createModelAndViewList();
 		return res;
 	}
 
-	protected ModelAndView createModelAndViewEdit(final Curricula curricula, final String... msg) {
+	protected ModelAndView createModelAndViewEdit(final CurriculaAndPersonalDataForm curriculaPersonalForm, final String... msg) {
 		final ModelAndView res = new ModelAndView("curricula/edit");
-		res.addObject("curricula", curricula);
+
+		res.addObject("curriculaAndPersonalDataForm", curriculaPersonalForm);
 		for (final String s : msg)
 			res.addObject("message", s);
+
 		this.configValues(res);
 		return res;
 	}
@@ -108,6 +124,9 @@ public class CurriculaHackerController extends AbstractController {
 		ModelAndView res = new ModelAndView("curricula/display");
 		try {
 			final Curricula curricula = this.curriculaService.findOne(curriculaId);
+
+			Assert.isTrue(this.hackerService.findByPrincipal(LoginService.getPrincipal()).getId() == curricula.getHacker().getId());
+
 			res.addObject("curricula", curricula);
 
 			final List<MiscellaneousData> miscellaneousData = (List<MiscellaneousData>) this.miscellaneousDataService.findAllCurricula(curricula);
@@ -123,7 +142,6 @@ public class CurriculaHackerController extends AbstractController {
 			res.addObject("show", true);
 
 		} catch (final Throwable oops) {
-			oops.printStackTrace();
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
 		this.configValues(res);
@@ -139,7 +157,6 @@ public class CurriculaHackerController extends AbstractController {
 			res.addObject("show", true);
 
 		} catch (final Throwable oops) {
-			oops.printStackTrace();
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
 		this.configValues(res);

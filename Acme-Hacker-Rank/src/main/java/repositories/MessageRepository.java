@@ -14,9 +14,9 @@ import domain.Message;
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 
 	@Query("select m from Message m where m.sender.id = ?1")
-	public Collection<Message> findAllByActor(int actorId);
+	Collection<Message> findAllByActor(int actorId);
 
 	@Query("select m.recipients from Message m where m.id = ?1")
-	public Collection<Actor> getRecipients(int idMessage);
+	Collection<Actor> getRecipients(int idMessage);
 
 }

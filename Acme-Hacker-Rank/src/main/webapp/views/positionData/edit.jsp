@@ -1,13 +1,3 @@
-<%--
- * action-1.jsp
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
@@ -24,10 +14,10 @@
 	
 	<acme:textbox code="positionData.edit.title" path="title"/>
 	<acme:textbox code="positionData.edit.description" path="description"/>
-	<acme:textbox code="positionData.edit.startDate" path="startDate" placeholder="positionData.edit.date"/>
-	<acme:textbox code="positionData.edit.endDate" path="endDate" placeholder="positionData.edit.date"/>
+	<acme:inputDate code="positionData.edit.startDate" path="startDate"/>
+	<acme:inputDate code="positionData.edit.endDate" path="endDate"/>
 	
 	<spring:message code="positionData.edit.submit" var="submit" />
 	<input type="submit" name="submit" value="${ submit}" />
-	<acme:cancel url="/" code="positionData.edit.cancel" />
+	<acme:cancel url="/curricula/hacker/display.do?curriculaId=${positionData.curricula.id}" code="positionData.edit.cancel" />
 </form:form>

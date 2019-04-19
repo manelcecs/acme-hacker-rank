@@ -51,7 +51,7 @@ public class CompanyController extends AbstractController {
 			res = this.createModelAndViewEdit(companyForm);
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(companyForm, "company.edit.commit.error");
-			oops.printStackTrace();
+
 		}
 
 		return res;
@@ -70,7 +70,7 @@ public class CompanyController extends AbstractController {
 			res = this.createModelAndViewEdit(company);
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(company);
-			oops.printStackTrace();
+
 		}
 		return res;
 	}

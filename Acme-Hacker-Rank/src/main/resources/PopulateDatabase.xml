@@ -116,6 +116,216 @@
 			<list></list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount57" class="security.UserAccount">
+		<property name="username" value="admin1" />
+		<property name="password" value="e00cf25ad42683b3df678c61f42c6bda" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard57">
+
+		<property value="admin" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Administrator" id="admin1">
+
+		<!-- Valores de Actor -->
+
+		<property value="admin1" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Boss1</value>
+			</list>
+		</property>
+
+		<property value="00000000001-A" name="vatNumber" />
+
+		<property value="admin1@" name="email" />
+
+		<property value="+00 000-1234567" name="phoneNumber" />
+
+		<property value="Av. Main Principal" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard0" />
+
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox080" />
+				<ref bean="messageBox081" />
+				<ref bean="messageBox082" />
+				<ref bean="messageBox083" />
+				<ref bean="messageBox084" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount57" />
+
+	</bean>
+	
+	<bean id="messageBox080" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox081" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox082" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox083" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="messageBox084" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount58" class="security.UserAccount">
+		<property name="username" value="admin2" />
+		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard58">
+
+		<property value="admin2" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Administrator" id="admin2">
+
+		<!-- Valores de Actor -->
+
+		<property value="admin2" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Boss2</value>
+			</list>
+		</property>
+
+		<property value="00000000001-A" name="vatNumber" />
+
+		<property value="admin2@" name="email" />
+
+		<property value="+00 000-1234567" name="phoneNumber" />
+
+		<property value="Av. Main Principal" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard58" />
+
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox085" />
+				<ref bean="messageBox086" />
+				<ref bean="messageBox087" />
+				<ref bean="messageBox088" />
+				<ref bean="messageBox089" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount58" />
+
+	</bean>
+	
+	<bean id="messageBox085" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox086" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox087" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox088" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="messageBox089" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
 
 	<!-- Companies -->
 	<!-- Company0 -->
@@ -451,10 +661,453 @@
 			<list></list>
 		</property>
 	</bean>
+	
+	<!-- Company3 -->
+
+	<bean id="userAccount23" class="security.UserAccount">
+		<property name="username" value="company3" />
+		<property name="password" value="e828ae3339b8d80b3902c1564578804e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard23">
+
+		<property value="company3" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Company" id="company3">
+
+		<!-- Valores de Actor -->
+
+		<property value="Ubuntu" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Inc.</value>
+			</list>
+		</property>
+
+		<property value="UB113-INC" name="vatNumber" />
+
+		<property value="ubuntu@me.com" name="email" />
+
+		<property value="+0099 1899-299" name="phoneNumber" />
+
+		<property value="Av. Ubuntu 32" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard23" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox025" />
+				<ref bean="messageBox026" />
+				<ref bean="messageBox027" />
+				<ref bean="messageBox028" />
+				<ref bean="messageBox029" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount23" />
+
+		<!-- Propios de Company -->
+
+		<property value="Ubuntu Inc." name="companyName" />
+
+	</bean>
+	
+	<bean id="messageBox025" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox026" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox027" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox028" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox029" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- Company4 -->
+
+	<bean id="userAccount24" class="security.UserAccount">
+		<property name="username" value="company4" />
+		<property name="password" value="856dfd9045541fa727ef6ad392835eb0" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard24">
+
+		<property value="company4" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Company" id="company4">
+
+		<!-- Valores de Actor -->
+
+		<property value="Oracle" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Inc.</value>
+			</list>
+		</property>
+
+		<property value="OR113-INC" name="vatNumber" />
+
+		<property value="oracle@me.com" name="email" />
+
+		<property value="+0099 1899-299" name="phoneNumber" />
+
+		<property value="Av. Oracle 12" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard24" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox060" />
+				<ref bean="messageBox061" />
+				<ref bean="messageBox062" />
+				<ref bean="messageBox063" />
+				<ref bean="messageBox064" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount24" />
+
+		<!-- Propios de Company -->
+
+		<property value="Oracle Inc." name="companyName" />
+
+	</bean>
+	
+	<bean id="messageBox060" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox061" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox062" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox063" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox064" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- Company5 -->
+
+	<bean id="userAccount25" class="security.UserAccount">
+		<property name="username" value="company5" />
+		<property name="password" value="efa5a30f11d85b93518ba6cc3f229b14" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard25">
+
+		<property value="company5" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Company" id="company5">
+
+		<!-- Valores de Actor -->
+
+		<property value="Google" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Inc.</value>
+			</list>
+		</property>
+
+		<property value="GO113-INC" name="vatNumber" />
+
+		<property value="google@me.com" name="email" />
+
+		<property value="+0099 1899-299" name="phoneNumber" />
+
+		<property value="Av. Google 43" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard25" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox065" />
+				<ref bean="messageBox066" />
+				<ref bean="messageBox067" />
+				<ref bean="messageBox068" />
+				<ref bean="messageBox069" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount25" />
+
+		<!-- Propios de Company -->
+
+		<property value="Google Inc." name="companyName" />
+
+	</bean>
+	
+	<bean id="messageBox065" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox066" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox067" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox068" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox069" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- Company6 -->
+
+	<bean id="userAccount26" class="security.UserAccount">
+		<property name="username" value="company6" />
+		<property name="password" value="65ea58759487b11278c234e510c34817" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard26">
+
+		<property value="company6" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Company" id="company6">
+
+		<!-- Valores de Actor -->
+
+		<property value="Softonic" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>Inc.</value>
+			</list>
+		</property>
+
+		<property value="SO113-INC" name="vatNumber" />
+
+		<property value="softonic@me.com" name="email" />
+
+		<property value="+0099 1899-299" name="phoneNumber" />
+
+		<property value="Av. Descubrimientos 45" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard26" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox070" />
+				<ref bean="messageBox071" />
+				<ref bean="messageBox072" />
+				<ref bean="messageBox073" />
+				<ref bean="messageBox074" />
+			</list>
+		</property>
+
+		<property name="userAccount" ref="userAccount26" />
+
+		<!-- Propios de Company -->
+
+		<property value="Softonic Inc." name="companyName" />
+
+	</bean>
+	
+	<bean id="messageBox070" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox071" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox072" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox073" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox074" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
 
 	<!-- Hackers -->
-
-	<!-- Hacker0 -->
+<!-- Hacker0 -->
 	<bean id="userAccount30" class="security.UserAccount">
 		<property name="username" value="hacker0" />
 		<property name="password" value="c11ff1d553c4e4e65b6c0ff67ccd9fcd" />
@@ -678,6 +1331,39 @@
 		<property name="lastUpdate" value="06/01/2018" />
 	</bean>
 
+	<!-- original curricula -->
+	<bean class="domain.Curricula" id="curricula02">
+		<property name="title" value="curricula2" />
+		<property name="copy" value="false" />
+		<property name="hacker" ref="hacker1" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData02">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula02" />
+	</bean>
+	
+	
+	<!-- copy curricula -->
+	<bean class="domain.Curricula" id="curricula03">
+		<property name="title" value="curricula3" />
+		<property name="copy" value="true" />
+		<property name="hacker" ref="hacker1" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData03">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula03" />
+	</bean>
+	
 	<bean class="domain.Hacker" id="hacker1">
 
 		<!-- Valores de Actor -->
@@ -795,6 +1481,39 @@
 		<property name="minimumSalary" value="2000.0" />
 		<property name="lastUpdate" value="06/01/2018" />
 	</bean>
+	
+	<!-- original curricula -->
+	<bean class="domain.Curricula" id="curricula04">
+		<property name="title" value="curricula4" />
+		<property name="copy" value="false" />
+		<property name="hacker" ref="hacker2" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData04">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula04" />
+	</bean>
+	
+	
+	<!-- copy curricula -->
+	<bean class="domain.Curricula" id="curricula05">
+		<property name="title" value="curricula5" />
+		<property name="copy" value="true" />
+		<property name="hacker" ref="hacker2" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData05">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula05" />
+	</bean>
 
 	<bean class="domain.Hacker" id="hacker2">
 
@@ -869,6 +1588,573 @@
 		</property>
 	</bean>
 	<bean id="messageBox044" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- Hacker3 -->
+	<bean id="userAccount33" class="security.UserAccount">
+		<property name="username" value="hacker3" />
+		<property name="password" value="c6ae6edca1ad45f42e619ec91a32b636" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard33">
+
+		<property value="hacker3" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder3">
+		<property name="keyWord" value="System" />
+		<property name="minimumDeadLine" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+		<property name="lastUpdate" value="06/01/2018" />
+	</bean>
+	
+	<!-- original curricula -->
+	<bean class="domain.Curricula" id="curricula06">
+		<property name="title" value="curricula6" />
+		<property name="copy" value="false" />
+		<property name="hacker" ref="hacker3" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData06">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula06" />
+	</bean>
+	
+	
+	<!-- copy curricula -->
+	<bean class="domain.Curricula" id="curricula07">
+		<property name="title" value="curricula7" />
+		<property name="copy" value="true" />
+		<property name="hacker" ref="hacker3" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData07">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula07" />
+	</bean>
+	<bean class="domain.Hacker" id="hacker3">
+
+		<!-- Valores de Actor -->
+
+		<property value="davcamalv" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>DCA</value>
+			</list>
+		</property>
+
+		<property value="34675689-R" name="vatNumber" />
+
+		<property value="davcamalv@globalwarming.com" name="email" />
+
+		<property value="+03 529-00437" name="phoneNumber" />
+
+		<property value="Unknown Source" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard33" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount33" />
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox045" />
+				<ref bean="messageBox046" />
+				<ref bean="messageBox047" />
+				<ref bean="messageBox048" />
+				<ref bean="messageBox049" />
+			</list>
+		</property>
+		
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder3" />
+	</bean>
+	
+	<bean id="messageBox045" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox046" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox047" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox048" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox049" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- Hacker4 -->
+	<bean id="userAccount44" class="security.UserAccount">
+		<property name="username" value="hacker4" />
+		<property name="password" value="a0ba178a7585a3b3575613351aa76ef7" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard44">
+
+		<property value="hacker4" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder4">
+		<property name="keyWord" value="System" />
+		<property name="minimumDeadLine" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+		<property name="lastUpdate" value="06/01/2018" />
+	</bean>
+	
+	<!-- original curricula -->
+	<bean class="domain.Curricula" id="curricula08">
+		<property name="title" value="curricula8" />
+		<property name="copy" value="false" />
+		<property name="hacker" ref="hacker4" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData08">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula08" />
+	</bean>
+	
+	
+	<!-- copy curricula -->
+	<bean class="domain.Curricula" id="curricula09">
+		<property name="title" value="curricula9" />
+		<property name="copy" value="true" />
+		<property name="hacker" ref="hacker4" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData09">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula09" />
+	</bean>
+
+	<bean class="domain.Hacker" id="hacker4">
+
+		<!-- Valores de Actor -->
+
+		<property value="antcarluq" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>ACL</value>
+			</list>
+		</property>
+
+		<property value="352435234-H" name="vatNumber" />
+
+		<property value="antcarluq@gemail.com" name="email" />
+
+		<property value="+36 733 342542" name="phoneNumber" />
+
+		<property value="Road Ahead 32" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard44" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount44" />
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox050" />
+				<ref bean="messageBox051" />
+				<ref bean="messageBox052" />
+				<ref bean="messageBox053" />
+				<ref bean="messageBox054" />
+			</list>
+		</property>
+
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder4" />
+
+	</bean>
+	
+	<bean id="messageBox050" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox051" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox052" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox053" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox054" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<!-- Hacker5 -->
+	<bean id="userAccount55" class="security.UserAccount">
+		<property name="username" value="hacker5" />
+		<property name="password" value="c788cf2e81a407a2d33ee178ed79de3e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard55">
+
+		<property value="hacker5" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder5">
+		<property name="keyWord" value="System" />
+		<property name="minimumDeadLine" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+		<property name="lastUpdate" value="06/01/2018" />
+	</bean>
+	
+	<!-- original curricula -->
+	<bean class="domain.Curricula" id="curricula10">
+		<property name="title" value="curricula10" />
+		<property name="copy" value="false" />
+		<property name="hacker" ref="hacker5" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData10">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula10" />
+	</bean>
+	
+	
+	<!-- copy curricula -->
+	<bean class="domain.Curricula" id="curricula11">
+		<property name="title" value="curricula11" />
+		<property name="copy" value="true" />
+		<property name="hacker" ref="hacker5" />
+	</bean>
+	
+	<bean class="domain.PersonalData" id="personalData11">
+		<property name="fullName" value="Anthony -Global Warming- Statman" />
+		<property name="statement" value="Focus on develop sploits" />
+		<property name="phoneNumber" value="+21 555 23 65 87" />
+		<property name="gitHubProfile" value="https://github.com/u/globalWarming" />
+		<property name="linkedinProfile" value="https://linkedin.com/u/GobalWarming" />
+		<property name="curricula" ref="curricula11" />
+	</bean>
+
+	<bean class="domain.Hacker" id="hacker5">
+
+		<!-- Valores de Actor -->
+
+		<property value="manucec" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>cecilio</value>
+			</list>
+		</property>
+
+		<property value="32563775437-Q" name="vatNumber" />
+
+		<property value="manucec@mailto.com" name="email" />
+
+		<property value="+34 666-555-123" name="phoneNumber" />
+
+		<property value="Highway to Hell 66" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard55" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount55" />
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox055" />
+				<ref bean="messageBox056" />
+				<ref bean="messageBox057" />
+				<ref bean="messageBox058" />
+				<ref bean="messageBox059" />
+			</list>
+		</property>
+
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder5" />
+
+	</bean>
+	<bean id="messageBox055" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox056" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox057" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox058" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox059" class="domain.MessageBox">
+		<property name="name" value="Notification Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	
+	<!-- Hacker6 -->
+	<bean id="userAccount56" class="security.UserAccount">
+		<property name="username" value="hacker6" />
+		<property name="password" value="b8f9087a445d02d19b5154dbadbc7efd" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="domain.CreditCard" id="creditcard56">
+
+		<property value="hacker6" name="holder" />
+
+		<property value="VISA" name="make" />
+
+		<property value="12" name="expirationMonth" />
+
+		<property value="2020" name="expirationYear" />
+
+		<property value="999" name="cvv" />
+
+		<property value="4308543581357191" name="number" />
+
+	</bean>
+
+	<bean class="domain.Finder" id="finder6">
+		<property name="keyWord" value="System" />
+		<property name="minimumDeadLine" value="06/01/2019" />
+		<property name="maximumDeadLine" value="07/30/2019" />
+		<property name="minimumSalary" value="2000.0" />
+		<property name="lastUpdate" value="06/01/2018" />
+	</bean>
+	
+
+	<bean class="domain.Hacker" id="hacker6">
+
+		<!-- Valores de Actor -->
+
+		<property value="jualorper" name="name" />
+
+		<property name="surnames">
+			<list>
+				<value>JLP</value>
+			</list>
+		</property>
+
+		<property value="32563775437-Q" name="vatNumber" />
+
+		<property value="jualorper@mailto.com" name="email" />
+
+		<property value="+34 666-555-123" name="phoneNumber" />
+
+		<property value="Highway to Hell 66" name="address" />
+
+		<property value="false" name="spammer" />
+
+		<property value="false" name="banned" />
+
+		<property name="creditCard" ref="creditcard56" />
+
+		<!-- Creo que la asociación de socilProfile está mal -->
+
+		<property name="userAccount" ref="userAccount56" />
+		
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBox075" />
+				<ref bean="messageBox076" />
+				<ref bean="messageBox077" />
+				<ref bean="messageBox078" />
+				<ref bean="messageBox079" />
+			</list>
+		</property>
+
+		<!-- Propios de Hacker -->
+		<property name="finder" ref="finder6" />
+
+	</bean>
+	<bean id="messageBox075" class="domain.MessageBox">
+		<property name="name" value="In Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox076" class="domain.MessageBox">
+		<property name="name" value="Out Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox077" class="domain.MessageBox">
+		<property name="name" value="Spam Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox078" class="domain.MessageBox">
+		<property name="name" value="Trash Box" />
+		<property name="deleteable" value="false" />
+		<property name="messages">
+			<list></list>
+		</property>
+	</bean>
+	<bean id="messageBox079" class="domain.MessageBox">
 		<property name="name" value="Notification Box" />
 		<property name="deleteable" value="false" />
 		<property name="messages">
@@ -1049,6 +2335,321 @@
 		<property name="identifier" value="AINC-4326" />
 	</bean>
 	
+	<!-- Company3 -->
+	<bean class="domain.Position" id="position22">
+		<property value="Seguridad en iCloud" name="title" />
+		<property
+			value="Se tratará de probar la seguridad de las copias de recuperación en iCloud de los dispositivos móviles."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Ubuntu</value>
+				<value>iOS</value>
+				<value>OsX</value>
+			</list>
+		</property>
+
+		<property value="7999.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company3" />
+		<property name="ticker" ref="ticker22" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker22">
+		<property name="identifier" value="UBUN-4326" />
+	</bean>
+	
+	<!-- Company4 -->
+	<bean class="domain.Position" id="position23">
+		<property value="Seguridad en base de datos" name="title" />
+		<property
+			value="Se tratará de probar la seguridad de las bases de datos."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Oracle</value>
+				<value>mySql</value>
+			</list>
+		</property>
+
+		<property value="7999.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company4" />
+		<property name="ticker" ref="ticker23" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker23">
+		<property name="identifier" value="ORAC-4326" />
+	</bean>
+	
+		<!-- Company5 -->
+	<bean class="domain.Position" id="position24">
+		<property value="Seguridad en buscadores" name="title" />
+		<property
+			value="Se tratará de probar la seguridad de las búsquedas en la red."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Java</value>
+			</list>
+		</property>
+
+		<property value="7999.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company5" />
+		<property name="ticker" ref="ticker24" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker24">
+		<property name="identifier" value="GOOG-4326" />
+	</bean>
+	
+	<bean class="domain.Position" id="position25">
+		<property value="Servidores" name="title" />
+		<property
+			value="Reparación de servidores."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Java</value>
+			</list>
+		</property>
+
+		<property value="7999.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company0" />
+		<property name="ticker" ref="ticker25" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker25">
+		<property name="identifier" value="SOFT-4326" />
+	</bean>
+	
+	<bean class="domain.Position" id="position26">
+		<property value="Servidores 2" name="title" />
+		<property
+			value="Reparación de servidores."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>Java</value>
+			</list>
+		</property>
+
+		<property value="7999.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company1" />
+		<property name="ticker" ref="ticker26" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker26">
+		<property name="identifier" value="SOFT-4327" />
+	</bean>
+	
+	<bean class="domain.Position" id="position27">
+		<property value="Servidores 3" name="title" />
+		<property
+			value="Reparación de servidores 3."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>PHP</value>
+			</list>
+		</property>
+
+		<property value="3200.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company2" />
+		<property name="ticker" ref="ticker27" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker27">
+		<property name="identifier" value="SOFT-4328" />
+	</bean>
+	
+	<bean class="domain.Position" id="position28">
+		<property value="Servidores 4" name="title" />
+		<property
+			value="Reparación de servidores 4."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>PHP</value>
+			</list>
+		</property>
+
+		<property value="3200.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company3" />
+		<property name="ticker" ref="ticker28" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker28">
+		<property name="identifier" value="SOFT-4329" />
+	</bean>
+	
+	<bean class="domain.Position" id="position29">
+		<property value="Servidores 5" name="title" />
+		<property
+			value="Reparación de servidores 5."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>PHP</value>
+			</list>
+		</property>
+
+		<property value="3200.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company6" />
+		<property name="ticker" ref="ticker29" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker29">
+		<property name="identifier" value="SOFT-4330" />
+	</bean>
+	
+	<bean class="domain.Position" id="position30">
+		<property value="Servidores 6" name="title" />
+		<property
+			value="Reparación de servidores 6."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>PHP</value>
+			</list>
+		</property>
+
+		<property value="3200.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company4" />
+		<property name="ticker" ref="ticker30" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker30">
+		<property name="identifier" value="SOFT-4031" />
+	</bean>
+	
+	<bean class="domain.Position" id="position31">
+		<property value="Servidores 7" name="title" />
+		<property
+			value="Reparación de servidores 7."
+			name="description" />
+		<property value="12/31/2199" name="deadline" />
+		<property value="UX" name="profileRequired" />
+
+		<property name="skillsRequired">
+			<list>
+				<value>Security</value>
+			</list>
+		</property>
+
+		<property name="technologiesRequired">
+			<list>
+				<value>PHP</value>
+			</list>
+		</property>
+
+		<property value="3200.00" name="salaryOffered" />
+		<property value="false" name="draft" />
+		<property value="false" name="cancelled" />
+
+		<property name="company" ref="company5" />
+		<property name="ticker" ref="ticker31" />
+	</bean>
+	<bean class="domain.Ticker" id="ticker31">
+		<property name="identifier" value="SOFT-4331" />
+	</bean>
 	<!-- Problemas -->
 	
 	<!-- Position00 -->
@@ -1142,8 +2743,358 @@
 		<property name="position" ref="position20" />
 		
 	</bean>
+	
+		<!-- Position23 -->
+	<bean class="domain.Problem" id="problem22">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position22" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem23">
+		<property value="Comprobar estilo" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Asegurarse que el producto es estiloso" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position22" />
+		
+	</bean>
+	
+		<!-- Position23 -->
+	<bean class="domain.Problem" id="problem24">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position23" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem25">
+		<property value="Comprobar estilo" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Asegurarse que el producto es estiloso" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position23" />
+		
+	</bean>
+	
+		<!-- Position24 -->
+	<bean class="domain.Problem" id="problem26">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position24" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem27">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position24" />
+		
+	</bean>
+	
+	<!-- Position25 -->
+	<bean class="domain.Problem" id="problem28">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position25" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem29">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position25" />
+		
+	</bean>
+	
+	<!-- Position26 -->
+	<bean class="domain.Problem" id="problem30">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position26" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem31">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position26" />
+		
+	</bean>
+	
+	<!-- Position27 -->
+	<bean class="domain.Problem" id="problem32">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position27" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem33">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position27" />
+		
+	</bean>
+	
+	<!-- Position28 -->
+	<bean class="domain.Problem" id="problem34">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position28" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem35">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position28" />
+		
+	</bean>
+	
+	<!-- Position29 -->
+	<bean class="domain.Problem" id="problem36">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position29" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem37">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position29" />
+		
+	</bean>
+	
+	<!-- Position30 -->
+	<bean class="domain.Problem" id="problem38">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position30" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem39">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position30" />
+		
+	</bean>
+	
+	<!-- Position31 -->
+	<bean class="domain.Problem" id="problem40">
+		<property value="Probar Apariencia" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position31" />
+		
+	</bean>
+	<bean class="domain.Problem" id="problem41">
+		<property value="Comprobar post hacking" name="title" />
+		<property value="NOIDEA" name="statement" />
+		<property value="Comprobar post hacking" name="hint" />
+		
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+		
+		<property value="false" name="draft" />
+		<property name="position" ref="position31" />
+		
+	</bean>
+	
+	<!-- Applications -->
+	<bean class="domain.Application" id="application0">
+		<!-- <property value="" name="momentSubmit" /> -->
+		<property value="PENDING" name="status" />
+		<property value="12/31/2199" name="moment" />		
+		<property name="problem" ref="problem41" />
+		<property name="hacker" ref="hacker0" />
+		<property name="curricula" ref="curricula01" />		
+	</bean>
+	<bean class="domain.Application" id="application1">
+		<!-- <property value="" name="momentSubmit" /> -->
+		<property value="PENDING" name="status" />
+		<property value="12/31/2199" name="moment" />		
+		<property name="problem" ref="problem41" />
+		<property name="hacker" ref="hacker1" />
+		<property name="curricula" ref="curricula03" />		
+	</bean>
+	<bean class="domain.Application" id="application2">
+		<!-- <property value="" name="momentSubmit" /> -->
+		<property value="PENDING" name="status" />
+		<property value="12/31/2199" name="moment" />		
+		<property name="problem" ref="problem41" />
+		<property name="hacker" ref="hacker2" />
+		<property name="curricula" ref="curricula05" />		
+	</bean>
+	<bean class="domain.Application" id="application3">
+		<!-- <property value="" name="momentSubmit" /> -->
+		<property value="PENDING" name="status" />
+		<property value="12/31/2199" name="moment" />		
+		<property name="problem" ref="problem41" />
+		<property name="hacker" ref="hacker3" />
+		<property name="curricula" ref="curricula07" />		
+	</bean>
+	<bean class="domain.Application" id="application4">
+		<!-- <property value="" name="momentSubmit" /> -->
+		<property value="PENDING" name="status" />
+		<property value="12/31/2199" name="moment" />		
+		<property name="problem" ref="problem41" />
+		<property name="hacker" ref="hacker4" />
+		<property name="curricula" ref="curricula09" />		
+	</bean>
+	<bean class="domain.Application" id="application5">
+		<!-- <property value="" name="momentSubmit" /> -->
+		<property value="PENDING" name="status" />
+		<property value="12/31/2199" name="moment" />		
+		<property name="problem" ref="problem41" />
+		<property name="hacker" ref="hacker5" />
+		<property name="curricula" ref="curricula11" />		
+	</bean>
 
-	<bean id="adminConfig" class="domain.AdminConfig">
+<bean id="adminConfig" class="domain.AdminConfig">
 		<property name="systemName" value="Acme Hacker Rank" />
 		<property name="bannerURL" value="https://i.imgur.com/7b8lu4b.png" />
 		<property name="countryCode" value="+34" />
@@ -1167,3 +3118,4 @@
 	</bean>
 
 </beans>
+

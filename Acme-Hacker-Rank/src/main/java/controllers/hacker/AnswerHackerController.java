@@ -20,7 +20,7 @@ import domain.Answer;
 public class AnswerHackerController extends AbstractController {
 
 	@Autowired
-	AnswerService	answerService;
+	private AnswerService	answerService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

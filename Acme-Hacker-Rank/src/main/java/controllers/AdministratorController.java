@@ -74,8 +74,6 @@ public class AdministratorController extends AbstractController {
 		final ModelAndView result = new ModelAndView("administrator/process");
 
 		final Collection<Actor> spammers = this.actorService.getSpammerActors();
-		final Collection<Actor> actorsEliminated = this.actorService.findEliminatedActors();
-		spammers.removeAll(actorsEliminated);
 
 		result.addObject("spamActors", spammers);
 		result.addObject("actorLogged", LoginService.getPrincipal());

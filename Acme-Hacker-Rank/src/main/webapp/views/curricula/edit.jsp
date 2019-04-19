@@ -1,22 +1,37 @@
  <%@page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"
-    uri="http://www.springframework.org/security/tags"%>
+	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form modelAttribute="curricula" action="curricula/hacker/save.do" method="post">
 
-    <acme:hidden path="id"/>
-    <acme:hidden path="version" />
+<script type='text/javascript'>
+    function checkPhone(str) {
+   	 if (str != "") {
+   		 var patt = new RegExp("^(\[+][1-9][0-9]{0,2}[ ]{1}\[(][1-9][0-9]{0,2}\[)][ ]{1}[0-9]{4,}|\[+][1-9][0-9]{0,2}[ ]{1}[0-9]{4,}|[0-9]{4,}|[ ]{1,})$");
+   		 if (patt.test(str) == false) { return confirm("<spring:message code="personalData.edit.phoneNumber.error"/>"); }
+   	 }
+    }
+</script>
 
-    <acme:textbox path="title" code="curricula.edit.title" />
+<form:form modelAttribute="curriculaAndPersonalDataForm" action="curricula/hacker/save.do" method="post">
+
+	<acme:textbox path="title" code="curricula.edit.title" />
     
-    <acme:submit name="submit" code="curricula.edit.submit"/>
-    <acme:cancel url="/curricula/hacker/list.do" code="curricula.edit.cancel" />
+	<acme:textbox code="personalData.edit.fullName" path="fullName"/>
+    <acme:textbox code="personalData.edit.statement" path="statement"/>
+    <acme:textbox code="personalData.edit.phoneNumber" path="phoneNumber"/>
+    <acme:textbox code="personalData.edit.gitHubProfile" path="gitHubProfile"/>
+    <acme:textbox code="personalData.edit.linkedinProfile" path="linkedinProfile"/>
+    
+    <spring:message code="personalData.edit.submit" var="submit" />
+    <input type="submit" name="submit" value="${ submit}" onclick="return checkPhone(this.form.phoneNumber.value)"/>
+	<acme:cancel url="/curricula/hacker/list.do" code="curricula.edit.cancel" />
     
 </form:form>
+

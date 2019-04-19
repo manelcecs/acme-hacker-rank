@@ -111,18 +111,15 @@ public class ActorController extends AbstractController {
 		case "ADMINISTRATOR":
 			final Administrator administrator = this.administratorService.findOne(actor.getId());
 			result.addObject("administrator", administrator);
-			System.out.println(administrator);
 			break;
 
 		case "HACKER":
 			final Hacker hacker = this.hackerService.findOne(actor.getId());
-			System.out.println(hacker);
 			result.addObject("hacker", hacker);
 			break;
 
 		case "COMPANY":
 			final Company company = this.companyService.findOne(actor.getId());
-			System.out.println(company);
 			result.addObject("company", company);
 			break;
 		}
@@ -238,7 +235,7 @@ public class ActorController extends AbstractController {
 			this.actorService.deleteData();
 			result = new ModelAndView("redirect:../j_spring_security_logout");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/displayData.do");
+			result = new ModelAndView("redirect:displayData.do");
 		}
 
 		this.configValues(result);

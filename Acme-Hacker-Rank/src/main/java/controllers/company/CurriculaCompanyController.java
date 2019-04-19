@@ -26,12 +26,16 @@ public class CurriculaCompanyController extends AbstractController {
 
 	@Autowired
 	private CurriculaService			curriculaService;
+
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
 	@Autowired
 	private PersonalDataService			personalDataService;
+
 	@Autowired
 	private PositionDataService			positionDataService;
+
 	@Autowired
 	private EducationDataService		educationDataService;
 
@@ -68,7 +72,7 @@ public class CurriculaCompanyController extends AbstractController {
 
 			res.addObject("show", false);
 		} catch (final Throwable oops) {
-			oops.printStackTrace();
+
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
 		this.configValues(res);
@@ -82,7 +86,6 @@ public class CurriculaCompanyController extends AbstractController {
 			res.addObject("curriculas", curriculas);
 			res.addObject("show", false);
 		} catch (final Throwable oops) {
-			oops.printStackTrace();
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
 		this.configValues(res);

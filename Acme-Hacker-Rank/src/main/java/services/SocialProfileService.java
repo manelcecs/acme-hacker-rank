@@ -63,4 +63,8 @@ public class SocialProfileService {
 		return this.socialProfileRepository.findAllSocialProfile(idActor);
 	}
 
+	public void delete(final Collection<SocialProfile> socialProfiles) {
+		this.socialProfileRepository.delete(socialProfiles);
+	}
+
 }

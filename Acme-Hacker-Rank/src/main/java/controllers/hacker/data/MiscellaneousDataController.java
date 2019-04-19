@@ -1,6 +1,7 @@
 
 package controllers.hacker.data;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.CurriculaService;
 import services.EducationDataService;
+import services.HackerService;
 import services.MiscellaneousDataService;
 import services.PersonalDataService;
 import services.PositionDataService;
@@ -33,14 +36,21 @@ public class MiscellaneousDataController extends AbstractController {
 
 	@Autowired
 	private EducationDataService		educationDataService;
+
 	@Autowired
 	private CurriculaService			curriculaService;
+
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
 	@Autowired
 	private PersonalDataService			personalDataService;
+
 	@Autowired
 	private PositionDataService			positionDataService;
+
+	@Autowired
+	private HackerService				hackerService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -63,20 +73,20 @@ public class MiscellaneousDataController extends AbstractController {
 
 		return res;
 	}
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final Integer id) {
+	public ModelAndView delete(@RequestParam final Integer miscellaneousDataId) {
 
 		final int curriculaId;
 		ModelAndView res;
-		final MiscellaneousData record = this.miscellaneousDataService.findOne(id);
+		final MiscellaneousData record = this.miscellaneousDataService.findOne(miscellaneousDataId);
 		curriculaId = record.getCurricula().getId();
 		try {
 			this.miscellaneousDataService.delete(record);
+			res = this.createModelAndViewCurricula(curriculaId);
 		} catch (final Throwable oops) {
-			oops.printStackTrace();
+			res = this.createModelAndViewCurricula(curriculaId, "miscellaneousData.submit.error");
 		}
-
-		res = this.createModelAndViewCurricula(curriculaId);
 
 		return res;
 	}
@@ -84,32 +94,29 @@ public class MiscellaneousDataController extends AbstractController {
 	public ModelAndView save(@Valid final MiscellaneousData miscellaneousData, final BindingResult binding) {
 		ModelAndView res;
 
-		if (miscellaneousData.getAttachments() != null || !miscellaneousData.getAttachments().isEmpty())
-			if (ValidateCollectionURL.validateURLCollection(miscellaneousData.getAttachments()))
-				binding.rejectValue("attachments", "miscellaneousData.edit.attachments.error");
+		if (miscellaneousData.getAttachments() != null) {
+			final Collection<String> urls = ValidateCollectionURL.deleteURLBlanksInCollection(miscellaneousData.getAttachments());
+			miscellaneousData.setAttachments(urls);
+			if (ValidateCollectionURL.validateURLCollection(miscellaneousData.getAttachments()) != true)
+				binding.rejectValue("attachments", "problem.edit.attachments.error.url");
+		}
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			res = this.createModelAndViewEdit(miscellaneousData);
-			System.out.println(binding.getAllErrors());
-		} else
+		else
 			try {
 				this.miscellaneousDataService.save(miscellaneousData);
 				res = this.createModelAndViewCurricula(miscellaneousData.getCurricula().getId());
 			} catch (final ValidationException oops) {
-				System.out.println("Validation Exception");
-				System.out.println(binding.getAllErrors());
 				res = this.createModelAndViewEdit(miscellaneousData);
 			} catch (final Throwable oops) {
-				System.out.println("Generic Exception");
-				oops.printStackTrace();
 				res = this.createModelAndViewEdit(miscellaneousData);
 			}
 
-		this.configValues(res);
 		return res;
 	}
 
-	protected ModelAndView createModelAndViewCurricula(final int curriculaId) {
+	protected ModelAndView createModelAndViewCurricula(final int curriculaId, final String... message) {
 		ModelAndView res;
 		res = new ModelAndView("curricula/display");
 		final Curricula curricula = this.curriculaService.findOne(curriculaId);
@@ -125,6 +132,9 @@ public class MiscellaneousDataController extends AbstractController {
 		res.addObject("personalData", personalData);
 		res.addObject("miscellaneousData", miscellaneousData);
 
+		for (final String s : message)
+			res.addObject("message", s);
+
 		res.addObject("show", true);
 		this.configValues(res);
 		return res;
@@ -133,8 +143,13 @@ public class MiscellaneousDataController extends AbstractController {
 	protected ModelAndView createModelAndViewEdit(final MiscellaneousData miscData) {
 		ModelAndView res;
 
-		res = new ModelAndView("miscellaneousData/edit");
-		res.addObject("miscellaneousData", miscData);
+		if (this.hackerService.findByPrincipal(LoginService.getPrincipal()).getId() != miscData.getCurricula().getHacker().getId())
+			res = new ModelAndView("redirect:/");
+		else {
+			res = new ModelAndView("miscellaneousData/edit");
+			res.addObject("miscellaneousData", miscData);
+		}
+
 		this.configValues(res);
 		return res;
 	}

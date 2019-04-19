@@ -32,19 +32,19 @@ import forms.ApplicationForm;
 public class ApplicationHackerController extends AbstractController {
 
 	@Autowired
-	ApplicationService	applicationService;
+	private ApplicationService	applicationService;
 
 	@Autowired
-	CurriculaService	curriculaService;
+	private CurriculaService	curriculaService;
 
 	@Autowired
-	HackerService		hackerService;
+	private HackerService		hackerService;
 
 	@Autowired
-	PositionService		positionService;
+	private PositionService		positionService;
 
 	@Autowired
-	AnswerService		answerService;
+	private AnswerService		answerService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

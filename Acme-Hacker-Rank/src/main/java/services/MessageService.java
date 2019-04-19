@@ -285,8 +285,9 @@ public class MessageService {
 	//Utilities
 	private String allTextFromAMessage(final Message message) {
 		String text = message.getBody() + " " + message.getSubject();
-		for (final String tag : message.getTags())
-			text = text + " " + tag;
+		if (message.getTags() != null)
+			for (final String tag : message.getTags())
+				text = text + " " + tag;
 		return text;
 	}
 
@@ -319,6 +320,10 @@ public class MessageService {
 	public boolean checkMessagePermissions(final Message message) {
 		final Actor actorPrincipal = this.actorService.findByUserAccount(LoginService.getPrincipal());
 		return message.getSender().equals(actorPrincipal) || message.getRecipients().contains(actorPrincipal);
+	}
+
+	public void flush() {
+		this.messageRepository.flush();
 	}
 
 }

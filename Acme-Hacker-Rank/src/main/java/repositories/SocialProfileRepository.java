@@ -5,12 +5,14 @@ import java.util.Collection;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import domain.SocialProfile;
 
+@Repository
 public interface SocialProfileRepository extends JpaRepository<SocialProfile, Integer> {
 
 	@Query("select distinct(sp) from SocialProfile sp where sp.actor.id = ?1")
-	public Collection<SocialProfile> findAllSocialProfile(final int actorId);
+	Collection<SocialProfile> findAllSocialProfile(final int actorId);
 
 }

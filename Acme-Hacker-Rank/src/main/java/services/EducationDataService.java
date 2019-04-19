@@ -73,4 +73,8 @@ public class EducationDataService {
 		this.educationDataRepository.delete(educationData);
 	}
 
+	public void delete(final Collection<EducationData> educationData) {
+		this.educationDataRepository.delete(educationData);
+	}
+
 }

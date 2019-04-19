@@ -148,10 +148,8 @@ public class MessageController extends AbstractController {
 
 		final Actor sender = this.actorService.findByUserAccount(LoginService.getPrincipal());
 
-		final Collection<Actor> actors = this.actorService.findAll();
-		final Collection<Actor> actorsEliminated = this.actorService.findEliminatedActors();
+		final Collection<Actor> actors = this.actorService.findNonEliminatedActors();
 		actors.remove(sender);
-		actors.removeAll(actorsEliminated);
 
 		result.addObject("Message", message);
 		result.addObject("actors", actors);

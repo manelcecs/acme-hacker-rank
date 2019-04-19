@@ -134,18 +134,15 @@ public class SocialProfileController extends AbstractController {
 		case "ADMINISTRATOR":
 			final Administrator administrator = this.administratorService.findOne(actor.getId());
 			result.addObject("administrator", administrator);
-			System.out.println(administrator);
 			break;
 
 		case "HACKER":
 			final Hacker hacker = this.hackerService.findOne(actor.getId());
-			System.out.println(hacker);
 			result.addObject("hacker", hacker);
 			break;
 
 		case "COMPANY":
 			final Company company = this.companyService.findOne(actor.getId());
-			System.out.println(company);
 			result.addObject("company", company);
 			break;
 		}

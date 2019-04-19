@@ -21,6 +21,18 @@ public class ValidatorCollection {
 		return res;
 	}
 
+	//	public static boolean validateSafeHTMLCollection(final Collection<String> urls) {
+	//		boolean res = true;
+	//		try {
+	//			for (final String url : urls)
+	//				new ValidatorB
+	//		} catch (final MalformedURLException e) {
+	//			res = false;
+	//		}
+	//
+	//		return res;
+	//	}
+
 	public static Collection<String> deleteStringsBlanksInCollection(final Collection<String> collectionString) {
 		final Collection<String> strings = collectionString;
 		final Collection<String> stringsBlanks = new ArrayList<>();

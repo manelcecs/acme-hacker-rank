@@ -21,13 +21,13 @@ import domain.Position;
 public class AnswerService {
 
 	@Autowired
-	AnswerRepository	answerRepository;
+	private AnswerRepository	answerRepository;
 
 	@Autowired
-	ApplicationService	applicationService;
+	private ApplicationService	applicationService;
 
 	@Autowired
-	HackerService		hackerService;
+	private HackerService		hackerService;
 
 
 	public Answer create(final int idApplication) {

@@ -73,7 +73,6 @@ public class AdminConfigController extends AbstractController {
 			result = new ModelAndView("redirect:edit.do");
 		} catch (final Throwable oops) {
 			result = this.createModelAndView(this.adminConfigService.getAdminConfig().castToForm(), "adminConfig.save.error");
-			oops.printStackTrace();
 		}
 
 		this.configValues(result);

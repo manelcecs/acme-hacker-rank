@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.CurriculaService;
 import services.EducationDataService;
+import services.HackerService;
 import services.MiscellaneousDataService;
 import services.PersonalDataService;
 import services.PositionDataService;
@@ -32,14 +34,21 @@ public class EducationDataController extends AbstractController {
 
 	@Autowired
 	private EducationDataService		educationDataService;
+
 	@Autowired
 	private CurriculaService			curriculaService;
+
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
 	@Autowired
 	private PersonalDataService			personalDataService;
+
 	@Autowired
 	private PositionDataService			positionDataService;
+
+	@Autowired
+	private HackerService				hackerService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -68,33 +77,33 @@ public class EducationDataController extends AbstractController {
 		curriculaId = record.getCurricula().getId();
 		try {
 			this.educationDataService.delete(record);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-		}
+			res = this.createModelAndViewCurricula(curriculaId);
 
-		res = this.createModelAndViewCurricula(curriculaId);
+		} catch (final Throwable oops) {
+			res = this.createModelAndViewCurricula(curriculaId, "educationData.submit.error");
+		}
 
 		return res;
 	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView save(@Valid final EducationData educationData, final BindingResult binding) {
 
 		ModelAndView res;
-		if (binding.hasErrors()) {
+
+		if (educationData.getEndDate() != null)
+			if (educationData.getEndDate().before(educationData.getStartDate()))
+				binding.rejectValue("endDate", "educationData.edit.date.error");
+
+		if (binding.hasErrors())
 			res = this.createModelAndViewEdit(educationData);
-			System.out.println(binding.getAllErrors());
-		} else
+		else
 			try {
 				this.educationDataService.save(educationData);
 				res = this.createModelAndViewCurricula(educationData.getCurricula().getId());
-
 			} catch (final ValidationException oops) {
-				System.out.println("Validation Exception");
-				System.out.println(binding.getAllErrors());
 				res = this.createModelAndViewEdit(educationData);
 			} catch (final Throwable oops) {
-				System.out.println("Generic Exception");
-				oops.printStackTrace();
 				res = this.createModelAndViewEdit(educationData);
 			}
 
@@ -103,13 +112,19 @@ public class EducationDataController extends AbstractController {
 
 	protected ModelAndView createModelAndViewEdit(final EducationData educationData) {
 		ModelAndView res;
-		res = new ModelAndView("educationData/edit");
-		res.addObject("educationData", educationData);
+
+		if (this.hackerService.findByPrincipal(LoginService.getPrincipal()).getId() != educationData.getCurricula().getHacker().getId())
+			res = new ModelAndView("redirect:/");
+		else {
+			res = new ModelAndView("educationData/edit");
+			res.addObject("educationData", educationData);
+		}
+
 		this.configValues(res);
 		return res;
 	}
 
-	protected ModelAndView createModelAndViewCurricula(final int curriculaId) {
+	protected ModelAndView createModelAndViewCurricula(final int curriculaId, final String... message) {
 		ModelAndView res;
 		res = new ModelAndView("curricula/display");
 		final Curricula curricula = this.curriculaService.findOne(curriculaId);
@@ -124,6 +139,9 @@ public class EducationDataController extends AbstractController {
 		res.addObject("educationsData", educationsData);
 		res.addObject("personalData", personalData);
 		res.addObject("miscellaneousData", miscellaneousData);
+
+		for (final String s : message)
+			res.addObject("message", s);
 
 		res.addObject("show", true);
 		this.configValues(res);

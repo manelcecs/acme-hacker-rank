@@ -50,7 +50,6 @@ public class HackerController extends AbstractController {
 			res = this.createModelAndViewEdit(hackerForm);
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(hackerForm, "hacker.edit.commit.error");
-			oops.printStackTrace();
 		}
 
 		return res;
@@ -69,7 +68,6 @@ public class HackerController extends AbstractController {
 			res = this.createModelAndViewEdit(hacker);
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(hacker);
-			oops.printStackTrace();
 		}
 		return res;
 	}

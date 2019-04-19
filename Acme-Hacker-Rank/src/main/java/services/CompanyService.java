@@ -32,12 +32,16 @@ public class CompanyService {
 
 	@Autowired
 	private UserAccountRepository	accountRepository;
+
 	@Autowired
 	private CompanyRepository		companyRepository;
+
 	@Autowired
 	private AdminConfigService		adminConfigService;
+
 	@Autowired
 	private MessageBoxService		messageBoxService;
+
 	@Autowired
 	private Validator				validator;
 
@@ -122,10 +126,8 @@ public class CompanyService {
 
 		this.validator.validate(result, binding);
 
-		if (binding.hasErrors()) {
-			System.out.println(binding.getAllErrors());
+		if (binding.hasErrors())
 			throw new ValidationException();
-		}
 
 		return result;
 	}
@@ -164,10 +166,8 @@ public class CompanyService {
 
 		this.validator.validate(result, binding);
 
-		if (binding.hasErrors()) {
-			System.out.println(binding.getAllErrors());
+		if (binding.hasErrors())
 			throw new ValidationException();
-		}
 
 		return result;
 	}

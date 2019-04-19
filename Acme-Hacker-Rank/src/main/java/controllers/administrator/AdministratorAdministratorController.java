@@ -65,7 +65,6 @@ public class AdministratorAdministratorController extends AbstractController {
 			res = this.createModelAndViewEdit(adminForm);
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(adminForm, "administrator.edit.commit.error");
-			oops.printStackTrace();
 		}
 
 		return res;
@@ -84,7 +83,6 @@ public class AdministratorAdministratorController extends AbstractController {
 			res = this.createModelAndViewEdit(administrator);
 		} catch (final Throwable oops) {
 			res = this.createModelAndViewEdit(administrator);
-			oops.printStackTrace();
 		}
 		return res;
 	}

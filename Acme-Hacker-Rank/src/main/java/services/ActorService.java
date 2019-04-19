@@ -3,12 +3,12 @@ package services;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -27,30 +27,57 @@ import domain.Actor;
 import domain.Administrator;
 import domain.Company;
 import domain.CreditCard;
+import domain.Curricula;
+import domain.EducationData;
 import domain.Hacker;
 import domain.Message;
+import domain.MiscellaneousData;
+import domain.PersonalData;
+import domain.PositionData;
+import domain.SocialProfile;
 
 @Service
 @Transactional
 public class ActorService {
 
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository				actorRepository;
 
 	@Autowired
-	private UserAccountRepository	userAccountRepository;
+	private UserAccountRepository		userAccountRepository;
 
 	@Autowired
-	private MessageService			messageService;
+	private MessageService				messageService;
 
 	@Autowired
-	private CompanyService			companyService;
+	private CompanyService				companyService;
 
 	@Autowired
-	private HackerService			hackerService;
+	private HackerService				hackerService;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private CurriculaService			curriculaService;
+
+	@Autowired
+	private MiscellaneousDataService	miscellaneousDataService;
+
+	@Autowired
+	private PersonalDataService			personalDataService;
+
+	@Autowired
+	private EducationDataService		educationDataService;
+
+	@Autowired
+	private PositionDataService			positionDataService;
+
+	@Autowired
+	private AdministratorService		administratorService;
+
+	@Autowired
+	private SocialProfileService		socialProfileService;
+
+	@Autowired
+	private FinderService				finderService;
 
 
 	public Actor save(final Actor actor) {
@@ -73,8 +100,8 @@ public class ActorService {
 		return this.actorRepository.getByMessageBox(idBox);
 	}
 
-	public Collection<Actor> findEliminatedActors() {
-		return this.actorRepository.findEliminatedActors();
+	public Collection<Actor> findNonEliminatedActors() {
+		return this.actorRepository.findNonEliminatedActors();
 	}
 
 	// Workaround for the problem of hibernate with inheritances
@@ -161,10 +188,10 @@ public class ActorService {
 		return this.actorRepository.findSpamActors();
 	}
 
-	//:TODO todos los datos
 	public String exportData() throws JsonProcessingException {
 		final ObjectMapper mapper = new ObjectMapper();
 		List<Message> messages;
+		List<SocialProfile> socialProfiles;
 
 		String json = "";
 
@@ -178,30 +205,54 @@ public class ActorService {
 		case "ADMINISTRATOR":
 			final Administrator administrator = this.administratorService.findByPrincipal(principal);
 			messages = (List<Message>) this.messageService.findAllByActor(administrator.getId());
+			socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles(administrator.getId());
+
 			json = json + mapper.writeValueAsString(administrator);
 			json = json + mapper.writeValueAsString(messages);
+			json = json + mapper.writeValueAsString(socialProfiles);
 			break;
 
 		case "HACKER":
 			final Hacker hacker = this.hackerService.findByPrincipal(principal);
 			messages = (List<Message>) this.messageService.findAllByActor(hacker.getId());
+			socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles(hacker.getId());
+			final List<Curricula> curricula = (List<Curricula>) this.curriculaService.findAllNoCopy(hacker);
+			final List<MiscellaneousData> miscellaneousDatas = new ArrayList<>();
+			final List<PersonalData> personalDatas = new ArrayList<>();
+			final List<PositionData> positionDatas = new ArrayList<>();
+			final List<EducationData> educationDatas = new ArrayList<>();
+
+			for (final Curricula cv : curricula) {
+				miscellaneousDatas.addAll(this.miscellaneousDataService.findAllCurricula(cv));
+				personalDatas.add(this.personalDataService.findByCurricula(cv));
+				positionDatas.addAll(this.positionDataService.findAllCurricula(cv));
+				educationDatas.addAll(this.educationDataService.findAllCurricula(cv));
+			}
+
 			json = json + mapper.writeValueAsString(hacker);
+			json = json + mapper.writeValueAsString(socialProfiles);
+			json = json + mapper.writeValueAsString(curricula);
+			json = json + mapper.writeValueAsString(miscellaneousDatas);
+			json = json + mapper.writeValueAsString(personalDatas);
+			json = json + mapper.writeValueAsString(positionDatas);
+			json = json + mapper.writeValueAsString(educationDatas);
 			json = json + mapper.writeValueAsString(messages);
 			break;
 
 		case "COMPANY":
 			final Company company = this.companyService.findByPrincipal(principal);
 			messages = (List<Message>) this.messageService.findAllByActor(company.getId());
+			socialProfiles = (List<SocialProfile>) this.socialProfileService.findAllSocialProfiles(company.getId());
 
 			json = json + mapper.writeValueAsString(company);
 			json = json + mapper.writeValueAsString(messages);
+			json = json + mapper.writeValueAsString(socialProfiles);
 
 			break;
 		}
 		return json;
 	}
 
-	//:TODO todos los datos
 	public void deleteData() throws ParseException {
 
 		final UserAccount principal = LoginService.getPrincipal();
@@ -212,80 +263,24 @@ public class ActorService {
 
 		switch (authority) {
 		case "ADMINISTRATOR":
-			final Administrator administrator = this.administratorService.findByPrincipal(principal);
-			final UserAccount userAdmin = administrator.getUserAccount();
-			userAdmin.setAuthorities(null);
-			userAdmin.setPassword(this.generatePassword());
-			administrator.setUserAccount(userAdmin);
-			administrator.setAddress("---");
-			administrator.setBanned(false);
-			final CreditCard creditCardAdmin = administrator.getCreditCard();
-			creditCardAdmin.setCvv(999);
-			creditCardAdmin.setExpirationMonth(1);
-			creditCardAdmin.setExpirationYear(0);
-			creditCardAdmin.setHolder("---");
-			creditCardAdmin.setMake("---");
-			creditCardAdmin.setNumber("4636711719209732");
-			administrator.setCreditCard(creditCardAdmin);
-			administrator.setVatNumber("----");
-			administrator.setEmail("---");
-			administrator.setName("anonymous");
-			administrator.setPhoneNumber("----");
 
-			//:TODO Curriculums
+			final Administrator anonymousAdmin = this.anonymizeAdmin(this.administratorService.findByPrincipal(principal));
+			this.administratorService.save(anonymousAdmin);
 
-			this.administratorService.save(administrator);
 			break;
 
 		case "HACKER":
-			final Hacker hacker = this.hackerService.findByPrincipal(principal);
-			hacker.setAddress("---");
-			hacker.setBanned(false);
-			hacker.setEmail("---");
-			hacker.setName("anonymous");
-			hacker.setPhoneNumber("----");
-			final CreditCard creditCardhacker = hacker.getCreditCard();
-			creditCardhacker.setCvv(999);
-			creditCardhacker.setExpirationMonth(1);
-			creditCardhacker.setExpirationYear(0);
-			creditCardhacker.setHolder("---");
-			creditCardhacker.setMake("---");
-			creditCardhacker.setNumber("4636711719209732");
-			hacker.setCreditCard(creditCardhacker);
-			hacker.setVatNumber("----");
-			final UserAccount userHacker = hacker.getUserAccount();
-			userHacker.setAuthorities(null);
-			userHacker.setPassword(this.generatePassword());
-			hacker.setUserAccount(userHacker);
 
-			//:TODO Curriculums
+			final Hacker anonymousHacker = this.anonymizeHacker(this.hackerService.findByPrincipal(principal));
+			this.hackerService.save(anonymousHacker);
 
-			this.hackerService.save(hacker);
 			break;
 
 		case "COMPANY":
-			final Company company = this.companyService.findByPrincipal(principal);
-			final UserAccount userCompany = company.getUserAccount();
-			userCompany.setAuthorities(null);
-			userCompany.setPassword(this.generatePassword());
-			final CreditCard creditCardCompany = company.getCreditCard();
-			creditCardCompany.setCvv(999);
-			creditCardCompany.setExpirationMonth(1);
-			creditCardCompany.setExpirationYear(0);
-			creditCardCompany.setHolder("---");
-			creditCardCompany.setMake("---");
-			creditCardCompany.setNumber("4636711719209732");
-			company.setCreditCard(creditCardCompany);
-			company.setVatNumber("----");
-			company.setUserAccount(userCompany);
-			company.setCompanyName("Anonymous");
-			company.setAddress("---");
-			company.setBanned(false);
-			company.setEmail("---");
 
-			//:TODO Curriculums
+			final Company anonymousCompany = this.anonymizeCompany(this.companyService.findByPrincipal(principal));
+			this.companyService.save(anonymousCompany);
 
-			this.companyService.save(company);
 			break;
 
 		}
@@ -310,6 +305,119 @@ public class ActorService {
 			res = "ADMINISTRATOR";
 
 		return res;
+	}
+
+	private CreditCard anonymizeCreditCard(final CreditCard creditCard) {
+		creditCard.setCvv(999);
+		creditCard.setExpirationMonth(1);
+		creditCard.setExpirationYear(0);
+		creditCard.setHolder("---");
+		creditCard.setMake("---");
+		creditCard.setNumber("4636711719209732");
+		return creditCard;
+	}
+
+	private UserAccount anonymizeUserAccount(final UserAccount userAccount) {
+		userAccount.setAuthorities(null);
+		userAccount.setPassword(this.generatePassword());
+		return userAccount;
+	}
+
+	private Collection<String> anonymizeSurnames() {
+		final Collection<String> surname = new ArrayList<>();
+		surname.add("Anonymous");
+		return surname;
+	}
+
+	private Administrator anonymizeAdmin(final Administrator admin) {
+		admin.setName("anonymous");
+		admin.setSurnames(this.anonymizeSurnames());
+		admin.setVatNumber("----");
+		admin.setPhoto(null);
+		admin.setEmail("---");
+		admin.setPhoneNumber("----");
+		admin.setAddress("---");
+		admin.setBanned(false);
+		admin.setSpammer(null);
+
+		admin.setUserAccount(this.anonymizeUserAccount(admin.getUserAccount()));
+		admin.setCreditCard(this.anonymizeCreditCard(admin.getCreditCard()));
+
+		final Collection<SocialProfile> socialProfiles = this.socialProfileService.findAllSocialProfiles(admin.getId());
+		this.socialProfileService.delete(socialProfiles);
+		return admin;
+	}
+
+	private Hacker anonymizeHacker(final Hacker hacker) throws ParseException {
+		hacker.setName("anonymous");
+		hacker.setSurnames(this.anonymizeSurnames());
+		hacker.setVatNumber("----");
+		hacker.setPhoto(null);
+		hacker.setEmail("---");
+		hacker.setPhoneNumber("----");
+		hacker.setAddress("---");
+		hacker.setBanned(false);
+		hacker.setSpammer(null);
+
+		this.finderService.clear(hacker.getFinder());
+
+		hacker.setUserAccount(this.anonymizeUserAccount(hacker.getUserAccount()));
+		hacker.setCreditCard(this.anonymizeCreditCard(hacker.getCreditCard()));
+
+		final Collection<SocialProfile> socialProfiles = this.socialProfileService.findAllSocialProfiles(hacker.getId());
+		this.socialProfileService.delete(socialProfiles);
+
+		//Eliminar originales
+		final Collection<Curricula> originalCurricula = this.curriculaService.findAllNoCopy(hacker);
+
+		for (final Curricula cv : originalCurricula) {
+			this.miscellaneousDataService.delete(this.miscellaneousDataService.findAllCurricula(cv));
+			this.personalDataService.delete(this.personalDataService.findByCurricula(cv));
+			this.positionDataService.delete(this.positionDataService.findAllCurricula(cv));
+			this.educationDataService.delete(this.educationDataService.findAllCurricula(cv));
+		}
+
+		this.curriculaService.delete(originalCurricula);
+
+		//Anonimizar las copias
+		final Collection<Curricula> copyCurricula = this.curriculaService.findAllCopy(hacker);
+
+		for (final Curricula cv : copyCurricula) {
+			cv.setTitle("anonymous");
+			final PersonalData personalData = this.personalDataService.findByCurricula(cv);
+			personalData.setFullName("anonymous");
+			personalData.setGitHubProfile("http://anonymous.com");
+			personalData.setLinkedinProfile("http://anonymous.com");
+			personalData.setPhoneNumber("anonymous");
+			personalData.setStatement("anonymous");
+
+			this.miscellaneousDataService.delete(this.miscellaneousDataService.findAllCurricula(cv));
+			this.positionDataService.delete(this.positionDataService.findAllCurricula(cv));
+			this.educationDataService.delete(this.educationDataService.findAllCurricula(cv));
+		}
+
+		return hacker;
+	}
+
+	private Company anonymizeCompany(final Company company) {
+		company.setUserAccount(this.anonymizeUserAccount(company.getUserAccount()));
+		company.setCreditCard(this.anonymizeCreditCard(company.getCreditCard()));
+
+		company.setName("anonymous");
+		company.setSurnames(this.anonymizeSurnames());
+		company.setVatNumber("----");
+		company.setPhoto(null);
+		company.setEmail("---");
+		company.setPhoneNumber("----");
+		company.setAddress("---");
+		company.setBanned(false);
+		company.setSpammer(null);
+		company.setCompanyName("anonymous");
+
+		final Collection<SocialProfile> socialProfiles = this.socialProfileService.findAllSocialProfiles(company.getId());
+		this.socialProfileService.delete(socialProfiles);
+
+		return company;
 	}
 
 }

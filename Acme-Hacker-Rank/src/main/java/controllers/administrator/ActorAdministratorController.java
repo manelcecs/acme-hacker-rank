@@ -29,8 +29,10 @@ public class ActorAdministratorController extends AbstractController {
 
 	@Autowired
 	private HackerService			hackerService;
+
 	@Autowired
 	private CompanyService			companyService;
+
 	@Autowired
 	private AdministratorService	administratorService;
 
@@ -63,18 +65,15 @@ public class ActorAdministratorController extends AbstractController {
 		case "ADMINISTRATOR":
 			final Administrator administrator = this.administratorService.findOne(idActor);
 			result.addObject("administrator", administrator);
-			System.out.println(administrator);
 			break;
 
 		case "HACKER":
 			final Hacker hacker = this.hackerService.findOne(idActor);
-			System.out.println(hacker);
 			result.addObject("hacker", hacker);
 			break;
 
 		case "COMPANY":
 			final Company company = this.companyService.findOne(idActor);
-			System.out.println(company);
 			result.addObject("company", company);
 			break;
 		default:
@@ -90,10 +89,8 @@ public class ActorAdministratorController extends AbstractController {
 	public ModelAndView listActors() {
 		final ModelAndView res = new ModelAndView("administrator/listActors");
 
-		final Collection<Actor> actors = this.actorService.findAll();
-		final Collection<Actor> actorsRemoved = this.actorService.findEliminatedActors();
+		final Collection<Actor> actors = this.actorService.findNonEliminatedActors();
 		final Collection<Administrator> administrators = this.administratorService.findAll();
-		actors.removeAll(actorsRemoved);
 		actors.removeAll(administrators);
 
 		res.addObject("actors", actors);

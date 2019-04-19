@@ -14,8 +14,6 @@ import security.LoginService;
 import services.AnswerService;
 import services.ApplicationService;
 import services.CompanyService;
-import services.CurriculaService;
-import services.PositionService;
 import controllers.AbstractController;
 import domain.Answer;
 import domain.Application;
@@ -26,19 +24,13 @@ import domain.Company;
 public class ApplicationCompanyController extends AbstractController {
 
 	@Autowired
-	ApplicationService	applicationService;
+	private ApplicationService	applicationService;
 
 	@Autowired
-	CurriculaService	curriculaService;
+	private CompanyService		companyService;
 
 	@Autowired
-	CompanyService		companyService;
-
-	@Autowired
-	PositionService		positionService;
-
-	@Autowired
-	AnswerService		answerService;
+	private AnswerService		answerService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

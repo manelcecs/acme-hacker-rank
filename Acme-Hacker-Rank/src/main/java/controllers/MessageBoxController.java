@@ -109,15 +109,19 @@ public class MessageBoxController extends AbstractController {
 			this.messageBoxService.delete(box);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
+			final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
+			result = this.listModelAndView(this.messageBoxService.findOriginalBox(actor.getId(), "In Box"), "messageBox.commit.error");
 			result.addObject("message", "messageBox.commit.error");
 		}
 
 		this.configValues(result);
 		return result;
 	}
-
 	protected ModelAndView listModelAndView(final MessageBox boxSelect) {
+		return this.listModelAndView(boxSelect, null);
+	}
+
+	protected ModelAndView listModelAndView(final MessageBox boxSelect, final String message) {
 		final ModelAndView result = new ModelAndView("messageBox/list");
 
 		final Actor actor = this.actorService.findByUserAccount(LoginService.getPrincipal());
@@ -125,6 +129,7 @@ public class MessageBoxController extends AbstractController {
 		result.addObject("boxes", actor.getMessageBoxes());
 		result.addObject("boxSelect", boxSelect);
 		result.addObject("messages", boxSelect.getMessages());
+		result.addObject("message", message);
 
 		this.configValues(result);
 		return result;

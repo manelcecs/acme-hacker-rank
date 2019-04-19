@@ -11,6 +11,6 @@ import domain.Answer;
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
 
 	@Query("select a from Answer a where a.application.id = ?1")
-	public Answer getAnswerOfApplication(int idApplication);
+	Answer getAnswerOfApplication(int idApplication);
 
 }

@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
+import repositories.TickerRepository;
 import security.LoginService;
 import security.UserAccount;
 import utiles.AuthorityMethods;
@@ -28,7 +29,7 @@ import forms.PositionForm;
 public class PositionService {
 
 	@Autowired
-	private TickerService					tickerService;
+	private TickerRepository				tickerRepository;
 
 	@Autowired
 	private CompanyService					companyService;
@@ -110,8 +111,6 @@ public class PositionService {
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
-		
-
 		return this.positionRepository.save(position);
 	}
 
@@ -162,7 +161,6 @@ public class PositionService {
 
 	}
 
-	//TODO: Al hacer delete hay que borrar la position en el finder? En principio si pero hay que echarle un ojo al rendimiento
 	public void delete(final Position position) {
 
 		final UserAccount principal = LoginService.getPrincipal();
@@ -178,7 +176,7 @@ public class PositionService {
 
 		this.problemService.deleteCollectionOfProblems(problems);
 		this.positionRepository.delete(position);
-		this.tickerService.delete(position.getTicker());
+		this.tickerRepository.delete(position.getTicker());
 
 	}
 

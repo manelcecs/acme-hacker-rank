@@ -19,7 +19,9 @@ import domain.Curricula;
 import domain.EducationData;
 import domain.Hacker;
 import domain.MiscellaneousData;
+import domain.PersonalData;
 import domain.PositionData;
+import forms.CurriculaAndPersonalDataForm;
 
 @Service
 @Transactional
@@ -58,6 +60,28 @@ public class CurriculaService {
 		return res;
 	}
 
+	public void delete(final Curricula curricula) {
+		if (curricula.getId() != 0) {
+			final Collection<MiscellaneousData> miscellaneousData = this.miscellaneousDataService.findAllCurricula(curricula);
+			final Collection<PositionData> positionData = this.positionDataService.findAllCurricula(curricula);
+			final Collection<EducationData> educationsData = this.educationDataService.findAllCurricula(curricula);
+			final PersonalData personalData = this.personalDataService.findByCurricula(curricula);
+
+			for (final MiscellaneousData misc : miscellaneousData)
+				this.miscellaneousDataService.delete(misc);
+
+			for (final PositionData pos : positionData)
+				this.positionDataService.delete(pos);
+
+			for (final EducationData edu : educationsData)
+				this.educationDataService.delete(edu);
+
+			this.personalDataService.delete(personalData);
+
+			this.curriculaRepository.delete(curricula);
+		}
+	}
+
 	public Curricula createCopy(final Curricula curricula) {
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
@@ -66,6 +90,7 @@ public class CurriculaService {
 
 		final Curricula newCur = new Curricula();
 
+		newCur.setTitle(curricula.getTitle());
 		newCur.setHacker(hacker);
 		newCur.setCopy(true);
 
@@ -84,7 +109,6 @@ public class CurriculaService {
 
 		return res;
 	}
-
 	public Curricula save(final Curricula curricula) {
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
@@ -113,20 +137,37 @@ public class CurriculaService {
 		return this.curriculaRepository.getCurriculasOfHacker(idHacker);
 	}
 
-	public Curricula reconstruct(final Curricula curricula, final BindingResult binding) {
+	public Curricula reconstruct(final CurriculaAndPersonalDataForm curriculaPersonalForm, final BindingResult binding) {
 		final Curricula result;
 
-		if (curricula.getId() == 0)
-			result = this.create();
-		else
-			result = this.curriculaRepository.findOne(curricula.getId());
+		result = this.create();
 
-		result.setTitle(curricula.getTitle());
+		result.setTitle(curriculaPersonalForm.getTitle());
 
 		this.validator.validate(result, binding);
+
+		//Validar la personalData
+		if (curriculaPersonalForm.getFullName().equals(""))
+			binding.rejectValue("fullName", "org.hibernate.validator.constraints.NotBlank.message");
+		if (curriculaPersonalForm.getStatement().equals(""))
+			binding.rejectValue("statement", "org.hibernate.validator.constraints.NotBlank.message");
+		if (curriculaPersonalForm.getPhoneNumber().equals(""))
+			binding.rejectValue("phoneNumber", "org.hibernate.validator.constraints.NotBlank.message");
+		if (curriculaPersonalForm.getGitHubProfile().equals(""))
+			binding.rejectValue("gitHubProfile", "org.hibernate.validator.constraints.NotBlank.message");
+		if (curriculaPersonalForm.getLinkedinProfile().equals(""))
+			binding.rejectValue("linkedinProfile", "org.hibernate.validator.constraints.NotBlank.message");
 
 		if (binding.hasErrors())
 			throw new ValidationException();
 		return result;
+	}
+
+	public void delete(final Collection<Curricula> curricula) {
+		this.curriculaRepository.delete(curricula);
+	}
+
+	public Collection<Curricula> findAllCopy(final Hacker hacker) {
+		return this.curriculaRepository.findAllCopy(hacker.getId());
 	}
 }

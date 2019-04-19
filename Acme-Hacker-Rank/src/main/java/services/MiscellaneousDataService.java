@@ -68,4 +68,8 @@ public class MiscellaneousDataService {
 		this.miscellaneousRepository.delete(miscData);
 	}
 
+	public void delete(final Collection<MiscellaneousData> miscData) {
+		this.miscellaneousRepository.delete(miscData);
+	}
+
 }

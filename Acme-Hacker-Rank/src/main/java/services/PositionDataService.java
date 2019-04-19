@@ -72,4 +72,8 @@ public class PositionDataService {
 		this.positionDataRepository.delete(positionData);
 	}
 
+	public void delete(final Collection<PositionData> positionData) {
+		this.positionDataRepository.delete(positionData);
+	}
+
 }

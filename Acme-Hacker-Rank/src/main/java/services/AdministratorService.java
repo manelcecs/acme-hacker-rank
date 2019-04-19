@@ -32,12 +32,16 @@ public class AdministratorService {
 
 	@Autowired
 	private UserAccountRepository	accountRepository;
+
 	@Autowired
 	private AdministratorRepository	adminRepository;
+
 	@Autowired
 	private AdminConfigService		adminConfigService;
+
 	@Autowired
 	private MessageBoxService		messageBoxService;
+
 	@Autowired
 	private Validator				validator;
 

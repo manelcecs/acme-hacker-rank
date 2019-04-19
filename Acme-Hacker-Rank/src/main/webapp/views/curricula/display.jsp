@@ -44,11 +44,11 @@
 <br />
 <b><spring:message code="curricula.personalData.gitHubProfile" />:
 </b>
-<jstl:out value="${personalData.gitHubProfile }" />
+<a target="_blank" href="<jstl:out value="${personalData.gitHubProfile }" />" ><jstl:out value="${personalData.gitHubProfile }" /></a> 
 <br />
 <b><spring:message code="curricula.personalData.linkedinProfile" />:
 </b>
-<jstl:out value="${personalData.linkedinProfile }" />
+	<a target="_blank" href="<jstl:out value="${personalData.linkedinProfile }" />"><jstl:out value="${personalData.linkedinProfile }" /></a>
 <br />
 </jstl:if>
 
@@ -132,9 +132,11 @@
    	 <jstl:out value="${miscData.text }" />
     </display:column>
     <display:column titleKey="curricula.miscellaneousData.attachments">
-   	 <jstl:forEach items="${miscData.attachments }" var="attachment">
-   		 <jstl:out value="attachment" />
-   	 </jstl:forEach>
+    	<ul>
+		   	 <jstl:forEach items="${miscData.attachments }" var="attachment">
+	   			<li><a target="_blank" href="<jstl:out value="${attachment}" />"><jstl:out value="${attachment}" /></a></li>
+	   		 </jstl:forEach>
+    	</ul>
     </display:column>
     <jstl:if test="${!curricula.copy }">
 
@@ -188,7 +190,7 @@
    	 <display:column>
    		 <jstl:if test="${show }">
    			 <button
-   				 onClick="window.location.href='positionData/hacker/edit.do?postionDataId=${postionData.id }'">
+   				 onClick="window.location.href='positionData/hacker/edit.do?positionDataId=${positionData.id }'">
    				 <spring:message code="curricula.edit" />
    			 </button>
    		 </jstl:if>
@@ -196,7 +198,7 @@
    	 <display:column>
    		 <jstl:if test="${show }">
    			 <button
-   				 onClick="window.location.href='positionData/hacker/delete.do?postionDataId=${postionData.id }'">
+   				 onClick="window.location.href='positionData/hacker/delete.do?positionDataId=${positionData.id }'">
    				 <spring:message code="curricula.delete" />
    			 </button>
    		 </jstl:if>

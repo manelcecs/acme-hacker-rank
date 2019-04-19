@@ -3,7 +3,7 @@ package controllers.hacker.data;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.CurriculaService;
 import services.EducationDataService;
+import services.HackerService;
 import services.MiscellaneousDataService;
 import services.PersonalDataService;
 import services.PositionDataService;
@@ -44,6 +46,9 @@ public class PersonalDataController extends AbstractController {
 	@Autowired
 	private PositionDataService			positionDataService;
 
+	@Autowired
+	private HackerService				hackerService;
+
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int personalDataId) {
@@ -66,31 +71,38 @@ public class PersonalDataController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView save(@Valid final PersonalData personalData, final BindingResult binding) {
+	public ModelAndView save(final PersonalData personalData, final BindingResult binding) {
 
 		ModelAndView res;
-		if (binding.hasErrors()) {
-			System.out.println(binding.getAllErrors());
+
+		try {
+			final PersonalData result = this.personalDataService.reconstruct(personalData, binding);
+
+			this.personalDataService.save(result);
+			res = this.createModelAndViewCurricula(result.getCurricula().getId());
+		} catch (final ValidationException oops) {
 			res = this.createModelAndViewEdit(personalData);
-		} else {
-			try {
-
-				this.personalDataService.save(personalData);
-
-			} catch (final Throwable oops) {
-				oops.printStackTrace();
-			}
-			res = this.createModelAndViewCurricula(personalData.getCurricula().getId());
+		} catch (final Throwable oops) {
+			res = this.createModelAndViewEdit(personalData, "personalData.submit.error");
 		}
 
-		this.configValues(res);
 		return res;
 
 	}
 
-	protected ModelAndView createModelAndViewEdit(final PersonalData personalData) {
-		final ModelAndView res = new ModelAndView("personalData/edit");
-		res.addObject("personalData", personalData);
+	protected ModelAndView createModelAndViewEdit(final PersonalData personalData, final String... msg) {
+		final ModelAndView res;
+
+		if (this.hackerService.findByPrincipal(LoginService.getPrincipal()).getId() != personalData.getCurricula().getHacker().getId())
+			res = new ModelAndView("redirect:/");
+		else {
+			res = new ModelAndView("personalData/edit");
+			res.addObject("personalData", personalData);
+
+			for (final String s : msg)
+				res.addObject("message", s);
+		}
+
 		this.configValues(res);
 		return res;
 	}

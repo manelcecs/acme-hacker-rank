@@ -40,5 +40,5 @@
 	
 	<spring:message code="personalData.edit.submit" var="submit" />
 	<input type="submit" name="submit" value="${ submit}" onclick="return checkPhone(this.form.phoneNumber.value)"/>
-	<acme:cancel url="/" code="personalData.edit.cancel" />
+	<acme:cancel url="/curricula/hacker/display.do?curriculaId=${personalData.curricula.id}" code="personalData.edit.cancel" />
 </form:form>

@@ -27,9 +27,9 @@
 	<acme:textbox code="educationData.edit.degree" path="degree" />
 	<acme:textbox code="educationData.edit.institution" path="institution" />
 	<acme:textbox code="educationData.edit.mark" path="mark" />
-	<acme:textbox code="educationData.edit.startDate" path="startDate" placeholder="educationData.edit.date"/>
-	<acme:textbox code="educationData.edit.endDate" path="endDate" placeholder="educationData.edit.date"/>
+	<acme:inputDate code="educationData.edit.startDate" path="startDate"/>
+	<acme:inputDate code="educationData.edit.endDate" path="endDate"/>
 	<spring:message code="educationData.edit.submit" var="submit" />
 	<input type="submit" name="submit" value="${ submit}" />
-	<acme:cancel url="/" code="educationData.edit.cancel" />
+	<acme:cancel url="/curricula/hacker/display.do?curriculaId=${educationData.curricula.id}" code="educationData.edit.cancel" />
 </form:form>

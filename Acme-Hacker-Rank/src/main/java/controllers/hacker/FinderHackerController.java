@@ -67,7 +67,6 @@ public class FinderHackerController extends AbstractController {
 				result = new ModelAndView("redirect:edit.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(finder, "finder.commit.error");
-				oops.printStackTrace();
 			}
 		this.configValues(result);
 		return result;
