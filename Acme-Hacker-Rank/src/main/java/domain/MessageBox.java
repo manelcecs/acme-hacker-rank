@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {
-	@Index(columnList = "name")
+	@Index(columnList = "name"), @Index(columnList = "deleteable"), @Index(columnList = "parent")
 })
 public class MessageBox extends DomainEntity {
 

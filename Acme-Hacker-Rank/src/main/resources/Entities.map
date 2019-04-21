@@ -1,5 +1,5 @@
 #./src/main/resources/Entities.map
-#Fri Apr 19 21:14:13 CEST 2019
+#Sat Apr 20 16:24:59 CEST 2019
 messageBox017=9450
 userAccount58=9432
 messageBox016=9449
@@ -12,6 +12,7 @@ messageBox013=9444
 messageBox012=9443
 messageBox011=9442
 messageBox010=9441
+admin=9419
 messageBox005=9424
 messageBox004=9423
 messageBox003=9422
@@ -207,7 +208,6 @@ admin2=9433
 messageBox029=9466
 admin1=9426
 messageBox028=9465
-admin0=9419
 messageBox027=9464
 messageBox026=9463
 messageBox025=9462
