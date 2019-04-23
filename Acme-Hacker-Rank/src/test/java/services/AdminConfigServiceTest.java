@@ -138,4 +138,5 @@ public class AdminConfigServiceTest extends AbstractTest {
 
 		this.checkExceptions(expected, caught);
 	}
+
 }

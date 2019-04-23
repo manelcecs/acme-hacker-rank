@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,13 @@ import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
 import services.CompanyService;
+import services.CurriculaService;
+import services.EducationDataService;
 import services.HackerService;
 import services.MessageService;
+import services.MiscellaneousDataService;
+import services.PersonalDataService;
+import services.PositionDataService;
 import services.SocialProfileService;
 import utiles.AuthorityMethods;
 
@@ -26,8 +33,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import domain.Actor;
 import domain.Administrator;
 import domain.Company;
+import domain.Curricula;
+import domain.EducationData;
 import domain.Hacker;
 import domain.Message;
+import domain.MiscellaneousData;
+import domain.PersonalData;
+import domain.PositionData;
 import domain.SocialProfile;
 
 @Controller
@@ -35,22 +47,37 @@ import domain.SocialProfile;
 public class ActorController extends AbstractController {
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private HackerService			hackerService;
+	private HackerService				hackerService;
 
 	@Autowired
-	private CompanyService			companyService;
+	private CompanyService				companyService;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService		administratorService;
 
 	@Autowired
-	private SocialProfileService	socialProfileService;
+	private SocialProfileService		socialProfileService;
 
 	@Autowired
-	private MessageService			messageService;
+	private MessageService				messageService;
+
+	@Autowired
+	private CurriculaService			curriculaService;
+
+	@Autowired
+	private MiscellaneousDataService	miscellaneousDataService;
+
+	@Autowired
+	private PersonalDataService			personalDataService;
+
+	@Autowired
+	private PositionDataService			positionDataService;
+
+	@Autowired
+	private EducationDataService		educationDataService;
 
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -191,9 +218,26 @@ public class ActorController extends AbstractController {
 
 		case "HACKER":
 			final Hacker hacker = this.hackerService.findByPrincipal(principal);
+			final Collection<Curricula> curricula = this.curriculaService.findAllNoCopy(hacker);
+			final Collection<PersonalData> personalDatas = new ArrayList<>();
+			final Collection<MiscellaneousData> miscellaneousDatas = new ArrayList<>();
+			final Collection<PositionData> positionDatas = new ArrayList<>();
+			final Collection<EducationData> educationDatas = new ArrayList<>();
+			for (final Curricula cv : curricula) {
+				personalDatas.add(this.personalDataService.findByCurricula(cv));
+				miscellaneousDatas.addAll(this.miscellaneousDataService.findAllCurricula(cv));
+				positionDatas.addAll(this.positionDataService.findAllCurricula(cv));
+				educationDatas.addAll(this.educationDataService.findAllCurricula(cv));
+			}
+
 			messages = (List<Message>) this.messageService.findAllByActor(hacker.getId());
 			result.addObject("hacker", hacker);
 			result.addObject("messages", messages);
+			result.addObject("personalDatas", personalDatas);
+			result.addObject("miscellaneousDatas", miscellaneousDatas);
+			result.addObject("positionDatas", positionDatas);
+			result.addObject("educationDatas", educationDatas);
+
 			break;
 
 		case "COMPANY":

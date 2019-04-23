@@ -21,6 +21,9 @@
 	<acme:button url="actor/saveData.do" type="button" code="actor.displayData.saveData"/>
 <hr>
 
+
+
+
 <div id="print">
 <jstl:choose>
 	<jstl:when test="${authority == 'HACKER'}">
@@ -58,7 +61,7 @@
 		
 		<!-- Table with messages -->
 		<b><spring:message code="actor.displayData.messages" /></b>
-		<display:table pagesize="5" name="${messages}" id="message" requestURI="actor/displayAllData.do">
+		<display:table name="${messages}" id="message" >
 			<display:column titleKey="actor.displayData.messageSender"><jstl:out value="${message.sender.email}"/></display:column>
 			<display:column titleKey="actor.displayData.messageRecipients">
 				<jstl:forEach var="recipient" items="${message.recipients}">
@@ -74,6 +77,45 @@
 					<jstl:out value="${tag}"/><br/>
 				</jstl:forEach>
 			</display:column>
+		</display:table><br/>
+		
+		
+		<!-- Table with cv -->
+		
+		<b><spring:message code="actor.displayData.personalData" /></b>
+		<display:table name="${personalDatas}" id="personalData">
+			<display:column titleKey="actor.displayData.cv.title"><jstl:out value="${personalData.curricula.title}"/></display:column>
+			<display:column titleKey="actor.displayData.personalData.fullName"><jstl:out value="${personalData.fullName}"/></display:column>
+			<display:column titleKey="actor.displayData.personalData.statement"><jstl:out value="${personalData.statement}"/></display:column>
+			<display:column titleKey="actor.displayData.personalData.phoneNumber"><jstl:out value="${personalData.phoneNumber}"/></display:column>
+			<display:column titleKey="actor.displayData.personalData.gitHubProfile"><jstl:out value="${personalData.gitHubProfile}"/></display:column>
+			<display:column titleKey="actor.displayData.personalData.linkedinProfile"><jstl:out value="${personalData.linkedinProfile}"/></display:column>
+		</display:table><br/>
+		
+		<b><spring:message code="actor.displayData.positionData" /></b>
+		<display:table name="${positionDatas}" id="positionData">
+			<display:column titleKey="actor.displayData.cv.title"><jstl:out value="${positionData.curricula.title}"/></display:column>
+			<display:column titleKey="actor.displayData.positionData.title"><jstl:out value="${positionData.title}"/></display:column>
+			<display:column titleKey="actor.displayData.positionData.description"><jstl:out value="${positionData.description}"/></display:column>
+			<display:column titleKey="actor.displayData.positionData.startDate"><jstl:out value="${positionData.startDate}"/></display:column>
+			<display:column titleKey="actor.displayData.positionData.endDate"><jstl:out value="${positionData.endDate}"/></display:column>
+		</display:table><br/>
+		
+		<b><spring:message code="actor.displayData.educationData" /></b>
+		<display:table name="${educationDatas}" id="educationData">
+			<display:column titleKey="actor.displayData.cv.title"><jstl:out value="${personalData.curricula.title}"/></display:column>
+			<display:column titleKey="actor.displayData.educationData.degree"><jstl:out value="${educationData.degree}"/></display:column>
+			<display:column titleKey="actor.displayData.educationData.institution"><jstl:out value="${educationData.institution}"/></display:column>
+			<display:column titleKey="actor.displayData.educationData.mark"><jstl:out value="${educationData.mark}"/></display:column>
+			<display:column titleKey="actor.displayData.educationData.startDate"><jstl:out value="${educationData.startDate}"/></display:column>
+			<display:column titleKey="actor.displayData.educationData.endDate"><jstl:out value="${educationData.endDate}"/></display:column>
+		</display:table><br/>
+		
+		<b><spring:message code="actor.displayData.miscellaneousData" /></b>
+		<display:table name="${miscellaneousDatas}" id="miscellaneousData">
+			<display:column titleKey="actor.displayData.cv.title"><jstl:out value="${miscellaneousData.curricula.title}"/></display:column>
+			<display:column titleKey="actor.displayData.miscellaneousData.text"><jstl:out value="${miscellaneousData.text}"/></display:column>
+			<display:column titleKey="actor.displayData.miscellaneousData.attachments"><jstl:out value="${miscellaneousData.attachments}"/></display:column>
 		</display:table><br/>
 	
 	
@@ -238,4 +280,6 @@
 </script>
 
 <input type="button" value="<spring:message code="actor.exportData.export"/>" onclick="printHTML()"/>
+
+
 
