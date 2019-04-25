@@ -77,4 +77,8 @@ public class EducationDataService {
 		this.educationDataRepository.delete(educationData);
 	}
 
+	public void flush() {
+		this.educationDataRepository.flush();
+	}
+
 }

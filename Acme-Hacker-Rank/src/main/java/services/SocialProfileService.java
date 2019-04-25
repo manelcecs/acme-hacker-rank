@@ -37,17 +37,17 @@ public class SocialProfileService {
 		SocialProfile res;
 		if (socialProfile.getId() == 0)
 			Assert.isTrue(socialProfile.getActor().getId() == this.actorService.findByUserAccount(LoginService.getPrincipal()).getId());
-		res = this.socialProfileRepository.saveAndFlush(socialProfile);
+		res = this.socialProfileRepository.save(socialProfile);
 		return res;
 
 	}
-
 	public void delete(final SocialProfile sp) {
 		Assert.isTrue(AuthorityMethods.checkIsSomeoneLogged());
 		final Actor logged = this.actorService.findByUserAccount(LoginService.getPrincipal());
 		Assert.isTrue(logged.getId() == sp.getActor().getId());
 
 		this.socialProfileRepository.delete(sp);
+		this.flush();
 	}
 
 	public SocialProfile findOne(final int socialProfileId) {
@@ -65,6 +65,10 @@ public class SocialProfileService {
 
 	public void delete(final Collection<SocialProfile> socialProfiles) {
 		this.socialProfileRepository.delete(socialProfiles);
+	}
+
+	public void flush() {
+		this.socialProfileRepository.flush();
 	}
 
 }

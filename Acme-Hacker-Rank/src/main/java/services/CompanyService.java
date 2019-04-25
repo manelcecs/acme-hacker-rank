@@ -22,6 +22,7 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
+import utiles.ValidateCreditCard;
 import utiles.ValidatorCollection;
 import domain.Company;
 import forms.CompanyForm;
@@ -103,6 +104,9 @@ public class CompanyService {
 		if (companyForm.getSurnames().isEmpty())
 			binding.rejectValue("surnames", "company.edit.surnames.error");
 
+		companyForm.setCreditCard(ValidateCreditCard.checkNumeroAnno(companyForm.getCreditCard()));
+		ValidateCreditCard.checkFecha(companyForm.getCreditCard(), binding);
+
 		final Company result;
 		result = this.create();
 
@@ -149,6 +153,9 @@ public class CompanyService {
 			binding.rejectValue("email", "company.edit.email.error");
 		if (company.getSurnames().isEmpty())
 			binding.rejectValue("surnames", "company.edit.surnames.error");
+
+		company.setCreditCard(ValidateCreditCard.checkNumeroAnno(company.getCreditCard()));
+		ValidateCreditCard.checkFecha(company.getCreditCard(), binding);
 
 		final Company result;
 		result = this.findByPrincipal(LoginService.getPrincipal());

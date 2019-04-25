@@ -170,4 +170,9 @@ public class CurriculaService {
 	public Collection<Curricula> findAllCopy(final Hacker hacker) {
 		return this.curriculaRepository.findAllCopy(hacker.getId());
 	}
+
+	public void flush() {
+		this.curriculaRepository.flush();
+
+	}
 }

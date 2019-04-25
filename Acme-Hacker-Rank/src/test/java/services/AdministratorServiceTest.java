@@ -14,13 +14,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.Assert;
 
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AbstractTest;
-import domain.Actor;
 import domain.Administrator;
 import domain.CreditCard;
 
@@ -34,9 +32,6 @@ public class AdministratorServiceTest extends AbstractTest {
 	@Autowired
 	private AdministratorService	administratorService;
 
-	@Autowired
-	private ActorService			actorService;
-
 
 	@Override
 	@Before
@@ -46,27 +41,72 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	}
 
+	/**
+	 * Este test hace referencia al registro de un nuevo administrador.
+	 * Corresponde con el requisito funcional 11.1.
+	 * Además de datos válidos, es requisito indispensable que para registrar
+	 * un administrador nuevo, lo haga un adminsitrador ya existente.
+	 * 1 test positivo
+	 * 4 test negativos
+	 */
 	@Test
-	public void SampleDriver() {
+	public void AdminRegisterDriver() {
 		final Object testingData[][] = {
 			{
+				/*
+				 * usuario no logeado
+				 * a)11.1.
+				 * b)Negativo
+				 * c)13%
+				 * d)2/4
+				 */
 				null, true, IllegalArgumentException.class
 			}, {
+				/*
+				 * usuario logeado como administratdor
+				 * a)11.1
+				 * b)Positivo
+				 * c)100%
+				 * d)2/4
+				 */
 				"admin", true, null
 			}, {
+				/*
+				 * usuario logeado como hacker
+				 * a)11.1
+				 * b)Negativo
+				 * c)39%
+				 * d)2/4
+				 */
 				"hacker", true, IllegalArgumentException.class
 			}, {
+				/*
+				 * usuario logeado como company
+				 * a)11.1
+				 * b)Negativo
+				 * c)39%
+				 * d)2/4
+				 */
+				"company", true, IllegalArgumentException.class
+			}, {
+				/*
+				 * usuario logeado como administrador, datos invalidos.(email y photoURL)
+				 * a)11.1
+				 * b)Negativo
+				 * c)100%
+				 * d)2/4
+				 */
 				"admin", false, ConstraintViolationException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.SampleTemplate((String) testingData[i][0], (boolean) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.AdminRegisterTemplate((String) testingData[i][0], (boolean) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
 	// Ancillary methods ------------------------------------------------------
 
-	protected void SampleTemplate(final String username, final boolean validData, final Class<?> expected) {
+	protected void AdminRegisterTemplate(final String username, final boolean validData, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
@@ -95,6 +135,7 @@ public class AdministratorServiceTest extends AbstractTest {
 		}
 
 		this.checkExceptions(expected, caught);
+		System.out.println("Test concluido con éxito: " + username);
 	}
 	@Override
 	@After
@@ -143,65 +184,6 @@ public class AdministratorServiceTest extends AbstractTest {
 		res.setVatNumber("888848545-R");
 
 		return res;
-	}
-
-	@Test
-	public void bannedDriver() {
-		final Object testingData[][] = {
-			{
-				"admin", "hacker0", true, null
-			}, {
-				"admin", "company0", true, null
-			}, {
-				"admin", "hacker0", false, IllegalArgumentException.class
-			}, {
-				"admin", "company0", false, IllegalArgumentException.class
-			}, {
-				"admin", "admin", true, IllegalArgumentException.class
-			}, {
-				"admin", "admin", false, IllegalArgumentException.class
-			}, {
-				"hacker0", "admin", true, IllegalArgumentException.class
-			}, {
-				"company0", "admin", true, IllegalArgumentException.class
-			}, {
-				null, "admin", true, IllegalArgumentException.class
-			}
-		};
-
-		for (int i = 0; i < testingData.length; i++)
-			this.bannedTemplate((String) testingData[i][0], (String) testingData[i][1], (Boolean) testingData[i][2], (Class<?>) testingData[i][3]);
-	}
-	protected void bannedTemplate(final String user, final String actorBanned, final Boolean spammer, final Class<?> expected) {
-		Class<?> caught;
-		caught = null;
-
-		try {
-			super.authenticate(user);
-
-			final int idActor = this.getEntityId(actorBanned);
-			final Actor actor = this.actorService.getActor(idActor);
-
-			actor.setSpammer(spammer);
-
-			this.actorService.ban(actor);
-
-			this.actorService.flush();
-
-			Assert.isTrue(actor.getBanned());
-
-			this.actorService.unban(actor);
-
-			this.actorService.flush();
-
-			Assert.isTrue(!actor.getBanned());
-
-			super.unauthenticate();
-		} catch (final Throwable oops) {
-			caught = oops.getClass();
-		}
-
-		this.checkExceptions(expected, caught);
 	}
 
 }

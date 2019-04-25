@@ -1,7 +1,6 @@
 
 package services;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,18 +19,18 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AbstractTest;
+import domain.Company;
 import domain.CreditCard;
-import domain.Hacker;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class HackerTest extends AbstractTest {
+public class CompanyServiceTest extends AbstractTest {
 
 	@Autowired
-	private HackerService	hackerService;
+	private CompanyService	companyService;
 
 
 	@Override
@@ -43,30 +42,67 @@ public class HackerTest extends AbstractTest {
 	}
 
 	@Test
-	public void SampleDriver() throws ParseException {
+	public void CompanyRegisterDriver() {
 		final Object testingData[][] = {
 			{
+				/*
+				 * usuario no logeado, con datos válidos.
+				 * a)7.1
+				 * b)Positivo
+				 * c)74%
+				 * d)2/4
+				 */
 				null, true, null
 			}, {
+				/*
+				 * usuario logeado como admin, con datos válidos.
+				 * a)7.1
+				 * b)Positivo
+				 * c)39%
+				 * d)2/4
+				 */
 				"admin", true, IllegalArgumentException.class
 			}, {
-				"hacker", true, IllegalArgumentException.class
+				/*
+				 * usuario logeado como admin, con datos válidos.
+				 * a)7.1
+				 * b)Positivo
+				 * c)39%
+				 * d)2/4
+				 */
+				"company", true, IllegalArgumentException.class
 			}, {
+				/*
+				 * usuario logeado como admin, con datos válidos.
+				 * a)7.1
+				 * b)Positivo
+				 * c)39%
+				 * d)2/4
+				 */
+				"company", true, IllegalArgumentException.class
+			}, {
+				/*
+				 * usuario no logeado, con datos no válidos.
+				 * a)7.1
+				 * b)Positivo
+				 * c)74%
+				 * d)2/4
+				 */
 				null, false, ConstraintViolationException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.SampleTemplate((String) testingData[i][0], (boolean) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.CompanyRegisterTemplate((String) testingData[i][0], (boolean) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
 	// Ancillary methods ------------------------------------------------------
 
-	protected void SampleTemplate(final String username, final boolean validData, final Class<?> expected) throws ParseException {
+	protected void CompanyRegisterTemplate(final String username, final boolean validData, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
-		Hacker admin = this.hackerService.create();
+		Company admin = this.companyService.create();
 		try {
 			this.authenticate(username);
 
@@ -82,9 +118,9 @@ public class HackerTest extends AbstractTest {
 				admin.setEmail("dummyMail" + uniqueId + "@mailto.com");
 				admin.setPhoto("https://tiny.url/dummyPhoto");
 			}
-			admin = HackerTest.fillData(admin);
-			this.hackerService.save(admin);
-			this.hackerService.flush();
+			admin = CompanyServiceTest.fillData(admin);
+			this.companyService.save(admin);
+			this.companyService.flush();
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -101,8 +137,8 @@ public class HackerTest extends AbstractTest {
 
 	}
 
-	private static Hacker fillData(final Hacker admin) {
-		final Hacker res = admin;
+	private static Company fillData(final Company admin) {
+		final Company res = admin;
 
 		res.setAddress("Dirección de prueba");
 		res.setBanned(false);
@@ -110,6 +146,7 @@ public class HackerTest extends AbstractTest {
 		res.setName("DummyBoss");
 		res.setPhoneNumber("+34 555-2342");
 		res.setSpammer(false);
+		res.setCompanyName("Dummy Corp. Test Inc.");
 
 		final String dummySurname = "Dummy Wane Dan";
 		final String surnames[] = dummySurname.split(" ");
@@ -120,7 +157,7 @@ public class HackerTest extends AbstractTest {
 
 		final UserAccount a = new UserAccount();
 		final Authority auth = new Authority();
-		auth.setAuthority(Authority.HACKER);
+		auth.setAuthority(Authority.COMPANY);
 		a.addAuthority(auth);
 		a.setUsername("DummyTest" + res.getEmail().hashCode());
 		a.setPassword("DummyPass");

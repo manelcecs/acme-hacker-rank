@@ -76,4 +76,8 @@ public class PositionDataService {
 		this.positionDataRepository.delete(positionData);
 	}
 
+	public void flush() {
+		this.positionDataRepository.flush();
+	}
+
 }

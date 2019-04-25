@@ -22,6 +22,7 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
+import utiles.ValidateCreditCard;
 import utiles.ValidatorCollection;
 import domain.Administrator;
 import forms.AdministratorForm;
@@ -100,6 +101,9 @@ public class AdministratorService {
 		if (adminForm.getSurnames().isEmpty())
 			binding.rejectValue("surnames", "administrator.edit.surnames.error");
 
+		adminForm.setCreditCard(ValidateCreditCard.checkNumeroAnno(adminForm.getCreditCard()));
+		ValidateCreditCard.checkFecha(adminForm.getCreditCard(), binding);
+
 		final Administrator result;
 		result = this.create();
 
@@ -134,6 +138,9 @@ public class AdministratorService {
 			binding.rejectValue("email", "administrator.edit.email.error");
 		if (admin.getSurnames().isEmpty())
 			binding.rejectValue("surnames", "administrator.edit.surnames.error");
+
+		admin.setCreditCard(ValidateCreditCard.checkNumeroAnno(admin.getCreditCard()));
+		ValidateCreditCard.checkFecha(admin.getCreditCard(), binding);
 
 		final Administrator result;
 		result = this.findByPrincipal(LoginService.getPrincipal());

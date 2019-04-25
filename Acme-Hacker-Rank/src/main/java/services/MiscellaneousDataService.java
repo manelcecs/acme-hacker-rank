@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -30,6 +31,7 @@ public class MiscellaneousDataService {
 		final MiscellaneousData misc = new MiscellaneousData();
 		final Curricula c = this.curriculaService.findOne(curriculaId);
 		misc.setCurricula(c);
+		misc.setAttachments(new ArrayList<String>());
 		return misc;
 	}
 
@@ -70,6 +72,10 @@ public class MiscellaneousDataService {
 
 	public void delete(final Collection<MiscellaneousData> miscData) {
 		this.miscellaneousRepository.delete(miscData);
+	}
+
+	public void flush() {
+		this.miscellaneousRepository.flush();
 	}
 
 }

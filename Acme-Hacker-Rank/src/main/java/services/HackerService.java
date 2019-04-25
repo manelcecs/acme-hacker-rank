@@ -23,6 +23,7 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import utiles.AddPhoneCC;
 import utiles.AuthorityMethods;
+import utiles.ValidateCreditCard;
 import utiles.ValidatorCollection;
 import domain.Hacker;
 import forms.HackerForm;
@@ -106,6 +107,9 @@ public class HackerService {
 		if (hackerForm.getSurnames().isEmpty())
 			binding.rejectValue("surnames", "hacker.edit.surnames.error");
 
+		hackerForm.setCreditCard(ValidateCreditCard.checkNumeroAnno(hackerForm.getCreditCard()));
+		ValidateCreditCard.checkFecha(hackerForm.getCreditCard(), binding);
+
 		final Hacker result;
 		result = this.create();
 
@@ -146,6 +150,9 @@ public class HackerService {
 			binding.rejectValue("email", "hacker.edit.email.error");
 		if (hacker.getSurnames().isEmpty())
 			binding.rejectValue("surnames", "hacker.edit.surnames.error");
+
+		hacker.setCreditCard(ValidateCreditCard.checkNumeroAnno(hacker.getCreditCard()));
+		ValidateCreditCard.checkFecha(hacker.getCreditCard(), binding);
 
 		final Hacker result;
 		result = this.findByPrincipal(LoginService.getPrincipal());

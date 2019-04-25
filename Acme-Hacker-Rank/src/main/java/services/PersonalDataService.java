@@ -138,4 +138,9 @@ public class PersonalDataService {
 	public void delete(final PersonalData personalData) {
 		this.personalDataRepository.delete(personalData);
 	}
+
+	public void flush() {
+		this.personalDataRepository.flush();
+
+	}
 }
