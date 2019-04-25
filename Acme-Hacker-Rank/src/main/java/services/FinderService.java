@@ -46,13 +46,14 @@ public class FinderService {
 
 
 	public Finder save(final Finder finder) throws ParseException {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 		final LocalDateTime DATETIMENOW = LocalDateTime.now();
 
 		Assert.notNull(finder);
 		final Date actual = this.FORMAT.parse(DATETIMENOW.getYear() + "/" + DATETIMENOW.getMonthOfYear() + "/" + DATETIMENOW.getDayOfMonth() + " " + DATETIMENOW.getHourOfDay() + ":" + LocalDateTime.now().getMinuteOfHour() + ":"
 			+ DATETIMENOW.getSecondOfMinute());
 
-		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+		Assert.isTrue(this.hackerService.findByPrincipal(LoginService.getPrincipal()).getFinder().getId() == finder.getId());
 
 		String keyWord = finder.getKeyWord();
 		Date minimumdeadline = finder.getMinimumDeadLine();
@@ -80,6 +81,7 @@ public class FinderService {
 	}
 
 	public Finder clear(final Finder finder) throws ParseException {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 		final LocalDateTime DATETIMENOW = LocalDateTime.now();
 
 		Assert.notNull(finder);
@@ -92,7 +94,7 @@ public class FinderService {
 		final Date actual = this.FORMAT.parse(DATETIMENOW.getYear() + "/" + DATETIMENOW.getMonthOfYear() + "/" + DATETIMENOW.getDayOfMonth() + " " + DATETIMENOW.getHourOfDay() + ":" + LocalDateTime.now().getMinuteOfHour() + ":"
 			+ DATETIMENOW.getSecondOfMinute());
 
-		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
+		Assert.isTrue(this.hackerService.findByPrincipal(LoginService.getPrincipal()).getFinder().getId() == finder.getId());
 
 		final String keyWord = "";
 		final Date minimunDeadline = this.FORMAT.parse("0001/01/01 01:00:00");
@@ -179,6 +181,10 @@ public class FinderService {
 		Finder res;
 		res = this.finderRepository.save(finder);
 		return res;
+	}
+
+	public void flush() {
+		this.finderRepository.flush();
 	}
 
 }

@@ -54,10 +54,10 @@ public class ProblemService {
 	}
 
 	public Problem changeDraft(final Problem problem) {
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 		final Problem problemBD = this.problemRepository.findOne(problem.getId());
 		Assert.isTrue(problemBD.getDraft());
 		final UserAccount principal = LoginService.getPrincipal();
-		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
 
 		final Company company = this.companyService.findByPrincipal(principal);
 
@@ -71,8 +71,8 @@ public class ProblemService {
 
 	public void delete(final Problem problem) {
 
-		final UserAccount principal = LoginService.getPrincipal();
 		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("COMPANY"));
+		final UserAccount principal = LoginService.getPrincipal();
 
 		final Company company = this.companyService.findByPrincipal(principal);
 
@@ -92,4 +92,7 @@ public class ProblemService {
 		return this.problemRepository.getProblemsOfPositionFinal(idPosition);
 	}
 
+	public void flush() {
+		this.problemRepository.flush();
+	}
 }
