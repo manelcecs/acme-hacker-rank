@@ -23,8 +23,6 @@ import org.hibernate.validator.constraints.URL;
 
 import security.UserAccount;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -47,7 +45,6 @@ public abstract class Actor extends DomainEntity {
 
 	//Relationship
 	private UserAccount				userAccount;
-	@JsonIgnore
 	private Collection<MessageBox>	messageBoxes;
 
 

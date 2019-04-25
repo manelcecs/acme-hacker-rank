@@ -46,7 +46,7 @@ public class PositionService {
 	@Autowired
 	private MessageService					messageService;
 
-	@Autowired(required = false)
+	@Autowired
 	private IntermediaryBetweenTransactions	intermediaryBetweenTransactions;
 
 
@@ -105,9 +105,17 @@ public class PositionService {
 
 		Assert.isTrue(position.getDraft());
 
+		Assert.isTrue(!position.getCancelled());
+
 		final UserAccount principal = LoginService.getPrincipal();
 
 		final Company company = this.companyService.findByPrincipal(principal);
+		if (position.getId() != 0) {
+			final Position positionOld = this.findOne(position.getId());
+			Assert.isTrue(positionOld.getCompany().getId() == company.getId());
+			Assert.isTrue(!positionOld.getCancelled());
+			Assert.isTrue(positionOld.getDraft());
+		}
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
@@ -149,7 +157,7 @@ public class PositionService {
 
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
-		final Collection<Problem> problems = this.problemService.getProblemsOfPosition(position.getId());
+		final Collection<Problem> problems = this.problemService.getProblemsOfPositionFinal(position.getId());
 		Assert.isTrue(problems.size() >= 2);
 
 		position.setDraft(false);
@@ -171,6 +179,7 @@ public class PositionService {
 		Assert.isTrue(position.getCompany().getId() == company.getId());
 
 		Assert.isTrue(position.getDraft());
+		Assert.isTrue(!position.getCancelled());
 
 		final Collection<Problem> problems = this.problemService.getProblemsOfPosition(position.getId());
 
@@ -215,5 +224,9 @@ public class PositionService {
 
 	public Collection<Position> getPositionsCanBeApplied(final int idHacker) {
 		return this.positionRepository.getPositionsCanBeApplied(idHacker);
+	}
+
+	public void flush() {
+		this.positionRepository.flush();
 	}
 }

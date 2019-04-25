@@ -31,7 +31,7 @@ public class AnswerService {
 
 
 	public Answer create(final int idApplication) {
-		AuthorityMethods.chechAuthorityLogged("HACKER");
+		Assert.isTrue(AuthorityMethods.chechAuthorityLogged("HACKER"));
 
 		final Application application = this.applicationService.findOne(idApplication);
 		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
@@ -79,6 +79,10 @@ public class AnswerService {
 
 	public Answer getAnswerOfApplication(final int idApplication) {
 		return this.answerRepository.getAnswerOfApplication(idApplication);
+	}
+
+	public void flush() {
+		this.answerRepository.flush();
 	}
 
 }

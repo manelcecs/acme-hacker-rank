@@ -45,6 +45,9 @@ public class ApplicationService {
 	@Autowired
 	private CurriculaService		curriculaService;
 
+	@Autowired
+	PositionService					positionService;
+
 
 	public Application newApplication(final ApplicationForm applicationForm) {
 
@@ -56,9 +59,15 @@ public class ApplicationService {
 
 		final Hacker hacker = this.hackerService.findByPrincipal(LoginService.getPrincipal());
 
+		final Collection<Position> positionCanBeApplied = this.positionService.getPositionsCanBeApplied(hacker.getId());
+
+		Assert.isTrue(positionCanBeApplied.contains(position));
+
 		Assert.isTrue(!position.getDraft() && !position.getCancelled());
 
 		Assert.isTrue(curricula.getHacker().getId() == hacker.getId());
+		//TODO: El assert de que no sea una copia, quizas deberia ir en curriculaService
+		Assert.isTrue(!curricula.getCopy());
 
 		final Application application = new Application();
 		application.setHacker(hacker);
@@ -122,5 +131,9 @@ public class ApplicationService {
 
 	public Collection<Application> getApplicationsAnswered(final int idHacker) {
 		return this.applicationRepository.getApplicationsAnswered(idHacker);
+	}
+
+	public void flush() {
+		this.applicationRepository.flush();
 	}
 }

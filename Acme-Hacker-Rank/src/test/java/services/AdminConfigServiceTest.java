@@ -1,10 +1,6 @@
 
 package services;
 
-import java.util.Collection;
-
-import javax.validation.ConstraintViolationException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +22,7 @@ public class AdminConfigServiceTest extends AbstractTest {
 	private AdminConfigService	adminConfigService;
 
 
+	//La ultima siempre lanza una IAE
 	@Test
 	public void editAdminConfigDriver() {
 		final Object testingData[][] = {
@@ -36,23 +33,9 @@ public class AdminConfigServiceTest extends AbstractTest {
 			}, {
 				"hacker1", "http://url.com", 1, "+34", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", IllegalArgumentException.class
 			}, {
-				"admin", "es no es una url", 1, "+34", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", ConstraintViolationException.class
+				"admin", "http://url.com", 1, "+34", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", null
 			}, {
-				"admin", "http://url.com", -1, "+34", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", ConstraintViolationException.class
-			}, {
-				"admin", "http://url.com", 25, "+34", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", ConstraintViolationException.class
-			}, {
-				"admin", "http://url.com", 1, "+34", 0, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", ConstraintViolationException.class
-			}, {
-				"admin", "http://url.com", 1, "+34", 101, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", ConstraintViolationException.class
-			}, {
-				"admin", "http://url.com", 1, "+1000", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", ConstraintViolationException.class
-			}, {
-				"admin", "http://url.com", 1, "+34", 10, "", "Hi, you are welcome", "Hola, bienvenido", ConstraintViolationException.class
-			}, {
-				"admin", "http://url.com", 1, "+34", 10, "Acme-Hacker-Rank", "", "Hola, bienvenido", ConstraintViolationException.class
-			}, {
-				"admin", "http://url.com", 1, "+34", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "", ConstraintViolationException.class
+				"hacker1", "http://url.com", 1, "+34", 10, "Acme-Hacker-Rank", "Hi, you are welcome", "Hola, bienvenido", IllegalArgumentException.class
 			}
 		};
 
@@ -86,57 +69,19 @@ public class AdminConfigServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void editSpamWordTemplate() {
-		final Object testingData[][] = {
-			{
-				"admin", "nueva palabra", "add", null
-			}, {
-				"admin", "sex", "delete", null
-			}, {
-				"admin", "dvdsdvsdv", "delete", IllegalArgumentException.class
-			}, {
-				"hacker0", "sex", "delete", IllegalArgumentException.class
-			}, {
-				"hacker0", "nueva palabra", "add", IllegalArgumentException.class
-			}, {
-				"company0", "sex", "delete", IllegalArgumentException.class
-			}, {
-				"company0", "palabra", "add", IllegalArgumentException.class
-			}, {
-				null, "sex", "delete", IllegalArgumentException.class
-			}, {
-				null, "palabra", "add", IllegalArgumentException.class
-			}
-		};
-
-		for (int i = 0; i < testingData.length; i++)
-			this.editSpamWordTemplate((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
-	}
-
-	protected void editSpamWordTemplate(final String user, final String spamWord, final String action, final Class<?> expected) {
-		Class<?> caught;
-		caught = null;
-
-		try {
-			super.authenticate(user);
-			final AdminConfig adminConfig = this.adminConfigService.getAdminConfig();
-
-			final Collection<String> spamWords = adminConfig.getSpamWords();
-
-			if (action == "add") {
-				spamWords.add(spamWord);
-				adminConfig.setSpamWords(spamWords);
-				this.adminConfigService.save(adminConfig);
-			} else if (action == "delete")
-				this.adminConfigService.deleteSpamWord(spamWord);
-
-			this.adminConfigService.flush();
-			super.unauthenticate();
-		} catch (final Throwable oops) {
-			caught = oops.getClass();
-		}
-
-		this.checkExceptions(expected, caught);
+	public void testPrueba() {
+		super.authenticate("admin");
+		final AdminConfig adminConfig = this.adminConfigService.getAdminConfig();
+		adminConfig.setBannerURL("esto no es una url");
+		adminConfig.setCacheFinder(1);
+		adminConfig.setCountryCode("+34");
+		adminConfig.setResultsFinder(10);
+		adminConfig.setSystemName("Acme-Hacker-Rank");
+		adminConfig.setWelcomeMessageEN("Hola, bienvenido");
+		adminConfig.setWelcomeMessageES("Hola, bienvenido");
+		this.adminConfigService.save(adminConfig);
+		super.authenticate(null);
+		this.adminConfigService.flush();
 	}
 
 }

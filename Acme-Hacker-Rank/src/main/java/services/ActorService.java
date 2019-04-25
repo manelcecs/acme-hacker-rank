@@ -420,8 +420,4 @@ public class ActorService {
 		return company;
 	}
 
-	public void flush() {
-		this.actorRepository.flush();
-	}
-
 }

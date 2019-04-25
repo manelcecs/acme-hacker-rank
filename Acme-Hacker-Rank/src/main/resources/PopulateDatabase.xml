@@ -40,7 +40,7 @@
 
 	</bean>
 
-	<bean class="domain.Administrator" id="admin">
+	<bean class="domain.Administrator" id="admin0">
 
 		<!-- Valores de Actor -->
 
@@ -2326,7 +2326,7 @@
 
 		<property value="2908.99" name="salaryOffered" />
 		<property value="true" name="draft" />
-		<property value="true" name="cancelled" />
+		<property value="false" name="cancelled" />
 
 		<property name="company" ref="company2" />
 		<property name="ticker" ref="ticker21" />
@@ -2360,7 +2360,7 @@
 
 		<property value="7999.00" name="salaryOffered" />
 		<property value="false" name="draft" />
-		<property value="false" name="cancelled" />
+		<property value="true" name="cancelled" />
 
 		<property name="company" ref="company3" />
 		<property name="ticker" ref="ticker22" />
@@ -2665,7 +2665,7 @@
 			</list>
 		</property>
 		
-		<property value="true" name="draft" />
+		<property value="false" name="draft" />
 		<property name="position" ref="position00" />
 		
 	</bean>
@@ -2742,6 +2742,37 @@
 		<property value="false" name="draft" />
 		<property name="position" ref="position20" />
 		
+	</bean>
+	
+			
+			
+	<!-- Position21 -->		
+	<bean class="domain.Problem" id="problem42">		
+		<property value="Probar Apariencia" name="title" />		
+		<property value="NOIDEA" name="statement" />		
+		<property value="Mirar si es bonito y agradable a la vista" name="hint" />		
+				
+		<property name="attachments">		
+			<list>		
+			</list>		
+		</property>		
+				
+		<property value="false" name="draft" />		
+		<property name="position" ref="position21" />		
+				
+	</bean>		
+	<bean class="domain.Problem" id="problem43">		
+		<property value="Comprobar estilo" name="title" />		
+		<property value="NOIDEA" name="statement" />		
+		<property value="Asegurarse que el producto es estiloso" name="hint" />		
+				
+		<property name="attachments">		
+			<list>		
+			</list>		
+		</property>		
+				
+		<property value="false" name="draft" />		
+		<property name="position" ref="position21" />
 	</bean>
 	
 		<!-- Position23 -->
@@ -3086,12 +3117,20 @@
 		<property name="curricula" ref="curricula09" />		
 	</bean>
 	<bean class="domain.Application" id="application5">
-		<!-- <property value="" name="momentSubmit" /> -->
-		<property value="PENDING" name="status" />
+		<property value="01/01/2200" name="momentSubmit" />
+		<property value="SUBMITTED" name="status" />
 		<property value="12/31/2199" name="moment" />		
 		<property name="problem" ref="problem41" />
 		<property name="hacker" ref="hacker5" />
 		<property name="curricula" ref="curricula11" />		
+	</bean>
+	
+	<!-- Answer  -->
+	
+	<bean class="domain.Answer" id="answer00">
+		<property value="This is an explanation" name="explanation" />
+		<property value="http://www.url.com" name="link" />		
+		<property name="application" ref="application5" />
 	</bean>
 
 <bean id="adminConfig" class="domain.AdminConfig">
